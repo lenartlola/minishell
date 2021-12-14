@@ -24,10 +24,11 @@ line is cleared.
 * **waitpid** : suspends execution of the calling thread until a child specified by  `pid` argument has changed state.
     
     > By default `waitpid()` waits only for terminated children, but this behavior is modifiable via options argument, as described below. "
-    > **< -1** : meaning wait for any child process whose process group ID is equal to absolute value of `pid`.
-    > **-1** : meaning for any child process.
-    > **0** : meaning  wait for any child process whose process group ID is equal to that of the calling process at the time of the call to `waitpid()`.
-    > **>0** : meaning wait for the child whose process ID is equal to the value of `pid`.
+    
+    * **< -1** : meaning wait for any child process whose process group ID is equal to absolute value of `pid`.
+    * **-1** : meaning for any child process.
+    * **0** : meaning  wait for any child process whose process group ID is equal to that of the calling process at the time of the call to `waitpid()`.
+    * **>0** : meaning wait for the child whose process ID is equal to the value of `pid`.
     
 ---
 * printf(3)
