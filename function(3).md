@@ -16,7 +16,7 @@ line is cleared.
     associate arbitrary data with each line,
     and utilize information from previous lines in composing new ones.
 
-* **add_history**: `void add_history (const char *string)`, place a string add the end of the history list.
+* **add_history**: `void add_history(const char *string)`, place a string add the end of the history list.
 ---
 ### wait | <sys/wait.h>
     wait for a process to change state.
