@@ -1,6 +1,3 @@
-#### External functions that we are allowed to use:
-
----
 ### Readline | <stdio.h>
 * **readline(3)**: `char *readline(const char prompt)`, read a line from the terminal and return it using promp as promt, the line returned is allocated with `malloc(3)` so it should be freed properly. It offers editing capabilities as well.
 * **rl_clear_history**: `void rl_clear_history (void)`, clear the history by deleting all of the entries, it frees private data `readline` saves in history.
@@ -20,8 +17,8 @@ line is cleared.
 ---
 ### wait | <sys/wait.h>
     wait for a process to change state.
-* **wait** : Suspends execution of the calling thread until one of its children terminates.
-* **waitpid** : suspends execution of the calling thread until a child specified by  `pid` argument has changed state.
+* **wait** : `pid_t wait(int *stat_loc)`, Suspends execution of the calling thread until one of its children terminates.
+* **waitpid** : `pid_t waitpid9pid_t pid, int *stat_loc, struct rusage *rusage)`, suspends execution of the calling thread until a child specified by  `pid` argument has changed state.
     
     > By default `waitpid()` waits only for terminated children, but this behavior is modifiable via options argument, as described below. "
     
@@ -29,6 +26,7 @@ line is cleared.
     * **-1** : meaning for any child process.
     * **0** : meaning  wait for any child process whose process group ID is equal to that of the calling process at the time of the call to `waitpid()`.
     * **>0** : meaning wait for the child whose process ID is equal to the value of `pid`.
+* **wait3** || **wait4** : `pid_t wait3(int *status, int options, struct rusage *rusage)` || `pid_t wait4(pid_t pid, int *status, int options, struct rusage *rusage);`, The wait3() and wait4() system calls are similar to waitpid(2), but additionally return resource usage information about the child in the structure pointed to by rusage.
     
 ---
 * printf(3)
