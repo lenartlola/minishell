@@ -11,7 +11,10 @@ line is cleared.
 
 ------
 ### history(3) | [GNU History Library](https://tiswww.case.edu/php/chet/readline/history.html)
-    Many programs read input from the user a line at a time.  The GNU History library is able to keep track of those lines, associate arbitrary data with each line, and utilize information from previous lines in composing new ones.
+    Many programs read input from the user a line at a time.
+    The GNU History library is able to keep track of those lines,
+    associate arbitrary data with each line,
+    and utilize information from previous lines in composing new ones.
 
 * **add_history**: `void add_history (const char *string)`, place a string add the end of the history list.
 ---
