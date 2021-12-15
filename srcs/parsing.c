@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 09:57:44 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/15 17:38:17 by lgyger           ###   ########.fr       */
+/*   Updated: 2021/12/15 21:52:17 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,14 @@ int	check_env(char *path, char *cmd)
 	free(ret_join);
 	return (0);
 }
+
+/*
 void	test(char *path,t_shell *shell)
 {
-	int status;
-	status = 0;
-	pid_t pid;
-	pid_t chpid;
-	printf("%s\n",shell->tokens[1]);
-	pid = fork();
-	if (pid == 0)
-	{
-		execv(path,shell->tokens);
-
-	}
-	else if (pid > 0)
-		chpid = waitpid(pid,&status,0);
+	This function is now in the exec_cmds.c
 }
+*/
+
 char	*check_cmd(char *cmd, t_shell *shell)
 {
 	char	*path;
@@ -53,7 +45,7 @@ char	*check_cmd(char *cmd, t_shell *shell)
 	char	*full_path;
 	i = 0;
 	path = getenv("PATH");
-	printf("cmd: %s\n", cmd);
+//	printf("cmd: %s\n", cmd);
 	split = ft_split(path, ':');
 	while (split[i])
 	{
@@ -64,7 +56,7 @@ char	*check_cmd(char *cmd, t_shell *shell)
 		{
 //			printf("OK\n");
 //			if (ft_strncmp(cmd,"ls",2) == 0)
-				test(ft_strjoin(full_path,cmd),shell);
+				exec_path_cmd(ft_strjoin(full_path, cmd), shell);
 			break ;
 		}
 		else
@@ -107,12 +99,13 @@ void	parsing(t_shell *shell)
 	if (shell->n_pipes)
 		printf("Pipes\n");
 	else
-	{
 		get_cmd(shell);
-		while (shell->tokens[i])
+/*
+  		while (shell->tokens[i])
 		{
-//			check_cmd(shell->tokens[i], shell);
+			check_cmd(shell->tokens[i], shell);
 			i++;
 		}
 	}
+*/
 }
