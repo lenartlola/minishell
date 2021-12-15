@@ -6,10 +6,13 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 22:07:59 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/15 22:08:44 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2021/12/15 23:00:12 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-
+void	parse_pipes(void)
+{
+	printf("piping\n");
+}

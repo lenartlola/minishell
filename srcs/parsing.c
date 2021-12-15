@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 09:57:44 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/15 21:52:17 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2021/12/15 23:01:38 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,19 @@ void	get_cmd(t_shell *shell)
 	check_cmd(shell->tokens[0], shell);
 //	printf("%s\n",shell->cmds);
 }
-void	parsing(t_shell *shell)
+int	parsing(t_shell *shell)
 {
-	unsigned int i;
+	unsigned int 	i;
+	char			*cmd;
 
 	i = 0;
 	if (shell->n_pipes)
-		printf("Pipes\n");
+		parse_pipes();
 	else
+	{
 		get_cmd(shell);
+	}
+	return (1);
 /*
   		while (shell->tokens[i])
 		{
