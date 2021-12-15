@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/14 23:05:42 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2021/12/15 11:58:12 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,20 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <string.h>
+# include <stdlib.h>
 # include "../libs/libft/incs/libft.h"
 
 typedef struct	s_shell
 {
 	char	*cmdline;
-	int		n_pipes;
 	char	**tokens;
+	int		n_pipes;
+	//char	**cmds[100];
 }	t_shell;
 
-int	piping(t_shell *shell);
+void	tokenizing(t_shell *shell);
+
+//parsing
+int	parsing(t_shell *shell);
 
 #endif

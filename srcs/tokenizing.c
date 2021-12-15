@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   piping.c                                           :+:      :+:    :+:   */
+/*   tokenizing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 22:55:45 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/15 08:21:53 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2021/12/15 12:42:03 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,35 @@ int	pipe_counter(char *cmdline)
 	return (c_pipes);
 }
 
-int	piping(t_shell *shell)
+void	tokenizing(t_shell *shell)
 {
 	int		i;
+	int		check_len;
+//	int		j;
 
 	i = 0;
+//	j = 0;
+	check_len = 0;
 	//printf("%s\n", shell->cmdline);
 	//str = ft_strchr(shell->cmdline);
 	shell->n_pipes = pipe_counter(shell->cmdline);
-	printf("cmdline: %s\npipes number: %d\n\n", shell->cmdline, shell->n_pipes);
+	//printf("cmdline: %s\npipes number: %d\n\n", shell->cmdline, shell->n_pipes);
 	if (shell->n_pipes)
 	{
 		shell->tokens = ft_split(shell->cmdline, '|');
+		while (shell->cmdline[check_len])
+			check_len++;
+		//printf("check_len : %d\n", check_len);
+		if (check_len <= shell->n_pipes)
+			printf("minishell: syntax error near unexpected token `%s'\n", shell->cmdline);
 		//printf("tokens:\n 1: %s\n 2: %s\n", shell->tokens[0], shell->tokens[1]);
-		while (i < shell->n_pipes)
+		while (i < shell->n_pipes && shell->n_pipes > check_len)
 		{
 			shell->tokens[i] = ft_trim(shell->tokens[i]);
 			//printf("tokens[i]%s\n", shell->tokens[i]);
+			//shell->cmds[i] = ft_split(shell->tokens[i], ' ');
+			//printf("cmds: %s\n", shell->cmds[i]);
+			check_len++;
 			i++;
 		}
 	}
@@ -61,9 +73,9 @@ int	piping(t_shell *shell)
 	{
 		i = 0;
 		shell->tokens = ft_split(shell->cmdline, ' ');
-		/*while (shell->tokens[i])
+		/*while (shell->cmds[i])
 		{
-			printf("tokens: %s\n", shell->tokens[i]);
+			printf("cmds: %s\n", shell->cmds[i]);
 			i++;	
 		}*/
 	}

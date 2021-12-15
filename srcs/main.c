@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/14 22:57:24 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2021/12/15 09:58:05 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ int	main(int argc, char **argv, char **env)
 			continue ;
 		}
 		// We first take care about the pipes.
-		piping(&shell);
+		tokenizing(&shell);
+		parsing(&shell);
+
 	}
 	return (0);
 }
