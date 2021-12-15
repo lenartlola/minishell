@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/15 11:58:12 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2021/12/15 16:55:05 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ typedef struct	s_shell
 	char	*cmdline;
 	char	**tokens;
 	int		n_pipes;
-	//char	**cmds[100];
+	char	*cmds;
 }	t_shell;
 
 void	tokenizing(t_shell *shell);
 
 //parsing
-int	parsing(t_shell *shell);
+void	parsing(t_shell *shell);
 
 #endif
