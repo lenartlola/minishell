@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 22:55:45 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/15 00:34:44 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2021/12/15 08:21:53 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,17 @@ int	piping(t_shell *shell)
 	//printf("%s\n", shell->cmdline);
 	//str = ft_strchr(shell->cmdline);
 	shell->n_pipes = pipe_counter(shell->cmdline);
-	printf("str: %s\n pipes: %d\n", shell->cmdline, shell->n_pipes);
+	printf("cmdline: %s\npipes number: %d\n\n", shell->cmdline, shell->n_pipes);
 	if (shell->n_pipes)
 	{
 		shell->tokens = ft_split(shell->cmdline, '|');
-		while (i <= shell->n_pipes)
+		//printf("tokens:\n 1: %s\n 2: %s\n", shell->tokens[0], shell->tokens[1]);
+		while (i < shell->n_pipes)
 		{
 			shell->tokens[i] = ft_trim(shell->tokens[i]);
+			//printf("tokens[i]%s\n", shell->tokens[i]);
 			i++;
 		}
-		/*i = 0;
-		while (shell->tokens[i])
-		{
-			printf("pipesToken: %s\n", shell->tokens[i]);
-			i++;
-		}*/
 	}
 	else
 	{
