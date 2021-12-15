@@ -6,25 +6,30 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/14 16:10:00 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/14 22:57:24 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-void	minishell(void)
+int	main(int argc, char **argv, char **env)
 {
-	int	flag;
+	t_shell	shell;
 
-	flag = 1;
-	while (flag)
+	(void)argc;
+	(void)argv;
+	if (argc > 1)
+		printf("It is a shell, therefore it doesn't require any aargument");
+	while (1)
 	{
-		readline("(0^0)>");
-		flag = 0;
+		shell.cmdline = readline(">>>");
+		if (!ft_strlen(shell.cmdline))
+		{
+			free(shell.cmdline);
+			continue ;
+		}
+		// We first take care about the pipes.
+		piping(&shell);
 	}
-}
-
-int	main(void)
-{
-	minishell();
+	return (0);
 }
