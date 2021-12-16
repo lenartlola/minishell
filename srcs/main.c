@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/16 16:22:29 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/16 21:24:23 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	init_shell(void)
 int	main(int argc, char **argv, char **env)
 {
 	t_shell	shell;
-	
+
 	(void)argc;
 	(void)argv;
 	if (argc > 1)
@@ -56,9 +56,11 @@ int	main(int argc, char **argv, char **env)
 	init_shell();
 	while (1)
 	{
+		signal(SIGQUIT, blocksig);
+		signal(SIGINT, blocksig);
 		shell.prompt = init_prompt();
 		shell.cmdline = readline(shell.prompt);
-		if (!ft_strlen(shell.cmdline))
+		if (!(ft_strlen(shell.cmdline)))
 		{
 			free(shell.prompt);
 			free(shell.cmdline);
@@ -73,4 +75,24 @@ int	main(int argc, char **argv, char **env)
 			exec_pipe_cmd(&shell, env);
 	}
 	return (0);
+}
+
+void	blocksig(int sig)
+{
+	struct termios termios_new;
+	int rc;
+
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	rc = tcgetattr(1, &termios_new);
+	termios_new.c_lflag &= ~ECHOCTL;
+	rc = tcsetattr(1, 0, &termios_new );
+	if (sig == SIGINT)
+	{
+		printf("\n");
+		rl_on_new_line();
+	}
+		rl_replace_line("", 0);
+		rl_redisplay();
 }

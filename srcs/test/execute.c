@@ -1,9 +1,15 @@
 #include <unistd.h>
 #include <stdio.h>
+#  include <readline/readline.h>
 
 int	main(int ac, char *av[])
 {
-	if (execve(av[1],&av[2],NULL) == 0)
-		return 0;
+	char *c;
+	c = readline(">>");
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("",0);
+	rl_redisplay();
+
 	return 1;
 }

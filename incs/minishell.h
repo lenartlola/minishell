@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/16 15:05:47 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/16 18:25:45 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # include <stdlib.h>
 # include <sys/wait.h>
 # include "../libs/libft/incs/libft.h"
+# include <signal.h>
+# include <termios.h>
 
 typedef struct	s_shell
 {
@@ -41,7 +43,7 @@ typedef struct	s_shell
 }	t_shell;
 
 void	tokenizing(t_shell *shell);
-
+void	blocksig(int sig);
 //parsing
 int	parsing(t_shell *shell);
 

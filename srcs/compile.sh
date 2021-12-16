@@ -1,1 +1,1 @@
-gcc -g3 -fsanitize=address main.c tokenizing.c parsing.c prompt.c exec_cmds.c piping.c ../libs/libft/libft.a -lreadline -o minishell && ./minishell
+gcc -g3 -fsanitize=address main.c tokenizing.c parsing.c prompt.c exec_cmds.c piping.c ../libs/libft/libft.a -I ~/.brew/Cellar/readline/8.1.1/include -lreadline -L ~/.brew/Cellar/readline/8.1.1/lib -o minishell && ./minishell
