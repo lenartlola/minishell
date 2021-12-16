@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/16 11:39:33 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/16 13:34:02 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*init_prompt(void);
 
 //exec
 void	exec_path_cmd(char *path, t_shell *shell);
-void	exec_pipe_cmd(t_shell *shell, char **env);
+int	exec_pipe_cmd(t_shell *shell, char **env);
 
 //piping
 int	parse_pipes(t_shell *shell);
