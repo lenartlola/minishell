@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/16 14:28:42 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/16 15:20:16 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	main(int argc, char **argv, char **env)
 		tokenizing(&shell);
 		if (!(parsing(&shell)))
 				continue ;
-		if (shell.n_pipes && shell.n_pipes == 1)
+		if (shell.n_pipes)
 			exec_pipe_cmd(&shell, env);
 	}
 	return (0);
