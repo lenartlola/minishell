@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 09:57:44 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/16 00:05:36 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2021/12/16 14:28:01 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,11 @@ int	parsing(t_shell *shell)
 
 	i = 0;
 	if (shell->n_pipes)
-		parse_pipes(shell);
+	{
+		//if (!(parse_pipes(shell)))
+		//	return (0);
+		printf("Hello");
+	}
 	else
 	{
 		get_cmd(shell);

@@ -6,23 +6,27 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 21:41:20 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/16 09:47:00 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2021/12/16 14:04:05 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-void	child_process(int *fd, char **cmd, char **env)
+int	child_process(int *fd, char **cmd, char **env)
 {
 	close(fd[0]);
 	if (dup2(fd[1], STDOUT_FILENO) < 0)
 		printf("Error:");
 	close(fd[1]);
 	if (execve(cmd[0], cmd, env) < 0)
+	{
 		printf("minishell: %s command execution failed", cmd[0]);
+		return (0);
+	}
+	return (1);
 }
 
-void	parent_process(int *fd, char **cmd, char **env)
+int	parent_process(int *fd, char **cmd, char **env)
 {
 	int	pid;
 
@@ -31,9 +35,15 @@ void	parent_process(int *fd, char **cmd, char **env)
 	if (!pid)
 	{
 		if (dup2(fd[0], STDIN_FILENO) < 0)
+		{	
 			printf("Error: duplicating filedescriptor 0");
+			return (0);
+		}
 		if (execve(cmd[0], cmd, env) < 0)
+		{
 			printf("Minishell: %s executing command failed", cmd[0]);
+			return (0);
+		}
 	}
 	else if (pid > 0)
 		close(fd[0]);
@@ -41,13 +51,15 @@ void	parent_process(int *fd, char **cmd, char **env)
 	{
 		printf("Minishell: error in parrent process");
 	}
+	return (1);
 }
 
-void	exec_pipe_cmd(t_shell *shell, char **env)
+int	exec_pipe_cmd(t_shell *shell, char **env)
 {
 	int		fd[2];
 	pid_t	pid;
-	int		status;
+	int	child_pid;
+	int	parrent_pid;
 
 	if (pipe(fd) < 0)
 	{
@@ -60,9 +72,15 @@ void	exec_pipe_cmd(t_shell *shell, char **env)
 	else if (pid > 0)
 		parent_process(fd, shell->cmds_pipe[1], env);
 	else
+	{
 		printf("Error in forking pipes");
-	wait(&status);
-	wait(&status);
+		return (0);
+	}
+//	waitpid(pid, &child_pid, 0);
+//	waitpid(pid, &parrent_pid, 0);
+	wait(&child_pid);
+	wait(&parrent_pid);
+	return (1);
 }
 
 void	exec_path_cmd(char *path, t_shell *shell)

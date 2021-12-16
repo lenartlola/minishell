@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 22:55:45 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/16 00:33:10 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2021/12/16 14:59:10 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,37 @@ char	*ft_trim(char *str)
 	return (ret);
 }
 
-int	pipe_counter(char *cmdline)
+int pipe_counter(char *str, char c)
+{
+	unsigned int ret;
+	size_t i;
+	
+	i = 0;
+	ret = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			ret++;
+		i++;
+	}
+	return (ret);
+}
+/*int	pipe_counter(char *cmdline)
 {
 	int	c_pipes;
 	char *str;
 
 	c_pipes = 0;
-	str = ft_strchr(cmdline, '|');
-	while (str != NULL)
+	//str = ft_strchr(cmdline, '|');
+	while (cmdline != NULL)
 	{
+		if ()
 		c_pipes++;
 		str++;
 		str = ft_strchr(str, '|');
 	}
 	return (c_pipes);
-}
+}*/
 
 void	tokenizing(t_shell *shell)
 {
@@ -48,7 +64,7 @@ void	tokenizing(t_shell *shell)
 	check_len = 0;
 	//printf("%s\n", shell->cmdline);
 	//str = ft_strchr(shell->cmdline);
-	shell->n_pipes = pipe_counter(shell->cmdline);
+	shell->n_pipes = pipe_counter(shell->cmdline, '|');
 	//printf("cmdline: %s\npipes number: %d\n\n", shell->cmdline, shell->n_pipes);
 	if (shell->n_pipes)
 	{
