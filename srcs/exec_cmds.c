@@ -6,83 +6,77 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 21:41:20 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/16 16:20:23 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/16 20:36:45 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-int	child_process(int *fd, char **cmd, char **env)
+void	child_process(int *fd, char **cmd, char *env)
 {
-	close(fd[0]);
-	if (dup2(fd[1], STDOUT_FILENO) < 0)
+	close(fd[READ_END]);
+	if (dup2(fd[WRITE_END], STDOUT_FILENO) < 0)
 		printf("Error:");
-	close(fd[1]);
-	if (execve(cmd[0], cmd, env) < 0)
+	close(fd[WRITE_END]);
+	if (execve(cmd[0], cmd, &env) < 0)
 	{
-		printf("minishell: %s command execution failed", cmd[0]);
-		return (0);
+		printf("minishell: %s command execution failed\n", cmd[0]);
+		exit (EXIT_FAILURE);
 	}
-	return (1);
 }
 
-int	parent_process(int *fd, char **cmd, char **env)
+void	parent_process(int *fd, char **cmd, char *env)
 {
 	int	pid;
 
-	close(fd[1]);
+	close(fd[WRITE_END]);
 	pid = fork();
 	if (!pid)
 	{
-		if (dup2(fd[0], STDIN_FILENO) < 0)
+		if (dup2(fd[READ_END], STDIN_FILENO) < 0)
 		{	
-			printf("Error: duplicating filedescriptor 0");
+			printf("Error: duplicating filedescriptor 0\n");
 			exit (EXIT_FAILURE);
 		}
 		printf("path test: %s\n", cmd[0]);
-		if (execve(cmd[0], cmd, env) < 0)
+		if (execve(cmd[0], cmd, &env) < 0)
 		{
-			printf("Minishell: %s executing command failed", cmd[0]);
+			printf("Minishell: %s executing command failed\n", cmd[0]);
 			exit (EXIT_FAILURE);
 		}
 	}
 	else if (pid > 0)
-		close(fd[0]);
+		close(fd[READ_END]);
 	else
 	{
-		printf("Minishell: error in parrent process");
+		printf("Minishell: error in parrent process\n");
+		exit (EXIT_FAILURE);
 	}
-	return (1);
 }
 
-int	exec_pipe_cmd(t_shell *shell, char **env)
+void	exec_pipe_cmd(char *path, t_shell *shell)
 {
 	int		fd[2];
 	pid_t	pid;
-	int	child_pid;
-	int	parrent_pid;
+	int	status;
 
-	printf("Verify: %s\n", shell->cmds_pipe[1][0]);
 	if (pipe(fd) < 0)
 	{
-		printf("pipe err");
+		printf("pipe err\n");
 		exit(EXIT_FAILURE);
 	}
 	pid = fork();
 	if (!pid)
-		child_process(fd, shell->cmds_pipe[0], env);
+		child_process(fd, shell->cmds_pipe[0], path);
 	else if (pid > 0)
-		parent_process(fd, shell->cmds_pipe[1], env);
+		parent_process(fd, shell->cmds_pipe[1], path);
 	else
 	{
-		printf("Error in forking pipes");
-		return (0);
+		printf("Error in forking pipes\n");
+		exit (EXIT_FAILURE);
 	}
-//	waitpid(pid, &child_pid, 0);
-//	waitpid(pid, &parrent_pid, 0);
-	wait(&child_pid);
-	wait(&parrent_pid);
-	return (1);
+	wait(&status);
+	wait(&status);
 }
 
 void	exec_path_cmd(char *path, t_shell *shell)
@@ -95,6 +89,7 @@ void	exec_path_cmd(char *path, t_shell *shell)
 	pid = fork();
 	if (pid == 0)
 	{
+		printf("path: %s\n", path);
 		execv(path, shell->tokens);
 	}
 	else if (pid > 0)

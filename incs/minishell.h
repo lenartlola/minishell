@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/16 15:05:47 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/16 21:20:09 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@
 # include <sys/wait.h>
 # include "../libs/libft/incs/libft.h"
 
+# define READ_END 0
+# define WRITE_END 1
+
 typedef struct	s_shell
 {
 	char	*cmdline;
@@ -43,15 +46,19 @@ typedef struct	s_shell
 void	tokenizing(t_shell *shell);
 
 //parsing
-int	parsing(t_shell *shell);
+char	*parsing(t_shell *shell);
 
 //prompt
 char	*init_prompt(void);
 
 //exec
 void	exec_path_cmd(char *path, t_shell *shell);
-int	exec_pipe_cmd(t_shell *shell, char **env);
+void	exec_pipe_cmd(char	*path, t_shell *shell);
 
+char	*check_cmd(char *cmd, t_shell *shell);
 //piping
 int	parse_pipes(t_shell *shell);
+
+//check cmd
+char	*check_cmd_pipe(char *cmd);
 #endif

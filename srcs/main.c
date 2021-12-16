@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/16 16:22:29 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/16 20:41:06 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	init_shell(void)
 int	main(int argc, char **argv, char **env)
 {
 	t_shell	shell;
-	
+	char	*cmd;
 	(void)argc;
 	(void)argv;
 	if (argc > 1)
@@ -66,11 +66,14 @@ int	main(int argc, char **argv, char **env)
 		}
 		// We first take care about the pipes.
 		tokenizing(&shell);
-		parsing(&shell);
+		cmd = parsing(&shell);
 		//if (!(parsing(&shell)))
 		//		continue ;
+			printf("cmd: %s\n", cmd);
 		if (shell.n_pipes)
-			exec_pipe_cmd(&shell, env);
+			exec_pipe_cmd(cmd, &shell);
+		else
+			exec_path_cmd(cmd, &shell);
 	}
 	return (0);
 }
