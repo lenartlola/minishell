@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/15 23:01:14 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2021/12/16 09:36:52 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct	s_shell
 	char	**tokens;
 	int		n_pipes;
 	char	*cmds;
+	char	**cmds_pipe[1024];
 	char	*prompt;
 }	t_shell;
 
@@ -40,7 +41,8 @@ char	*init_prompt(void);
 
 //exec
 void	exec_path_cmd(char *path, t_shell *shell);
+void	exec_pipe_cmd(t_shell *shell, char **env);
 
 //piping
-void	parse_pipes(void);
+int	parse_pipes(t_shell *shell);
 #endif
