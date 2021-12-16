@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 22:07:59 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/16 14:26:10 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/16 16:18:41 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char	*check_pipes_cmd(char *cmd, t_shell *shell)
 	{
 		full_path = ft_strjoin(split[i], "/");
 		ret_cmd = ft_strjoin(full_path, cmd);
+		//printf("ret_cmd: %s\n", ret_cmd);
 		if (!(access(ret_cmd, X_OK)))
 			return (ret_cmd);
 		else
@@ -76,11 +77,12 @@ int	parse_pipes(t_shell *shell)
 		free(shell->cmds_pipe[i][0]);
 		//shell->cmds_pipe[i][0] = ft_substr(cmd);
 		shell->cmds_pipe[i][0] = ft_strdup(cmd);
+		//printf("cmds_pipe: %s\n", shell->cmds_pipe[i][0]);
 		free(cmd);
 		i++;
 	}
 	//printf("ret_cmd");
-	return (1);
+	return (0);
 	//check_pipes_cmd(shell->tokens[i][0]);
 	//printf("piping\n");
 }
