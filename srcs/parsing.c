@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 09:57:44 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/16 16:15:14 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/17 12:27:36 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,6 @@ int	check_env(char *path, char *cmd)
 	return (0);
 }
 
-/*
-void	test(char *path,t_shell *shell)
-{
-	This function is now in the exec_cmds.c
-}
-*/
-
 char	*check_cmd(char *cmd, t_shell *shell)
 {
 	char	*path;
@@ -45,17 +38,12 @@ char	*check_cmd(char *cmd, t_shell *shell)
 	char	*full_path;
 	i = 0;
 	path = getenv("PATH");
-//	printf("cmd: %s\n", cmd);
 	split = ft_split(path, ':');
 	while (split[i])
 	{
-		//printf("split: %s\n", split[i]);
 		full_path = ft_strjoin(split[i], "/");
-		//printf("split: %s\n", ret_cmd);
 		if (check_env(full_path, cmd))
 		{
-//			printf("OK\n");
-//			if (ft_strncmp(cmd,"ls",2) == 0)
 				exec_path_cmd(ft_strjoin(full_path, cmd), shell);
 			break ;
 		}
@@ -65,6 +53,7 @@ char	*check_cmd(char *cmd, t_shell *shell)
 		}
 		i++;
 	}
+	return (NULL);
 }
 void	get_cmd(t_shell *shell)
 {
@@ -78,7 +67,6 @@ void	get_cmd(t_shell *shell)
 		if (shell->cmdline[i] == '&' || shell->cmdline[i] == '|')
 		{
 			shell->cmds = ft_substr(shell->cmdline,a,i);
-//			printf("%s\n",shell->cmds);
 			a = i + 2;
 			shell->tokens = ft_split(shell->cmds, ' ');
 			check_cmd(shell->tokens[0], shell);
@@ -89,7 +77,6 @@ void	get_cmd(t_shell *shell)
 	}
 	shell->cmds = ft_substr(shell->cmdline,a,i);
 	check_cmd(shell->tokens[0], shell);
-//	printf("%s\n",shell->cmds);
 }
 int	parsing(t_shell *shell)
 {
@@ -107,12 +94,4 @@ int	parsing(t_shell *shell)
 		get_cmd(shell);
 	}
 	return (1);
-/*
-  		while (shell->tokens[i])
-		{
-			check_cmd(shell->tokens[i], shell);
-			i++;
-		}
-	}
-*/
 }
