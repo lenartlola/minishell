@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/17 16:22:24 by lgyger           ###   ########.fr       */
+/*   Updated: 2021/12/17 22:20:25 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@ void	init_line(t_shell *shell)
 	signal(SIGQUIT, SIG_IGN);
 	rl_replace_line("",0);
 	shell->cmdline = readline(shell->prompt);
+	if (!shell->cmdline)
+	{
+		free(shell->prompt);
+		free(shell->cmdline);
+		rl_clear_history();
+		exit (EXIT_SUCCESS);
+	}
 	a++;
 	while (!(ft_strlen(shell->cmdline)))
 	{
@@ -56,12 +63,13 @@ int	main(int argc, char **argv, char **env)
 		{
 			free(shell.prompt);
 			free(shell.cmdline);
-			//free(&shell);
+			rl_clear_history();
 			exit (EXIT_SUCCESS);
 		}
 		// We first take care about the pipes.
 		if (shell.cmdline)
 		{
+			add_history(shell.cmdline);
 			tokenizing(&shell);
 			parsing(&shell);
 		//if (!(parsing(&shell)))

@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 21:41:20 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/17 13:51:37 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/17 22:09:46 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,27 +59,17 @@ int	exec_pipe_cmd(t_shell *shell, char **env)
 {
 	int		fd[2];
 	pid_t	pid;
-	int	child_pid;
-	int	parrent_pid;
+	int i = 0;
 
-	printf("Verify: %s\n", shell->cmds_pipe[1][0]);
-	if (pipe(fd) < 0)
-	{
-		printf("pipe err\n");
-		exit(EXIT_FAILURE);
-	}
 	pid = fork();
-	if (!pid)
-		child_process(fd, shell->cmds_pipe[0], env);
-	else if (pid > 0)
-		parent_process(fd, shell->cmds_pipe[1], env);
-	else
+	if (pid == 0)
 	{
-		printf("Error in forking pipes\n");
-		return (0);
+		i = fork_pipes(shell->n_pipes,shell->cmds_pipe, env);
 	}
-	wait(&child_pid);
-	wait(&parrent_pid);
+	else if (pid > 0)
+		waitpid(pid,0,0);
+	if (i < 0)
+		return (0);
 	return (1);
 }
 

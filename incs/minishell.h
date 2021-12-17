@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/17 09:35:42 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2021/12/17 21:37:39 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	tokenizing(t_shell *shell);
 void	blocksig(int sig);
 //parsing
 int	parsing(t_shell *shell);
-
+int fork_pipes (int n, char ***argv, char **env);
 //prompt
 char	*init_prompt(void);
 
