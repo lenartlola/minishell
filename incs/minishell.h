@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/16 18:25:45 by lgyger           ###   ########.fr       */
+/*   Updated: 2021/12/17 09:35:42 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # include <signal.h>
 # include <termios.h>
 
+
 typedef struct	s_shell
 {
 	char	*cmdline;
@@ -56,4 +57,7 @@ int	exec_pipe_cmd(t_shell *shell, char **env);
 
 //piping
 int	parse_pipes(t_shell *shell);
+
+//Init ascii
+void	init_shell(void);
 #endif
