@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 21:41:20 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/17 12:26:41 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/17 12:30:34 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	parent_process(int *fd, char **cmd, char **env)
 			printf("Error: duplicating filedescriptor 0\n");
 			exit (EXIT_FAILURE);
 		}
-		printf("path test: %s\n", cmd[0]);
+		printf("path test: %s\n", cmd[1]);
 		if (execve(cmd[0], cmd, env) < 0)
 		{
 			printf("Minishell: %s executing command failed\n", cmd[0]);
@@ -78,8 +78,6 @@ int	exec_pipe_cmd(t_shell *shell, char **env)
 		printf("Error in forking pipes\n");
 		return (0);
 	}
-//	waitpid(pid, &child_pid, 0);
-//	waitpid(pid, &parrent_pid, 0);
 	wait(&child_pid);
 	wait(&parrent_pid);
 	return (1);

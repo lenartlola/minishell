@@ -6,29 +6,12 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 22:07:59 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/16 16:18:41 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/17 13:15:52 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-/*int	check_env(char *path, char *cmd)
-{
-	int	i;
-	char	*ret_join;
-
-	i = 0;
-	ret_join = ft_strjoin(path, cmd);
-	while (path[i])
-	{
-		if (!(access(ret_join, X_OK)))
-			return (1);
-		else
-			i++;
-	}
-	free(ret_join);
-	return (0);
-}*/
 
 char	*check_pipes_cmd(char *cmd, t_shell *shell)
 {
@@ -65,8 +48,9 @@ int	parse_pipes(t_shell *shell)
 	char	*cmd;
 
 	i = 0;
-	while (i < shell->n_pipes)
+	while (i <= shell->n_pipes && shell->cmds_pipe[i])
 	{
+		//arg: shell->n_pipes
 		//printf("cmd_pipe: %s\n", shell->cmds_pipe[i][0]);
 		cmd = check_pipes_cmd(shell->cmds_pipe[i][0], shell);
 		if (!cmd)
