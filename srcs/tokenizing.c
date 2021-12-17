@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 22:55:45 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/17 12:24:53 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/17 13:32:40 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@ void	tokenizing(t_shell *shell)
 	if (shell->n_pipes)
 	{
 		shell->tokens = ft_split(shell->cmdline, '|');
-		while (shell->cmdline[check_len])
-			check_len++;
+		check_len = ft_strlen(shell->cmdline);
+		//while (shell->cmdline[check_len])
+		//	check_len++;
 		if (check_len <= shell->n_pipes)
 			printf("minishell: syntax error near unexpected token `%s'\n", shell->cmdline);
 		while (i <= shell->n_pipes && shell->n_pipes < check_len)
