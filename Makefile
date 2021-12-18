@@ -6,8 +6,16 @@
 #    By: hsabir <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/14 13:27:39 by hsabir            #+#    #+#              #
-#    Updated: 2021/12/14 13:27:41 by hsabir           ###   ########.fr        #
+#    Updated: 2021/12/18 12:18:23 by 1mthe0wl         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+LIBFT_DIR = ./libs/libft
 
+all : $(NAME)
+
+$(NAME):
+	@$(MAKE) -C $(LIBFT_DIR)
+
+clean:
+	@$(MAKE) -C $(LIBFT_DIR) clean
