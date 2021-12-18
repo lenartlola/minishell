@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 22:55:45 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/17 13:32:40 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/18 16:30:09 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	*ft_trim(char *str)
 	free(str);
 	return (ret);
 }
+
 
 int pipe_counter(char *str, char c)
 {
@@ -37,37 +38,39 @@ int pipe_counter(char *str, char c)
 	return (ret);
 }
 
-void	tokenizing(t_shell *shell)
+/*
+ * check for the pipes 
+ */
+
+void	tokenizing_pipe(t_shell *shell)
 {
-	int		i;
-	int		check_len;
+	int	i;
+	int	check_len;
 
 	i = 0;
-	check_len = 0;
-	shell->n_pipes = pipe_counter(shell->cmdline, '|');
-	if (shell->n_pipes)
+	check_len = ft_strlen(shell->cmdline);
+	//if (check_len <= shell->n_pipes)
+	//	printf("minishell: syntax error near unexpected token `%s'\n", shell->cmdline);
+	if (shell->n_pipes < check_len)
 	{
 		shell->tokens = ft_split(shell->cmdline, '|');
-		check_len = ft_strlen(shell->cmdline);
-		//while (shell->cmdline[check_len])
-		//	check_len++;
-		if (check_len <= shell->n_pipes)
-			printf("minishell: syntax error near unexpected token `%s'\n", shell->cmdline);
-		while (i <= shell->n_pipes && shell->n_pipes < check_len)
+		shell->pipe_flag = 1;
+		while (i <= shell->n_pipes)
 		{
 			shell->tokens[i] = ft_trim(shell->tokens[i]);
 			shell->cmds_pipe[i] = ft_split(shell->tokens[i], ' ');
-			check_len++;
 			i++;
 		}
 	}
 	else
-	{
+		shell->pipe_flag = 0;
+}
+
+void	tokenizing(t_shell *shell)
+{
+	shell->n_pipes = pipe_counter(shell->cmdline, '|');
+	if (shell->n_pipes)
+		tokenizing_pipe(shell);
+	else
 		shell->tokens = ft_split(shell->cmdline, ' ');
-		/*while (shell->cmds[i])
-		{
-			printf("cmds: %s\n", shell->cmds[i]);
-			i++;	
-		}*/
-	}
 }

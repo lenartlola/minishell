@@ -6,52 +6,63 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 21:41:20 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/17 22:09:46 by lgyger           ###   ########.fr       */
+/*   Updated: 2021/12/18 17:46:15 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-int	child_process(int *fd, char **cmd, char **env)
+int spawn_proc (int in, int out,char ***av, char  **env)
 {
-	close(fd[0]);
-	if (dup2(fd[1], STDOUT_FILENO) < 0)
-		printf("Error:\n");
-	close(fd[1]);
-	if (execve(cmd[0], cmd, env) < 0)
+	pid_t pid;
+	
+	pid = fork();
+	if (pid == 0)
 	{
-		printf("minishell: %s command execution failed\n", cmd[0]);
-		return (0);
+		if (in != 0)
+		{
+			dup2 (in, 0);
+			close (in);
+		}
+		if (out != 1)
+		{
+			dup2 (out, 1);
+			close (out);
+		}
+		//printf("av[i] : %s", *av[0]);
+		//return execve (*av[0],*av, env);
+		return execve(*av[0], *av, env);
 	}
 	return (1);
 }
 
-int	parent_process(int *fd, char **cmd, char **env)
+int fork_pipes (int n, char ***av, char **env)
 {
-	int	pid;
+	int i;
+	pid_t pid;
+	int in;
+	int fd [2];
 
-	close(fd[1]);
-	pid = fork();
-	if (!pid)
+	in = 0;
+	i = 0;
+	while (i < n)
 	{
-		if (dup2(fd[0], STDIN_FILENO) < 0)
-		{	
-			printf("Error: duplicating filedescriptor 0\n");
-			exit (EXIT_FAILURE);
-		}
-		printf("path test: %s\n", cmd[1]);
-		if (execve(cmd[0], cmd, env) < 0)
-		{
-			printf("Minishell: %s executing command failed\n", cmd[0]);
-			exit (EXIT_FAILURE);
-		}
+		pipe (fd);
+		if (spawn_proc (in, fd [1], av + i, env) < 0)
+			return (-1);
+		/* the child will write here.  */
+
+		close (fd [1]);
+
+      /* the next child will read from there.  */
+		in = fd [0];
+		i++;
 	}
-	else if (pid > 0)
-		close(fd[0]);
-	else
-	{
-		printf("Minishell: error in parrent process\n");
-	}
+	if (in != 0)
+		dup2 (in, 0);
+	printf("av[%d][0] : %str", i, av[i][0]);
+	if (!(access(av[i][0], X_OK)))
+		return (execve (av[i][0],av[i],NULL));
 	return (1);
 }
 
@@ -59,15 +70,17 @@ int	exec_pipe_cmd(t_shell *shell, char **env)
 {
 	int		fd[2];
 	pid_t	pid;
-	int i = 0;
+	int i; 
 
-	pid = fork();
+	i = 0;
+	if (shell->pipe_cmd_exist == 1)
+		pid = fork();
 	if (pid == 0)
 	{
 		i = fork_pipes(shell->n_pipes,shell->cmds_pipe, env);
 	}
 	else if (pid > 0)
-		waitpid(pid,0,0);
+		waitpid(pid, 0, 0);
 	if (i < 0)
 		return (0);
 	return (1);

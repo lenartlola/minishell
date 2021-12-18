@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 22:07:59 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/17 13:20:32 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/18 17:46:46 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,11 @@ int	parse_pipes(t_shell *shell)
 		cmd = check_pipes_cmd(shell->cmds_pipe[i][0], shell);
 		if (!cmd)
 		{
-			printf("Minishell: %s: command not found\n", shell->cmds_pipe[i][0]);
+			shell->pipe_cmd_exist = 0;
+			printf("minishell: %s: command not found\n", shell->cmds_pipe[i][0]);
 			return (0);
 		}
+		shell->pipe_cmd_exist = 1;
 		free(shell->cmds_pipe[i][0]);
 		shell->cmds_pipe[i][0] = ft_strdup(cmd);
 		free(cmd);

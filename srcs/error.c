@@ -1,36 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/18 12:33:06 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/18 16:12:25 by hsabir           ###   ########.fr       */
+/*   Created: 2021/12/18 14:03:26 by hsabir            #+#    #+#             */
+/*   Updated: 2021/12/18 14:41:50 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-int	double_free(char **array)
+void	print_error(char *str)
 {
-	int	i;
-
-	i = 0;
-	if (!array)
-		return (0);
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-	return (0);
-}
-
-void	free_struct(t_shell *shell)
-{
-	free(shell->cmdline);
-	free(shell->prompt);
-	double_free(shell->tokens);
+	printf("%s\n", str);
 }

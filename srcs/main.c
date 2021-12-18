@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/18 12:45:53 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/18 16:32:42 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ void	init_line(t_shell *shell)
 	shell->cmdline = readline(shell->prompt);
 	if (!shell->cmdline)
 	{
-		//free(shell->prompt);
-		//free(shell->cmdline);
 		free_struct(shell);
 		rl_clear_history();
 		exit (EXIT_SUCCESS);
@@ -40,9 +38,8 @@ void	init_line(t_shell *shell)
 	a++;
 	while (!(ft_strlen(shell->cmdline)))
 	{
-		//free(shell->prompt);
-		//free(shell->cmdline);
-		free_struct(shell);
+		free(shell->prompt);
+		free(shell->cmdline);
 		init_line(shell);
 	} 
 }
@@ -58,29 +55,25 @@ int	main(int argc, char **argv, char **env)
 	{
 		a = 0;
 		signal(SIGINT, blocksig);
-		if (shell.cmdline)
-		{
-			free(shell.cmdline);
-		}
 		init_line(&shell);
 		if (shell.cmdline && !(ft_strncmp(shell.cmdline, "exit", 4)))
 		{
-			//free(shell.prompt);
-			//free(shell.cmdline);
 			free_struct(&shell);
 			rl_clear_history();
 			exit (EXIT_SUCCESS);
 		}
-		// We first take care about the pipes.
 		if (shell.cmdline)
 		{
 			add_history(shell.cmdline);
 			tokenizing(&shell);
 			parsing(&shell);
-		//if (!(parsing(&shell)))
-		//		continue ;
 			if (shell.n_pipes)
-				exec_pipe_cmd(&shell, env);
+			{
+				if (shell.pipe_flag == 1)
+					exec_pipe_cmd(&shell, env);
+				else if (shell.pipe_flag == 0)
+					printf("minishell: syntax error near unexpected token `%s'\n", shell.cmdline);
+			}
 		}
 	}
 	free_struct(&shell);

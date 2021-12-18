@@ -1,49 +1,43 @@
-#include "../incs/minishell.h"
-
-int spawn_proc (int in, int out,char ***av, char  **env)
+/*int	child_process(int *fd, char **cmd, char **env)
 {
-	pid_t pid;
-
-	if ((pid = fork ()) == 0)
+	close(fd[0]);
+	if (dup2(fd[1], STDOUT_FILENO) < 0)
+		printf("Error:\n");
+	close(fd[1]);
+	if (execve(cmd[0], cmd, env) < 0)
 	{
-		if (in != 0)
-		{
-			dup2 (in, 0);
-			close (in);
-		}
-		if (out != 1)
-		{
-			dup2 (out, 1);
-			close (out);
-		}
-		return execve (*av[0],*av, env);
+		printf("minishell: %s command execution failed\n", cmd[0]);
+		return (0);
 	}
 	return (1);
 }
 
-int fork_pipes (int n, char ***av, char **env)
+int	parent_process(int *fd, char **cmd, char **env)
 {
-	int i;
-	pid_t pid;
-	int in; 
-	int fd [2];
+	int	pid;
 
-	in = 0;
-	i = 0;
-	while (i < n)
+	close(fd[1]);
+	pid = fork();
+	if (!pid)
 	{
-		pipe (fd);
-		if (spawn_proc (in, fd [1], av + i, env) < 0)
-			return (-1);
-		/* the child will write here.  */
-
-		close (fd [1]);
-
-      /* the next child will read from there.  */
-		in = fd [0];
-		i++;
+		if (dup2(fd[0], STDIN_FILENO) < 0)
+		{
+			printf("Error: duplicating filedescriptor 0\n");
+			exit (EXIT_FAILURE);
+		}
+		printf("path test: %s\n", cmd[1]);
+		if (execve(cmd[0], cmd, env) < 0)
+		{
+			printf("Minishell: %s executing command failed\n", cmd[0]);
+			exit (EXIT_FAILURE);
+		}
 	}
-	if (in != 0)
-		dup2 (in, 0);
-	return execve (av[i][0],av[i],NULL);
+	else if (pid > 0)
+		close(fd[0]);
+	else
+	{
+		printf("Minishell: error in parrent pocess\n");
+	}
+	return (1);
 }
+*/r

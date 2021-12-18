@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/18 12:37:58 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/18 17:42:01 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ typedef struct	s_shell
 	char	*cmdline;
 	char	**tokens;
 	int		n_pipes;
+	int		pipe_flag;
+	int		pipe_cmd_exist;
 	char	*cmds;
 	char	**cmds_pipe[1024];
 	char	*prompt;
@@ -60,6 +62,9 @@ int	parse_pipes(t_shell *shell);
 
 //Init ascii
 void	init_shell(void);
-
+//Free
 void	free_struct(t_shell *shell);
+int		double_free(char **array);
+//Error
+void	print_error(char *str);
 #endif
