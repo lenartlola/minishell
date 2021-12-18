@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/18 12:13:19 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/18 12:37:58 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,6 @@ int	parse_pipes(t_shell *shell);
 
 //Init ascii
 void	init_shell(void);
+
+void	free_struct(t_shell *shell);
 #endif

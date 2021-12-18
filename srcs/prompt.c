@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 15:13:59 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/18 12:25:23 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2021/12/18 12:29:41 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	init_prompt(t_shell *shell)
 	ft_strlcat(shell->prompt, path, ft_strlen(shell->prompt) + ft_strlen(path)+ 1);
 	ft_strlcat(shell->prompt, "] ~ ", ft_strlen(shell->prompt) + 5);
 	free (path);
+	//free(user);
 	//return (shell->prompt);
 	//printf("%s\n", prompt);
 }

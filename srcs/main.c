@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/18 12:12:41 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/18 12:40:19 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,18 @@ void	init_line(t_shell *shell)
 	shell->cmdline = readline(shell->prompt);
 	if (!shell->cmdline)
 	{
-		free(shell->prompt);
-		free(shell->cmdline);
+		//free(shell->prompt);
+		//free(shell->cmdline);
+		free_struct(shell);
 		rl_clear_history();
 		exit (EXIT_SUCCESS);
 	}
 	a++;
 	while (!(ft_strlen(shell->cmdline)))
 	{
-		free(shell->prompt);
-		free(shell->cmdline);
+		//free(shell->prompt);
+		//free(shell->cmdline);
+		free_struct(shell);
 		init_line(shell);
 	} 
 }
@@ -65,8 +67,9 @@ int	main(int argc, char **argv, char **env)
 		init_line(&shell);
 		if (shell.cmdline && !(ft_strncmp(shell.cmdline, "exit", 4)))
 		{
-			free(shell.prompt);
-			free(shell.cmdline);
+			//free(shell.prompt);
+			//free(shell.cmdline);
+			free_struct(&shell);
 			rl_clear_history();
 			exit (EXIT_SUCCESS);
 		}
