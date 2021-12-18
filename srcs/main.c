@@ -6,16 +6,16 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/17 22:20:25 by lgyger           ###   ########.fr       */
+/*   Updated: 2021/12/18 11:40:10 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
+
 int a = 0;
+
 void	check_tty()
 {
-//	void(argc);
-//	void(argv);
 	if (!isatty(0) || !isatty(1) || !isatty(2))
 	{
 		printf("/!\\ forbidden action detected");
@@ -58,6 +58,10 @@ int	main(int argc, char **argv, char **env)
 	{
 		a = 0;
 		signal(SIGINT, blocksig);
+		if (shell.cmdline)
+		{
+			free(shell.cmdline);
+		}
 		init_line(&shell);
 		if (shell.cmdline && !(ft_strncmp(shell.cmdline, "exit", 4)))
 		{
