@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/18 12:40:19 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/18 12:45:53 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ int	main(int argc, char **argv, char **env)
 	t_shell	shell;
 
 	check_tty();
-//	void(argc);
-//	void(argv);
 	init_shell();
 	shell.cmdline = NULL;
 	while (1)
@@ -85,6 +83,7 @@ int	main(int argc, char **argv, char **env)
 				exec_pipe_cmd(&shell, env);
 		}
 	}
+	free_struct(&shell);
 	return (0);
 }
 
