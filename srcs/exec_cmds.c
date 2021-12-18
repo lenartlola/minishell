@@ -61,8 +61,8 @@ int fork_pipes (int n, char ***av, char **env)
 	if (in != 0)
 		dup2 (in, 0);
 	printf("av[%d][0] : %str", i, av[i][0]);
-	if (!(access(av[i][0], X_OK)))
-		return (execve (av[i][0],av[i],NULL));
+	//if (!(access(av[i][0], X_OK)))
+	return (execve (av[i][0],av[i],NULL));
 	return (1);
 }
 
