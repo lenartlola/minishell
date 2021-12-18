@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 09:57:44 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/18 16:23:12 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/18 23:48:34 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,22 @@ char	*check_cmd(char *cmd, t_shell *shell)
 	}
 	return (NULL);
 }
+int	builtin(t_shell *shell)
+{
+	int i;
+
+	i = 0;
+	while (shell->tokens[i])
+	{
+		if (!ft_strncmp(shell->tokens[i],"env",3))
+			return(ft_env());
+		else if (!ft_strncmp(shell->tokens[i],"echo",4))
+			return (ft_echo(shell->tokens + i));
+
+		i++;
+	}
+	return (0);
+}
 void	get_cmd(t_shell *shell)
 {
 	unsigned int i;
@@ -62,21 +78,9 @@ void	get_cmd(t_shell *shell)
 
 	a = 0;
 	i = 0;
-	while (shell->cmdline[i])
-	{
-		if (shell->cmdline[i] == '&' || shell->cmdline[i] == '|')
-		{
-			shell->cmds = ft_substr(shell->cmdline,a,i);
-			a = i + 2;
-			shell->tokens = ft_split(shell->cmds, ' ');
-			check_cmd(shell->tokens[0], shell);
-			i += 2;
-		}
-		else
-			i++;
-	}
-	shell->cmds = ft_substr(shell->cmdline,a,i);
-	check_cmd(shell->tokens[0], shell);
+
+	if (!builtin(shell))
+		check_cmd(shell->tokens[0], shell);
 }
 int	parsing(t_shell *shell)
 {

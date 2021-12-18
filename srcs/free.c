@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 12:33:06 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/18 16:12:25 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/18 23:47:44 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ void	free_struct(t_shell *shell)
 {
 	free(shell->cmdline);
 	free(shell->prompt);
-	double_free(shell->tokens);
+	if (g_env)
+		double_free(shell->tokens);
 }
