@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/18 11:40:10 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/18 12:12:41 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	check_tty()
 
 void	init_line(t_shell *shell)
 {
-	shell->prompt = init_prompt();
+	init_prompt(shell);
 	signal(SIGQUIT, SIG_IGN);
 	rl_replace_line("",0);
 	shell->cmdline = readline(shell->prompt);

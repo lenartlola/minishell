@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 15:13:59 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/15 17:47:37 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/18 12:13:33 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,25 @@ char	*get_path(char *path)
 	return (ptr);
 }
 
-char	*init_prompt(void)
+void	init_prompt(t_shell *shell)
 {
 	char	*user;
 	char	*path;
-	char	*prompt;
+	//char	*prompt;
+	//t_shell	*shell;
 
 	user = getenv("USER");
 	if (!user)
 		exit (EXIT_FAILURE);
 	path = get_path(path);
-	prompt = ft_calloc(sizeof(char), 1024);
-	ft_strlcat(prompt, "[", ft_strlen(prompt) + 2);
-	ft_strlcat(prompt, user, ft_strlen(prompt) + ft_strlen(user) + 1);
-	ft_strlcat(prompt, "@", ft_strlen(prompt) + 2);
-	ft_strlcat(prompt, path, ft_strlen(path) + ft_strlen(path)+ 1);
-	ft_strlcat(prompt, "] ~ ", ft_strlen(prompt) + 5);
+	shell->prompt = ft_calloc(sizeof(char), 1024);
+	
+	ft_strlcat(shell->prompt, "[", ft_strlen(shell->prompt) + 2);
+	ft_strlcat(shell->prompt, user, ft_strlen(shell->prompt) + ft_strlen(user) + 1);
+	ft_strlcat(shell->prompt, "@", ft_strlen(shell->prompt) + 2);
+	ft_strlcat(shell->prompt, path, ft_strlen(shell->prompt) + ft_strlen(path)+ 1);
+	ft_strlcat(shell->prompt, "] ~ ", ft_strlen(shell->prompt) + 5);
 	free (path);
-	return (prompt);
+	//return (shell->prompt);
 	//printf("%s\n", prompt);
 }
