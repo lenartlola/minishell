@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/19 11:03:18 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2021/12/19 21:19:31 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ typedef struct	s_shell
 	char	*cmds;
 	char	**cmds_pipe[1024];
 	char	*prompt;
-	char	**env;
+	char	**ev;
+	char	**exp;
 }	t_shell;
 
 void	tokenizing(t_shell *shell);
@@ -62,8 +63,10 @@ int		exec_pipe_cmd(t_shell *shell, char **env);
 //piping
 int	parse_pipes(t_shell *shell);
 //builtin
-int	ft_env(void);
+int	ft_env(t_shell *shell);
 int	ft_echo(char **cmd);
+int     ft_cd(char **cmd, t_shell *shell);
+int	ft_export(char **cmd, t_shell *shell);
 //Init ascii
 void	init_shell(void);
 //Free

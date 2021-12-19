@@ -1,5 +1,19 @@
 #include "../incs/minishell.h"
+int	ft_cd(char **cmd, t_shell *shell)
+{
 
+	if (cmd[0] == NULL)
+		cmd[0] = getenv("HOME");
+	getcwd(shell->ev[31],100);
+//	shell->ev[31] = ft_strjoin("OLDPWD=",shell->ev[31]);
+	if (chdir(cmd[0]) != 0)
+	{
+		printf("cd: no such file or directory: %s\n",cmd[0]);
+		return (0);
+	}
+	init_prompt(shell);
+	return (1);
+}
 void	ft_printecho(char *str)
 {
 	int	i;
@@ -40,15 +54,26 @@ int	ft_echo(char **cmd)
 	return (1);
 }
 
-int	ft_env(void)
+int	ft_env(t_shell *shell)
 {
 	int	i;
+	static char *oldpwd;
+	int	a;
 
 	i = 0;
 	while(g_env[i])
 	{
+		if (!ft_strncmp(g_env[i],"PWD",3))
+		{
+			a = i;
+			g_env[i] = "PWD=";
+			g_env[i] = ft_strjoin(g_env[i],getcwd(NULL,sizeof(char *)));
+		}
 		printf("%s\n",g_env[i]);
 		i++;
 	}
+	if (oldpwd != NULL)
+		printf("OLDPWD=%s\n",oldpwd);
+	oldpwd = (g_env[a] + 4);
 	return (1);
 }

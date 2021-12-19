@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/19 11:12:06 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2021/12/19 21:06:45 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	main(int argc, char **argv, char **env)
 	check_tty();
 	init_shell();
 	shell.cmdline = NULL;
+	shell.ev = ft_calloc(sizeof(env), 100);
+	shell.ev = env;
 	while (1)
 	{
 		g_env = NULL;
