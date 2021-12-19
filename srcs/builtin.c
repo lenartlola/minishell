@@ -1,25 +1,5 @@
 #include "../incs/minishell.h"
 
-void	ft_printecho(char *str);
-
-int	ft_echo(char **cmd)
-{
-	int	i;
-	
-	i = 1;
-	while(cmd[i])
-	{
-		if(i == 1 && (!ft_strncmp(cmd[1], "-n",2)))
-			i++;
-		ft_printecho(cmd[i]);
-		if (cmd[i + 1])
-			printf(" ");
-		i++;
-	}
-	if ((ft_strncmp(cmd[1],"-n",2)))
-		printf("\n");
-	return (1);
-}
 void	ft_printecho(char *str)
 {
 	int	i;
@@ -40,6 +20,26 @@ void	ft_printecho(char *str)
 		i++;
 	}
 }
+
+int	ft_echo(char **cmd)
+{
+	int	i;
+	
+	i = 1;
+	while(cmd[i])
+	{
+		if(i == 1 && (!ft_strncmp(cmd[1], "-n",2)))
+			i++;
+		ft_printecho(cmd[i]);
+		if (cmd[i + 1])
+			printf(" ");
+		i++;
+	}
+	if ((ft_strncmp(cmd[1],"-n",2)))
+		printf("\n");
+	return (1);
+}
+
 int	ft_env(void)
 {
 	int	i;

@@ -6,13 +6,13 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/18 23:47:51 by lgyger           ###   ########.fr       */
+/*   Updated: 2021/12/19 11:12:06 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-//char **g_env;
+char **g_env = NULL;
 void	check_tty()
 {
 	if (!isatty(0) || !isatty(1) || !isatty(2))
@@ -24,7 +24,8 @@ void	check_tty()
 
 void	init_line(t_shell *shell)
 {
-	init_prompt(shell);
+	if (!shell->cmdline)
+		init_prompt(shell);
 	signal(SIGQUIT, SIG_IGN);
 	rl_replace_line("",0);
 	shell->cmdline = readline(shell->prompt);

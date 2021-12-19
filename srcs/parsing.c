@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 09:57:44 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/18 23:48:34 by lgyger           ###   ########.fr       */
+/*   Updated: 2021/12/19 11:50:26 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ int	check_env(char *path, char *cmd)
 	while (path[i])
 	{
 		if (!(access(ret_join, X_OK)))
+		{
+			free(ret_join);
 			return (1);
+		}
 		else
 			i++;
 	}
@@ -36,6 +39,7 @@ char	*check_cmd(char *cmd, t_shell *shell)
 	int		i;
 	char	**split;
 	char	*full_path;
+	char	*full_cmd;
 	i = 0;
 	path = getenv("PATH");
 	split = ft_split(path, ':');
@@ -44,13 +48,15 @@ char	*check_cmd(char *cmd, t_shell *shell)
 		full_path = ft_strjoin(split[i], "/");
 		if (check_env(full_path, cmd))
 		{
-				exec_path_cmd(ft_strjoin(full_path, cmd), shell);
+			full_cmd = ft_strjoin(full_path, cmd);
+			exec_path_cmd(full_cmd, shell);
+			free(split);
+			free(full_path);
+			free(full_cmd);
 			break ;
 		}
-		else
-		{
-//			printf("KO\n");
-		}
+		free(split[i]);
+		free(full_path);
 		i++;
 	}
 	return (NULL);
@@ -63,10 +69,11 @@ int	builtin(t_shell *shell)
 	while (shell->tokens[i])
 	{
 		if (!ft_strncmp(shell->tokens[i],"env",3))
+		{
 			return(ft_env());
+		}
 		else if (!ft_strncmp(shell->tokens[i],"echo",4))
 			return (ft_echo(shell->tokens + i));
-
 		i++;
 	}
 	return (0);

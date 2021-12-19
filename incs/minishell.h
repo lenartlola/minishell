@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/18 23:02:29 by lgyger           ###   ########.fr       */
+/*   Updated: 2021/12/19 11:03:18 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@
 # include <signal.h>
 # include <termios.h>
 
-char **g_env;
+extern char **g_env;
+
 typedef struct	s_shell
 {
 	char	*cmdline;
@@ -43,7 +44,7 @@ typedef struct	s_shell
 	char	*cmds;
 	char	**cmds_pipe[1024];
 	char	*prompt;
-	char **env;
+	char	**env;
 }	t_shell;
 
 void	tokenizing(t_shell *shell);
@@ -56,7 +57,7 @@ void	init_prompt(t_shell *shell);
 
 //exec
 void	exec_path_cmd(char *path, t_shell *shell);
-int	exec_pipe_cmd(t_shell *shell, char **env);
+int		exec_pipe_cmd(t_shell *shell, char **env);
 
 //piping
 int	parse_pipes(t_shell *shell);
@@ -70,4 +71,6 @@ void	free_struct(t_shell *shell);
 int		double_free(char **array);
 //Error
 void	print_error(char *str);
+
+//char	**g_env;
 #endif

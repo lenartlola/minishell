@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 22:07:59 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/18 17:46:46 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/19 11:33:13 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,17 @@ char	*check_pipes_cmd(char *cmd, t_shell *shell)
 		full_path = ft_strjoin(split[i], "/");
 		ret_cmd = ft_strjoin(full_path, cmd);
 		if (!(access(ret_cmd, X_OK)))
+		{
+			free(full_path);
+			free(split[i]);
+			free(split);
 			return (ret_cmd);
+		}
 		else
 		{
 			free(ret_cmd);
 			free(full_path);
+			free(split[i]);
 		}
 		i++;
 	}

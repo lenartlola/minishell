@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42lausanne.ch>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 11:29:27 by hsabir            #+#    #+#             */
-/*   Updated: 2021/10/20 11:35:51 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/19 11:41:26 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,9 @@ char	**ft_split(char const *s, char c)
 			return (0);
 		}
 		s += ft_wordlen(s, c);
+		//free(result[nb]);
 	}
+	//free(result);
 	result[cnt] = NULL;
 	return (result);
 }
