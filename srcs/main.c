@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/19 21:06:45 by lgyger           ###   ########.fr       */
+/*   Updated: 2021/12/20 10:28:52 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	init_line(t_shell *shell)
 	}
 	while (!(ft_strlen(shell->cmdline)))
 	{
-		free(shell->prompt);
+		//if (shell->prompt)
+			//free(shell->prompt);
 		free(shell->cmdline);
 		init_line(shell);
 	} 

@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/19 21:19:31 by lgyger           ###   ########.fr       */
+/*   Updated: 2021/12/20 13:37:00 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,16 @@
 # include <termios.h>
 
 extern char **g_env;
+
+typedef struct	s_q_vars
+{
+	int		i;
+	int		j;
+	int		len;
+	char	*start;
+	char	*end;
+	char	*quotes;
+}	t_q_vars;
 
 typedef struct	s_shell
 {
@@ -76,4 +86,8 @@ int		double_free(char **array);
 void	print_error(char *str);
 
 //char	**g_env;
+
+//quotes/
+int	check_quotes(char **tokens);
+int	ft_strhas(char *str, char *set);
 #endif

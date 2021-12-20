@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 22:55:45 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/19 11:47:45 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2021/12/20 13:35:08 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	tokenizing_pipe(t_shell *shell)
 {
 	int	i;
 	int	check_len;
+//	char	*test;
 
 	i = 0;
 	check_len = ft_strlen(shell->cmdline);
@@ -58,7 +59,11 @@ void	tokenizing_pipe(t_shell *shell)
 		while (i <= shell->n_pipes)
 		{
 			shell->tokens[i] = ft_trim(shell->tokens[i]);
+			if ((ft_strhas(shell->tokens[i], "\'\"")))
+				printf("test : %s\n", shell->tokens[i]);
 			shell->cmds_pipe[i] = ft_split(shell->tokens[i], ' ');
+			//if ((ft_strhas(shell->cmds_pipe[i][1], "\'")))
+			//	printf("test : %s\n", shell->cmds_pipe[i][1]);
 			i++;
 		}
 	}
@@ -68,6 +73,14 @@ void	tokenizing_pipe(t_shell *shell)
 
 void	tokenizing(t_shell *shell)
 {
+	char	*tmp;
+	//check_quotes(&shell->cmdline);
+	if (ft_strhas(shell->cmdline, "\'\"") == 1)
+	{
+		tmp = ft_strdup(shell->cmdline);
+	//	parse_quotes(tmp);
+		printf("It has quotes\n");
+	}
 	shell->n_pipes = pipe_counter(shell->cmdline, '|');
 	if (shell->n_pipes)
 		tokenizing_pipe(shell);
