@@ -81,24 +81,23 @@ int	ft_echo(char **cmd)
 
 int	ft_env(t_shell *shell)
 {
-	int	i;
-	static char *oldpwd;
-	int	a;
+	char	*str;
+	char	test[8];
+	t_list *cp;
 
-	i = 0;
-	while(g_env[i])
+
+	cp = shell->ev;
+	while(cp)
 	{
-		if (!ft_strncmp(g_env[i],"PWD",3))
+		str = cp->content;
+		if (!ft_strncmp(str,"OLDPWD",7))
 		{
-			a = i;
-			g_env[i] = "PWD=";
-			g_env[i] = ft_strjoin(g_env[i],getcwd(NULL,sizeof(char *)));
+			if (!ft_strncmp(str,"OLDPWD=",8))
+				printf("%s\n",str);
 		}
-		printf("%s\n",g_env[i]);
-		i++;
+		else
+				printf("%s\n",str);
+		cp = cp->next;
 	}
-	if (oldpwd != NULL)
-		printf("OLDPWD=%s\n",oldpwd);
-	oldpwd = (g_env[a] + 4);
 	return (1);
 }

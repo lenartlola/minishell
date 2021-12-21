@@ -63,13 +63,16 @@ void    print(void *ptr)
 int	ft_export(char **cmd, t_shell *shell)
 {
 	unsigned int i;
-	t_list *ntest;
+	t_list *nenv;
 	void (*test)(void *) = &print;
 
 	i = ft_lstsize(shell->ev);
 	if (cmd[1] == NULL)
-		ntest = sort(shell->ev,i);
+		shell->ev = sort(shell->ev,i);
 	else
-		ft_lstiter(shell->ev, test);
+	{
+		nenv = ft_lstnew(cmd[1]);
+		ft_lstadd_back(&shell->ev,nenv);
+	}
 	return (1);
 }
