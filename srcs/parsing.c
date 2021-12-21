@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 09:57:44 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/21 14:37:41 by lgyger           ###   ########.fr       */
+/*   Updated: 2021/12/21 16:01:10 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,11 @@ int	builtin(t_shell *shell)
 			return (ft_export(shell->tokens,shell));
 		else if (!ft_strncmp(shell->tokens[i],"unset",5))
 			return(ft_unset(shell->tokens,shell));
+		else if (!ft_strncmp(shell->tokens[i],"$?",2))
+		{
+			printf("%i\n",shell->lreturn);
+			return (1);
+		}
 		i++;
 	}
 	return (0);
@@ -93,6 +98,7 @@ void	get_cmd(t_shell *shell)
 	if (!builtin(shell))
 		check_cmd(shell->tokens[0], shell);
 }
+
 int	parsing(t_shell *shell)
 {
 	if (shell->n_pipes)

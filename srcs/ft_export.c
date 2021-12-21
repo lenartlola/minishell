@@ -1,11 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lgyger <marvin@42lausanne.ch>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/21 16:15:40 by lgyger            #+#    #+#             */
+/*   Updated: 2021/12/21 16:22:42 by lgyger           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include "../incs/minishell.h"
 
-t_list  *ft_sort(t_list *ev, int n_array);
-void    print(void *ptr);
+t_list	*ft_sort(t_list *ev, int n_array);
+void	print(void *ptr);
+
 int	ft_strcmp(char *s1, char *s2)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
@@ -13,19 +26,19 @@ int	ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
-t_list	*sort(t_list *ev,int n_array)
+t_list	*sort(t_list *ev, int n_array)
 {
-	int i;
-	int j;
-	char *temp;
-	void (*test)(void *);
-	
+	int			i;
+	int			j;
+	char		*temp;
+	void		(*test)(void *);
+
 	test = &print;
 	i = 0;
 	while (i < n_array)
 	{
 		j = 0;
-		ft_sort(ev, n_array-1-i);
+		ft_sort(ev, n_array - 1 - i);
 		i++;
 	}
 	ft_lstiter(ev, test);
@@ -34,19 +47,19 @@ t_list	*sort(t_list *ev,int n_array)
 
 t_list	*ft_sort(t_list *ev, int n_array)
 {
-	int	j;
-	char *temp;
-	void (*test)(void *);
+	int		j;
+	char	*temp;
+	void	(*test)(void *);
 
 	test = &print;
 	j = 0;
-    	while(j < n_array)
+	while (j < n_array)
 	{
-      		if(ft_strcmp(ev->content, ev->next->content) > 0)
+		if (ft_strcmp(ev->content, ev->next->content) > 0)
 		{
 			temp = ft_strdup(ev->content);
-        		ev->content = ft_strdup(ev->next->content);
-        		ev->next->content = ft_strdup(temp);
+			ev->content = ft_strdup(ev->next->content);
+			ev->next->content = ft_strdup(temp);
 		}
 		ev = ev->next;
 		j++;
@@ -54,25 +67,28 @@ t_list	*ft_sort(t_list *ev, int n_array)
 	return (ev);
 }
 
-void    print(void *ptr)
+void	print(void *ptr)
 {
-	char *str = ptr;
+	char	*str;
 
-	printf("declare -x %s\n",ptr);
+	str = ptr;
+	printf("declare -x %s\n", ptr);
 }
+
 int	ft_export(char **cmd, t_shell *shell)
 {
-	unsigned int i;
-	t_list *nenv;
-	void (*test)(void *) = &print;
+	unsigned int	i;
+	t_list			*nenv;
+	void			(*test)(void *);
 
+	test = &print;
 	i = ft_lstsize(shell->ev);
 	if (cmd[1] == NULL)
-		shell->ev = sort(shell->ev,i);
+		shell->ev = sort(shell->ev, i);
 	else
 	{
 		nenv = ft_lstnew(cmd[1]);
-		ft_lstadd_back(&shell->ev,nenv);
+		ft_lstadd_back(&shell->ev, nenv);
 	}
 	return (1);
 }

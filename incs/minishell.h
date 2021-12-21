@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/21 14:40:36 by lgyger           ###   ########.fr       */
+/*   Updated: 2021/12/21 15:24:08 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct	s_shell
 	int		n_pipes;
 	int		pipe_flag;
 	int		pipe_cmd_exist;
+	int	lreturn;
 	char	*cmds;
 	char	**cmds_pipe[1024];
 	char	*prompt;

@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 21:41:20 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/18 17:46:15 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/21 15:59:34 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int fork_pipes (int n, char ***av, char **env)
 	}
 	if (in != 0)
 		dup2 (in, 0);
-	printf("av[%d][0] : %str", i, av[i][0]);
+
 	//if (!(access(av[i][0], X_OK)))
 	return (execve (av[i][0],av[i],NULL));
 	return (1);
@@ -71,6 +71,7 @@ int	exec_pipe_cmd(t_shell *shell, char **env)
 	int		fd[2];
 	pid_t	pid;
 	int i; 
+	int status;
 
 	i = 0;
 	if (shell->pipe_cmd_exist == 1)
@@ -80,9 +81,10 @@ int	exec_pipe_cmd(t_shell *shell, char **env)
 		i = fork_pipes(shell->n_pipes,shell->cmds_pipe, env);
 	}
 	else if (pid > 0)
-		waitpid(pid, 0, 0);
+		waitpid(pid,&status,WCONTINUED);
 	if (i < 0)
 		return (0);
+	shell->lreturn = WEXITSTATUS(status);
 	return (1);
 }
 
