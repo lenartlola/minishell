@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "../incs/minishell.h"
 
+t_list  *ft_sort(t_list *ev, int n_array);
+void    print(void *ptr);
 int	ft_strcmp(char *s1, char *s2)
 {
 	int i;
@@ -11,47 +13,63 @@ int	ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
-char	**sort(char **ev,int n_array)
+t_list	*sort(t_list *ev,int n_array)
 {
 	int i;
 	int j;
 	char *temp;
+	void (*test)(void *);
 	
+	test = &print;
 	i = 0;
 	while (i < n_array)
 	{
 		j = 0;
-    		while(j < n_array-1-i)
-		{
-      			if(ft_strcmp(ev[j], ev[j+1]) > 0)
-			{
-				temp = ft_strdup(ev[j]);
-        			ev[j] = ft_strdup(ev[j+1]);
-        			ev[j+1] = ft_strdup(temp);
-			}
-			j++;
-		}
+		ft_sort(ev, n_array-1-i);
 		i++;
+	}
+	ft_lstiter(ev, test);
+	return (ev);
+}
+
+t_list	*ft_sort(t_list *ev, int n_array)
+{
+	int	j;
+	char *temp;
+	void (*test)(void *);
+
+	test = &print;
+	j = 0;
+    	while(j < n_array)
+	{
+      		if(ft_strcmp(ev->content, ev->next->content) > 0)
+		{
+			temp = ft_strdup(ev->content);
+        		ev->content = ft_strdup(ev->next->content);
+        		ev->next->content = ft_strdup(temp);
+		}
+		ev = ev->next;
+		j++;
 	}
 	return (ev);
 }
 
+void    print(void *ptr)
+{
+	char *str = ptr;
+
+	printf("declare -x %s\n",ptr);
+}
 int	ft_export(char **cmd, t_shell *shell)
 {
 	unsigned int i;
+	t_list *ntest;
+	void (*test)(void *) = &print;
 
-	i = 0;
-	while(shell->ev[i])
-		i++;
+	i = ft_lstsize(shell->ev);
 	if (cmd[1] == NULL)
-	{
-		g_env = sort(shell->ev,i);
-		i = 0;
-		while(g_env[i])
-		{
-			printf("declare -x %s\n",g_env[i]);
-			i++;
-		}
-	}
+		ntest = sort(shell->ev,i);
+	else
+		ft_lstiter(shell->ev, test);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/20 13:37:00 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/20 16:45:32 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct	s_shell
 	char	*cmds;
 	char	**cmds_pipe[1024];
 	char	*prompt;
-	char	**ev;
+	t_list	*ev;
 	char	**exp;
 }	t_shell;
 
@@ -79,6 +79,8 @@ int     ft_cd(char **cmd, t_shell *shell);
 int	ft_export(char **cmd, t_shell *shell);
 //Init ascii
 void	init_shell(void);
+// environement BS
+t_list	*enviroinit(char **ev);
 //Free
 void	free_struct(t_shell *shell);
 int		double_free(char **array);
