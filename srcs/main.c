@@ -6,21 +6,19 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/22 16:49:28 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/22 19:14:52 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
 char **g_env = NULL;
-void	check_tty()
-{
-	if (!isatty(0) || !isatty(1) || !isatty(2))
-	{
-		printf("/!\\ forbidden action detected");
-		exit(EXIT_FAILURE);
-	}
-}
+
+/*
+ * Init a nice prompt, Init a new line, 
+ * wait to user promt. verify if there is some strings
+ * otherwise free the allocated memory and reinit.
+ */
 
 void	init_line(t_shell *shell)
 {
@@ -38,18 +36,24 @@ void	init_line(t_shell *shell)
 	}
 	while (!(ft_strlen(shell->cmdline)))
 	{
-		//if (shell->prompt)
-			//free(shell->prompt);
 		free(shell->cmdline);
 		init_line(shell);
 	} 
 }
 
+/*
+ * The core of the program.
+ * Init a shell structure with some utilities, refer to minishell.h
+ * if cmdline is exit and no more strings exist, free the allocated
+ * memory and leave the program.
+ * if some strings are given then add a history and pass to tokenizing part.
+ */
+
 int	main(int argc, char **argv, char **env)
 {
 	t_shell	shell;
 
-	check_tty();
+//	check_tty();
 	init_shell();
 	shell.cmdline = NULL;
 	shell.ev = ft_calloc(sizeof(env), 100);

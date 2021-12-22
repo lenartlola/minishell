@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 22:55:45 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/22 18:41:07 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/22 19:48:48 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,10 @@ void	tokenizing_pipe(t_shell *shell)
 		shell->pipe_flag = 0;
 }
 
+/*
+ * Check for the the quote type, then parse them.
+ */
+
 int	parse_quotes_args(t_vars *vars, int *i, t_cmd *tmp)
 {
 	int	ret;
@@ -101,6 +105,11 @@ int	parse_words(t_vars *vars, int *i, t_cmd **tmp, int len)
 	return (0);
 }
 
+/*
+ * Check if a pipe exist before or after the quotes,
+ * skip the spaces if found,
+ */
+
 int	parse_loop(t_vars *vars, int len)
 {
 	t_cmd	*tmp;
@@ -111,7 +120,7 @@ int	parse_loop(t_vars *vars, int len)
 	i = 0;
 	while (i < len)
 	{
-		printf("vars_str before strim : %s\n", &vars->str[i]);
+		//printf("vars_str before strim : %s\n", &vars->str[i]);
 		i += trim_spaces(&vars->str[i]);
 		ret = parse_quotes_args(vars, &i, tmp);
 		if (ret == -1)
@@ -123,6 +132,18 @@ int	parse_loop(t_vars *vars, int len)
 	}
 	return (0);
 }
+
+/*
+ * The base of the program here we decide how to handle what
+ * the users write. It could be monkey typing so we have to be careful
+ * whar we are reciving and how tto manage them.
+ * -------------------------------------------
+ * The first approach was to handle the pipes at first
+ * but we soon realizes that we should have took care of quotes :)
+ * ---------------------------------------------------
+ * Check if any type 'single', or "double" exist, if yes,
+ * so find out its indexes of start and end and its type.
+ */
 
 void	tokenizing(t_shell *shell)
 {

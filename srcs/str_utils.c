@@ -6,11 +6,15 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 11:49:31 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/22 16:45:33 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/22 20:13:24 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
+
+/*
+ * Find the index of a character
+ */
 
 int	get_c_index(char *str, char c)
 {
@@ -28,6 +32,10 @@ int	get_c_index(char *str, char c)
 	return (-1);
 }
 
+/*
+ * Skip a space
+ */
+
 int	trim_spaces(char *str)
 {
 	size_t	i;
@@ -38,12 +46,23 @@ int	trim_spaces(char *str)
 	return (i);
 }
 
+/*
+ * Look for special separators,
+ * 		60 = <
+ * 		62 = >
+ * 		124 = |
+ */
+
 int	is_sep(char c)
 {
 	if (c == 60 || c == 62 || c == 32 || c == 124)
 		return (1);
 	return (0);
 }
+
+/*
+ * count the number of quotes
+ */
 
 int	quote_counter(t_vars *vars, int start, int end)
 {
@@ -65,7 +84,11 @@ int	quote_counter(t_vars *vars, int start, int end)
 	return (count);
 }
 
-int	quote_is_data(t_vars *vars, int i)
+/*
+ * Check if the index is quote
+ */
+
+int	is_quote(t_vars *vars, int i)
 {
 	t_quotes	*tmp;
 
@@ -79,24 +102,30 @@ int	quote_is_data(t_vars *vars, int i)
 	return (0);
 }
 
+/*
+ * check if the index is quote, otherwise
+ * substr the string
+ */
+
 char	*substr_quote(t_vars *vars, int start, int end)
 {
-	int		cut;
+	//int		cut;
 	char	*tmp;
 	int		i;
 
-	cut = quote_counter(vars, start, end);
-	tmp = malloc(sizeof(char) * (end - start - cut + 2));
+	//cut = quote_counter(vars, start, end);
+	//tmp = malloc(sizeof(char) * (end - start - cut + 2));
+	tmp = malloc(sizeof(char) * (end - start + 2));
 	if (!tmp)
 		return (NULL);
 	i = 0;
 	while (start <= end)
 	{
-		if (quote_is_data(vars, start) == 1)
+		if (is_quote(vars, start) == 1)
 			start++;
 		else
 		{
-			tmp[i] = vars->str[i];
+			tmp[i] = vars->str[start];
 			i++;
 			start++;
 		}

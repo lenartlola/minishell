@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 09:59:11 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/22 17:04:17 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/22 20:18:05 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ int	ft_strhas(char *str, char *set)
 	return (0);
 }
 
+/*
+ * Since we have defined the index of start and end of the quote
+ * we finally set them to the quotes struct.
+ */
+
 void	set_quotes_data(t_vars * vars, t_quotes *quotes, t_quotes tmp)
 {
 	t_quotes	*swap;
@@ -42,6 +47,14 @@ void	set_quotes_data(t_vars * vars, t_quotes *quotes, t_quotes tmp)
 		quotes->type = tmp.type;
 	}
 }
+
+/*
+ * Check what type of quotes comes first, then find its end,
+ * things to be stocked:
+ * 		Type : (Simple/Double)
+ * 		start: the index where the quotes starts
+ * 		end  : the index of of the second same type of quote
+ */
 
 void	parse_quotes(t_vars *vars, int len)
 {
@@ -86,6 +99,14 @@ void	quote_error_exit(t_vars *vars)
 	exit(EXIT_FAILURE);
 }
 
+/*
+ * Assign the index of the last quote into j
+ * check if after the quote there is something else that left
+ * like |, <, or > in the args loop.
+ * substr whatever is inside the quotes.
+ * append the subed string into cmd->token.
+ */
+
 int	parse_simple_quote(t_vars *vars, t_cmd *current, int i)
 {
 	int		j;
@@ -106,6 +127,10 @@ int	parse_simple_quote(t_vars *vars, t_cmd *current, int i)
 	return (j - i - 1);
 }
 
+/*
+ * Same thing as simple parsing
+ */
+
 int	parse_double_quote(t_vars *vars, t_cmd *current, int i)
 {
 	int		j;
@@ -118,10 +143,10 @@ int	parse_double_quote(t_vars *vars, t_cmd *current, int i)
 	if (args_loop(vars, &j) == -1)
 		return (quotes_error());
 	tmp = substr_quote(vars, i, j - 1);
-	//if (!tmp)
-	//	free_vars(vars);
+	if (!tmp)
+		free_vars(vars);
 	current->token = append_args(current->token, tmp);
-	//if (!current->token)
-	//	free_vars(vars);
+	if (!current->token)
+		free_vars(vars);
 	return (j - i - 1);
 }

@@ -6,11 +6,15 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 12:26:35 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/22 16:19:32 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/22 20:17:38 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
+
+/*
+ * copy new into the 2d array
+ */
 
 int	copy_args(char **args, char **tmp, char *new)
 {
@@ -36,6 +40,10 @@ int	copy_args(char **args, char **tmp, char *new)
 	return (1);
 }
 
+/*
+ * append new into a 2d array
+ */
+
 char	**append_args(char **args, char *new)
 {
 	int		i;
@@ -60,6 +68,11 @@ char	**append_args(char **args, char *new)
 	return (tmp);
 }
 
+/*
+ * Check if there is other separators after,
+ * or any other quotes.
+ */
+
 int	args_loop(t_vars *vars, int *i)
 {
 	int	len;
@@ -71,7 +84,7 @@ int	args_loop(t_vars *vars, int *i)
 		if (vars->str[*i] == ' ')
 			break ;
 		if (is_sep(vars->str[*i]))
-			break;
+			break ;
 		else if (ft_strncmp(&vars->str[*i], "\'", 1) == 0)
 		{
 			ret = get_c_index((&vars->str[*i] + 1), '\'');
