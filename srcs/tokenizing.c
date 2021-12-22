@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 22:55:45 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/20 13:35:08 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/22 18:41:07 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,84 @@ void	tokenizing_pipe(t_shell *shell)
 		shell->pipe_flag = 0;
 }
 
+int	parse_quotes_args(t_vars *vars, int *i, t_cmd *tmp)
+{
+	int	ret;
+
+	ret = 0;
+	if (ft_strncmp(&vars->str[*i], "\'", 1) == 0)
+		ret = parse_simple_quote(vars, tmp, *i) + 1;
+	else if (ft_strncmp(&vars->str[*i], "\"", 1) == 0)
+		ret = parse_double_quote(vars, tmp, *i) + 1;
+	*i += ret;
+	if (ret == -255 || ret == -254)
+		return (-1);
+	return (ret);
+}
+
+int	parse_words(t_vars *vars, int *i, t_cmd **tmp, int len)
+{
+	int	ret;
+
+	ret = 0;
+	if (vars->str[*i] != ' ')
+	{
+		ret = args_to_word(vars, *tmp, *i);
+		if (ret == -1)
+			return (-1);
+		*i += ret;
+	}
+	return (0);
+}
+
+int	parse_loop(t_vars *vars, int len)
+{
+	t_cmd	*tmp;
+	int		i;
+	int		ret;
+
+	tmp = vars->cmd;
+	i = 0;
+	while (i < len)
+	{
+		printf("vars_str before strim : %s\n", &vars->str[i]);
+		i += trim_spaces(&vars->str[i]);
+		ret = parse_quotes_args(vars, &i, tmp);
+		if (ret == -1)
+			return (-1);
+		else if (ret != 0)
+			continue ;
+		if (parse_words(vars, &i, &tmp, len) == -2)
+			return (-1);
+	}
+	return (0);
+}
+
 void	tokenizing(t_shell *shell)
 {
-	char	*tmp;
-	//check_quotes(&shell->cmdline);
-	if (ft_strhas(shell->cmdline, "\'\"") == 1)
+	t_vars	vars;
+	int		len;
+
+	shell->cmd = init_cmd();
+	if (!shell->cmd)
+		perror("Close");
+	init_vars(&vars, shell);
+	len = ft_strlen(vars.str);
+	parse_quotes(&vars, len);
+	len = ft_strlen(vars.str);
+	if (parse_loop(&vars, len) == -1)
 	{
-		tmp = ft_strdup(shell->cmdline);
-	//	parse_quotes(tmp);
-		printf("It has quotes\n");
+		//check_empty(&vars) == -1
+		c_free_vars(&vars);
+		shell->cmd = NULL;
+		return ;
 	}
-	shell->n_pipes = pipe_counter(shell->cmdline, '|');
+	free(vars.str);
+	free_quotes(vars.quotes);
+	ft_echo(shell->cmd->token);
+	/*shell->n_pipes = pipe_counter(shell->cmdline, '|');
 	if (shell->n_pipes)
 		tokenizing_pipe(shell);
 	else
-		shell->tokens = ft_split(shell->cmdline, ' ');
+		shell->tokens = ft_split(shell->cmdline, ' ');*/
 }

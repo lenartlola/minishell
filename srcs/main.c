@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/20 10:28:52 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/22 16:49:28 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	main(int argc, char **argv, char **env)
 		g_env = NULL;
 		signal(SIGINT, (void (*)(int))blocksig);
 		init_line(&shell);
-		if (shell.cmdline && !(ft_strncmp(shell.cmdline, "exit", 4)))
+		if (shell.cmdline && !(ft_strncmp(shell.cmdline, "exit", 4)) && ft_strlen(shell.cmdline) == 4)
 		{
 			free_struct(&shell);
 			rl_clear_history();
@@ -70,7 +70,7 @@ int	main(int argc, char **argv, char **env)
 			g_env = env;
 			add_history(shell.cmdline);
 			tokenizing(&shell);
-			parsing(&shell);
+			//parsing(&shell);
 			if (shell.n_pipes)
 			{
 				if (shell.pipe_flag == 1)
@@ -79,7 +79,7 @@ int	main(int argc, char **argv, char **env)
 					printf("minishell: syntax error near unexpected token `%s'\n", shell.cmdline);
 			}
 		}
-		free(shell.cmdline);
+		//free(shell.cmdline);
 	}
 	free_struct(&shell);
 	return (0);

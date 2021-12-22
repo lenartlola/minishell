@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/20 13:37:00 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/22 16:21:12 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,40 @@
 
 extern char **g_env;
 
-typedef struct	s_q_vars
+typedef struct s_quotes	t_quotes;
+typedef struct s_cmd	t_cmd;
+
+typedef enum	s_type
 {
-	int		i;
-	int		j;
-	int		len;
-	char	*start;
-	char	*end;
-	char	*quotes;
-}	t_q_vars;
+	SIMPLE,
+	DOUBLE,
+	NONE,
+}	t_type;
+
+typedef struct	s_quotes
+{
+	int	start;
+	int	end;
+	t_type	type;
+	t_quotes	*next;
+}	t_quotes;
+
+typedef struct	s_vars
+{
+	t_cmd		*cmd;
+	t_quotes	*quotes;
+	char		*str;
+}	t_vars;
+
+typedef struct	s_cmd
+{
+	char	**token;
+	t_cmd	*next;
+}	t_cmd;
 
 typedef struct	s_shell
 {
+	t_cmd	*cmd;
 	char	*cmdline;
 	char	**tokens;
 	int		n_pipes;
@@ -88,6 +110,38 @@ void	print_error(char *str);
 //char	**g_env;
 
 //quotes/
-int	check_quotes(char **tokens);
+int	parse_simple_quote(t_vars *vars, t_cmd *current, int i);
+int	parse_double_quote(t_vars *vars, t_cmd *current, int i);
 int	ft_strhas(char *str, char *set);
+void	set_quotes_data(t_vars *vars, t_quotes *quotes, t_quotes tmp);
+void	parse_quotes(t_vars *vars, int len);
+int	quotes_error();
+
+//str_utils
+int		get_c_index(char *str, char c);
+int		trim_spaces(char *str);
+int		is_sep(char c);
+int		quote_counter(t_vars *vars, int start, int end);
+int		quote_is_data(t_vars *vars, int i);
+char	*substr_quote(t_vars *vars, int start, int end);
+
+//cmd_utils
+char	**init_cmd_token(void);
+t_cmd	*init_cmd(void);
+void	free_cmd(t_cmd *cmd);
+
+//quotes_utils
+t_quotes	*init_quotes(int start, int end, t_type type);
+void		free_quotes(t_quotes *quotes);
+
+//vars_utils
+void	init_vars(t_vars *vars, t_shell *shell);
+void	c_free_vars(t_vars *vars);
+void	free_vars(t_vars *vars);
+
+//args_utils
+int	args_loop(t_vars *vars, int *i);
+char	**append_args(char **args, char *new);
+int	check_empty(t_vars *vars);
+int	args_to_word(t_vars *vars, t_cmd *current, int i);
 #endif
