@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 22:07:59 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/23 14:52:53 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/23 17:42:01 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,15 @@ int	get_pipes(t_shell *shell)
 {
 	int		i;
 	char	*cmd;
+	t_cmd	*tmp;
 
+	tmp = shell->cmd;
 	i = 0;
-	//while (i <= shell->n_pipes && shell->cmds_pipe[i])
-	while (shell->cmd->next)
+	while (tmp)
 	{
-		cmd = check_pipes_cmd(shell->cmd->token[i], shell);
-		printf("Dpipe %s \n", shell->cmd->token[i]);
+		cmd = check_pipes_cmd(tmp->token[0], shell);
+		//printf("tmp -> cmd : %s\n", tmp->token[0]);
+		//printf("shell -> cmd : %s\n", tmp->token[0]);
 		if (!cmd)
 		{
 			shell->pipe_cmd_exist = 0;
@@ -64,11 +66,15 @@ int	get_pipes(t_shell *shell)
 			return (0);
 		}
 		shell->pipe_cmd_exist = 1;
-		free(shell->cmd->token[i]);
+		free(tmp->token[0]);
 		shell->cmd->token[i] = ft_strdup(cmd);
+		//printf("tkns: %s\n", shell->cmd->token[i]);
 		free(cmd);
-		shell->cmd = shell->cmd->next;
+		//shell->cmd = shell->cmd->next;
+		i++;
+		tmp = tmp->next;
 	}
+	//printf("cmd1: %s\ncmd2: %s\n", shell->cmd->token[0], shell->cmd->token[1]);
 	return (0);
 }
 
@@ -99,7 +105,7 @@ int	pipe_handler(t_vars *vars, int i, int len, t_cmd **tmp)
 {
 	if (check_after_pipe(vars, (i + 1), len, *tmp) == -1)
 		return (-1);
-	printf("vsrs token : %s\n", vars->cmd->token[1]);
+	//printf("vsrs token : %s\n", vars->cmd->token[1]);
 	(*tmp)->next = init_cmd();
 	if (!(*tmp)->next)
 		free_vars(vars);
