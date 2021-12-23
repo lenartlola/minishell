@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/22 16:21:12 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/23 15:37:08 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ typedef struct	s_shell
 	char	**exp;
 }	t_shell;
 
-void	tokenizing(t_shell *shell);
+int	tokenizing(t_shell *shell);
 void	blocksig(int sig, void *ptr);
 //parsing
-int	parsing(t_shell *shell);
+void	parsing(t_shell *shell);
 int fork_pipes (int n, char ***argv, char **env);
 //prompt
 void	init_prompt(t_shell *shell);
@@ -93,7 +93,8 @@ void	exec_path_cmd(char *path, t_shell *shell);
 int		exec_pipe_cmd(t_shell *shell, char **env);
 
 //piping
-int	parse_pipes(t_shell *shell);
+int	get_pipes(t_shell *shell);
+int	pipe_handler(t_vars *vars, int i, int len, t_cmd **tmp);
 //builtin
 int	ft_env(t_shell *shell);
 int	ft_echo(char **cmd);

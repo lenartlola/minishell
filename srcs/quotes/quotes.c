@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 09:59:11 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/22 20:18:05 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/23 12:18:12 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,18 @@ void	set_quotes_data(t_vars * vars, t_quotes *quotes, t_quotes tmp)
 		quotes->start = tmp.start;
 		quotes->end = tmp.end;
 		quotes->type = tmp.type;
+	}
+	else
+	{
+		while (swap->next)
+			swap = swap->next;
+		swap->next = init_quotes(tmp.start, tmp.end, tmp.type);
+		if (!swap->next)
+		{
+			free_vars(vars);
+			perror("Error\n");
+			exit(-1);
+		}
 	}
 }
 

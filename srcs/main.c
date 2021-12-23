@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/22 19:14:52 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/23 15:38:13 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,12 @@ int	main(int argc, char **argv, char **env)
 		{
 			g_env = env;
 			add_history(shell.cmdline);
-			tokenizing(&shell);
-			//parsing(&shell);
+			if (tokenizing(&shell) == -1)
+				continue ;
+			if (*shell.cmd->token)
+			{	//printf("Hello cmd %s\n", shell.cmd->token[0]);
+				parsing(&shell);
+			}
 			if (shell.n_pipes)
 			{
 				if (shell.pipe_flag == 1)

@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 09:57:44 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/19 20:28:25 by lgyger           ###   ########.fr       */
+/*   Updated: 2021/12/23 13:30:56 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,16 @@ int	builtin(t_shell *shell)
 	int i;
 
 	i = 0;
-	while (shell->tokens[i])
+	while (shell->cmd->token[i])
 	{
-		if (!ft_strncmp(shell->tokens[i],"env",3))
+		if (!ft_strncmp(shell->cmd->token[i],"env",3))
 			return(ft_env(shell));
-		else if (!ft_strncmp(shell->tokens[i],"echo",4))
-			return (ft_echo(shell->tokens + i));
-		else if (!ft_strncmp(shell->tokens[i],"cd",2))
-			return (ft_cd(shell->tokens + 1, shell));
-		else if (!ft_strncmp(shell->tokens[i],"export",6))
-			return (ft_export(shell->tokens,shell));
+		else if (!ft_strncmp(shell->cmd->token[i],"echo",4))
+			return (ft_echo(shell->cmd->token + i));
+		else if (!ft_strncmp(shell->cmd->token[i],"cd",2))
+			return (ft_cd(shell->cmd->token + 1, shell));
+		else if (!ft_strncmp(shell->cmd->token[i],"export",6))
+			return (ft_export(shell->cmd->token, shell));
 		i++;
 	}
 	return (0);
@@ -89,20 +89,43 @@ void	get_cmd(t_shell *shell)
 	i = 0;
 
 	if (!builtin(shell))
-		check_cmd(shell->tokens[0], shell);
+		check_cmd(shell->cmd->token[0], shell);
 }
-int	parsing(t_shell *shell)
+void	parsing(t_shell *shell)
 {
-	if (shell->n_pipes)
+	int		status;
+	t_cmd	*ptr;
+
+	status = 0;
+	ptr = shell->cmd;
+	while (shell->cmd)
+	{
+		if (!shell->cmd->next)
+		{
+			get_cmd(shell);
+			status = -1;
+		}
+		else
+		{
+			printf("pipe test\n");
+			get_pipes(shell);
+		}
+		shell->cmd = shell->cmd->next;
+	}
+	//if (shell->n_pipes == 1)
+	//	printf("Hello pipes\n");
+	//if (!builtin(shell))
+	//	printf("Error\n");
+	/*if (shell->n_pipes)
 	{
 		if (shell->pipe_flag == 1)
 		{
-			parse_pipes(shell);
+		//	parse_pipes(shell);
 		}
 	}
 	else
 	{
 		get_cmd(shell);
 	}
-	return (1);
+	return (1);*/
 }

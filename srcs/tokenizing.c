@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 22:55:45 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/22 19:48:48 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/23 15:36:36 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	tokenizing_pipe(t_shell *shell)
 {
 	int	i;
 	int	check_len;
-//	char	*test;
 
 	i = 0;
 	check_len = ft_strlen(shell->cmdline);
@@ -90,12 +89,19 @@ int	parse_quotes_args(t_vars *vars, int *i, t_cmd *tmp)
 	return (ret);
 }
 
-int	parse_words(t_vars *vars, int *i, t_cmd **tmp, int len)
+int	parse_pipes(t_vars *vars, int *i, t_cmd **tmp, int len)
 {
 	int	ret;
 
 	ret = 0;
-	if (vars->str[*i] != ' ')
+	if (ft_strncmp(&vars->str[*i], "|", 1) == 0)
+	{
+		//printf("str[%c]\n", vars->str[i]);
+		if (pipe_handler(vars, *i, len, tmp) == -1)
+			return (-1);
+		*i += 1;
+	}
+	else if (vars->str[*i] != ' ')
 	{
 		ret = args_to_word(vars, *tmp, *i);
 		if (ret == -1)
@@ -127,7 +133,7 @@ int	parse_loop(t_vars *vars, int len)
 			return (-1);
 		else if (ret != 0)
 			continue ;
-		if (parse_words(vars, &i, &tmp, len) == -2)
+		if (parse_pipes(vars, &i, &tmp, len) == -1)
 			return (-1);
 	}
 	return (0);
@@ -145,7 +151,7 @@ int	parse_loop(t_vars *vars, int len)
  * so find out its indexes of start and end and its type.
  */
 
-void	tokenizing(t_shell *shell)
+int	tokenizing(t_shell *shell)
 {
 	t_vars	vars;
 	int		len;
@@ -162,11 +168,11 @@ void	tokenizing(t_shell *shell)
 		//check_empty(&vars) == -1
 		c_free_vars(&vars);
 		shell->cmd = NULL;
-		return ;
+		return (-1);
 	}
 	free(vars.str);
 	free_quotes(vars.quotes);
-	ft_echo(shell->cmd->token);
+	return (0);
 	/*shell->n_pipes = pipe_counter(shell->cmdline, '|');
 	if (shell->n_pipes)
 		tokenizing_pipe(shell);
