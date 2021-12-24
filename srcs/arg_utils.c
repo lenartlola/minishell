@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 12:26:35 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/22 20:17:38 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/24 10:31:59 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	**append_args(char **args, char *new)
 		return (NULL);
 	tmp[i + 1] = NULL;
 	double_free(args);
-	free(new);
+	//free(new);
 	return (tmp);
 }
 
@@ -124,6 +124,8 @@ int	args_to_word(t_vars *vars, t_cmd *current, int i)
 	if (!tmp)
 		free_vars(vars);
 	current->token = append_args(current->token, tmp);
+	current->p_cmds = append_args(current->p_cmds, tmp);
+	free(tmp);
 	if (!current->token)
 		free_vars(vars);
 	return (j - i);

@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 21:41:20 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/23 19:32:48 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/24 10:08:19 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int spawn_proc (int in, int out,char ***av, char  **env)
 	return (1);
 }
 
-int fork_pipes (int n, char ***av, char **env)
+int fork_pipes (int n, char ***av, char **env, t_shell *shell)
 {
 	int i;
 	pid_t pid;
@@ -48,13 +48,13 @@ int fork_pipes (int n, char ***av, char **env)
 	while (i < n)
 	{
 		pipe (fd);
-		if (spawn_proc (in, fd [1], av + i, env) < 0)
-			return (-1);
-		/* the child will write here.  */
+		//if (spawn_proc (in, fd [1], av + i, env) < 0)
+		//	return (-1);
+		// the child will write here.
 
 		close (fd [1]);
 
-      /* the next child will read from there.  */
+    // the next child will read from there.
 		in = fd [0];
 		i++;
 	}
@@ -62,9 +62,9 @@ int fork_pipes (int n, char ***av, char **env)
 		dup2 (in, 0);
 
 	//if (!(acess(av[i][0], X_OK)))
-	//printf("fork : %s", av[0][0]);
-	return (execve (av[i][0], av[i],NULL));
-	
+	//printf("fork : %s\n", shell->cmd->str[0]);
+	//return (execve (av[i][0], av[i],NULL));
+
 	return (1);
 }
 
@@ -80,7 +80,7 @@ int	exec_pipe_cmd(t_shell *shell, char **env)
 	if (pid == 0)
 	{
 		//i = fork_pipes(shell->n_pipes,shell->cmds_pipe, env);
-		i = fork_pipes(shell->n_pipes, &shell->cmd->token, env);
+		//i = fork_pipes(shell->n_pipes, &shell->cmd->token, env, shell);
 		//printf("fork %s\n", &shell->cmd->token);
 	}
 	else if (pid > 0)
