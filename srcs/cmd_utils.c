@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 10:26:23 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/24 10:25:17 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/29 12:04:18 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,9 @@ t_cmd	*init_cmd(void)
 	if (!cmd)
 		return (NULL);
 	cmd->token = init_cmd_token();
-	if (!cmd->token)
+	cmd->redirection = init_cmd_token();
+	if (!cmd->token || !cmd->redirection)
 		return  (NULL);
-	cmd->p_cmds = init_cmd_token();
-	if (!cmd->p_cmds)
-		return (NULL);
 	cmd->next = NULL;
 	return (cmd);
 }

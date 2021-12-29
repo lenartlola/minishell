@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/23 17:42:32 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/29 11:49:57 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,14 @@ int	main(int argc, char **argv, char **env)
 			if (tokenizing(&shell) == -1)
 				continue ;
 			if (*shell.cmd->token)
-			{	//printf("Hello cmd %s\n", shell.cmd->token[0]);
+			{
 				parsing(&shell);
 			}
 			//if (shell.n_pipes)
 			//{
 				//if (shell.pipe_flag == 1)
 					//printf("tkn : %s, %s\n", shell.cmd->token[0], shell.cmd->token[1]);
-							exec_pipe_cmd(&shell, env);
+							//exec_pipe_cmd(&shell, env);
 				//else if (shell.pipe_flag == 0)
 				//	printf("minishell: syntax error near unexpected token `%s'\n", shell.cmdline);
 			//}

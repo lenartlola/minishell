@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/24 10:24:01 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/29 12:02:44 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct	s_vars
 typedef struct	s_cmd
 {
 	char	**token;
-	char	**p_cmds;
+	char	**redirection;
 	t_cmd	*next;
 }	t_cmd;
 

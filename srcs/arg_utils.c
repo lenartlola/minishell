@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 12:26:35 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/24 10:31:59 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/29 12:09:27 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	**append_args(char **args, char *new)
 		return (NULL);
 	tmp[i + 1] = NULL;
 	double_free(args);
-	//free(new);
+	free(new);
 	return (tmp);
 }
 

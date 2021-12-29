@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 22:55:45 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/23 15:36:36 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/29 13:31:40 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,10 @@ int	parse_quotes_args(t_vars *vars, int *i, t_cmd *tmp)
 		ret = parse_simple_quote(vars, tmp, *i) + 1;
 	else if (ft_strncmp(&vars->str[*i], "\"", 1) == 0)
 		ret = parse_double_quote(vars, tmp, *i) + 1;
+	else if (vars->str[*i] == '<' || vars->str[*i] == '>')
+		ret = redirection(vars, tmp, *i);
 	*i += ret;
-	if (ret == -255 || ret == -254)
+	if (ret == -1)
 		return (-1);
 	return (ret);
 }
