@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 21:41:20 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/24 10:08:19 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/30 17:38:06 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int fork_pipes (int n, char ***av, char **env, t_shell *shell)
 	return (1);
 }
 
-int	exec_pipe_cmd(t_shell *shell, char **env)
+int	exec_pipe_cmd(t_shell *shell, char **env, int fd_in)
 {
 	int		fd[2];
 	pid_t	pid;

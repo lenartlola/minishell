@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:57:56 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/29 13:27:33 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/30 17:31:20 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	redirection_loop(t_vars *vars, int *i)
 		if (is_sep(vars->str[*i]))
 			break ;
 		else if (ft_strncmp(&vars->str[*i], "\'", 1) == 0)
-			*i += get_c_index((&vars->str[*i] + 1). '\'') + 1;
+			*i += get_c_index((&vars->str[*i] + 1), '\'') + 1;
 		else if (ft_strncmp(&vars->str[*i], "\"", 1) == 0)
 			*i += get_c_index((&vars->str[*i] + 1), '\"') + 1;
 		*i += 1;
@@ -59,8 +59,8 @@ int	redirection(t_vars *vars, t_cmd *current, int i)
 	tmp = ft_substr(vars->str, i, j - i);
 	if (!tmp)
 		free_vars(vars);
-	current->red = append_args(current->red, tmp);
-	if (!current->red)
+	current->redirection = append_args(current->redirection, tmp);
+	if (!current->redirection)
 		free_vars(vars);
 	j += trim_spaces(&vars->str[j]);
 	k = j;
@@ -69,8 +69,42 @@ int	redirection(t_vars *vars, t_cmd *current, int i)
 	tmp = substr_quote(vars, j, k - 1);
 	if (!tmp)
 		free_vars(vars);
-	current->red = append_args(current->red, tmp);
-	if (!current->red)
+	current->redirection = append_args(current->redirection, tmp);
+	if (!current->redirection)
 		free_vars(vars);
 	return (k - j);
+}
+
+/* ########################################################### */
+
+void	redirection_out(char *redirection, int *type)
+{
+	if (*redirection == '>')
+	{
+		if (*(redirection + 1) == '>')
+			*type = REDIRECT_D_OUT;
+		else
+			*type = REDIRECT_OUT;
+	}
+}
+
+void	redirection_in(char *redirection, int *mode)
+{
+	if (*redirection == '<')
+	{
+		if (*(redirection + 1) == '<')
+			*mode = HEREDOC;
+		else
+			*mode = REDIRECT_IN;
+	}
+}
+
+int	redirection_type(char *redirection)
+{
+	int	mode;
+
+	mode = -1;
+	redirection_in(redirection, &mode);
+	redirection_out(redirection, &mode);
+	return (mode);
 }

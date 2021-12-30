@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/29 12:02:44 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/30 17:34:18 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,14 @@ extern char **g_env;
 typedef struct s_quotes	t_quotes;
 typedef struct s_cmd	t_cmd;
 
+typedef enum	s_red_type
+{
+	HEREDOC,
+	REDIRECT_IN,
+	REDIRECT_OUT,
+	REDIRECT_D_OUT,
+}	t_red_type;
+
 typedef enum	s_type
 {
 	SIMPLE,
@@ -63,6 +71,8 @@ typedef struct	s_cmd
 {
 	char	**token;
 	char	**redirection;
+	int		in;
+	int		out;
 	t_cmd	*next;
 }	t_cmd;
 
@@ -81,11 +91,18 @@ typedef struct	s_shell
 	char	**exp;
 }	t_shell;
 
+int	ft_strcmp(char *s1, char *s2);
+void	close_error(int fd);
+void	close_fds(t_cmd *cmd);
+int	fd_set_in_out(t_shell *shell, int *fd, int first);
+int	parse_heredoc(char *delim, t_shell *shell, t_cmd *ptr);
+int	redirection_type(char *redirection);
+int	redirection(t_vars *vars, t_cmd *current, int i);
 int	tokenizing(t_shell *shell);
 int	pipe_counter(char *str, char c);
 void	blocksig(int sig, void *ptr);
 //parsing
-void	parsing(t_shell *shell);
+void	parsing(t_shell *shell, char **env);
 int fork_pipes (int n, char ***argv, char **env, t_shell *shell);
 //int	fork_pipes(int n, char *argv, char **env);
 //prompt
@@ -93,7 +110,7 @@ void	init_prompt(t_shell *shell);
 
 //exec
 void	exec_path_cmd(char *path, t_shell *shell);
-int		exec_pipe_cmd(t_shell *shell, char **env);
+int		exec_pipe_cmd(t_shell *shell, char **env, int fd_in);
 
 //piping
 int	get_pipes(t_shell *shell);

@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 22:07:59 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/24 10:32:56 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/30 14:35:18 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	get_pipes(t_shell *shell)
 	while (tmp)
 	{
 		//printf("ptr : %s\n", ptr);
-		printf("cmd -> p_cmds : %s\n", tmp->p_cmds[0]);
+		//printf("cmd -> p_cmds : %s\n", tmp->p_cmds[0]);
 		cmd = check_pipes_cmd(tmp->token[0], shell);
 		//printf("tmp -> cmd : %s\n", tmp->token[0]);
 		//printf("shell -> cmd : %s\n", tmp->token[0]);

@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/29 11:49:57 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/30 17:12:48 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	main(int argc, char **argv, char **env)
 				continue ;
 			if (*shell.cmd->token)
 			{
-				parsing(&shell);
+				parsing(&shell, env);
 			}
 			//if (shell.n_pipes)
 			//{

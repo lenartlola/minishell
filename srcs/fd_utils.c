@@ -1,36 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   fd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/18 14:03:26 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/30 17:26:27 by hsabir           ###   ########.fr       */
+/*   Created: 2021/12/30 17:02:39 by hsabir            #+#    #+#             */
+/*   Updated: 2021/12/30 17:20:59 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-void	print_error(char *str)
+int	fd_set_in_out(t_shell *shell, int *fd, int first)
 {
-	printf("%s\n", str);
-}
-
-void	close_error(int fd)
-{
-	if (close(fd) == -1)
-		perror("Close\n");
-}
-
-void	close_fds(t_cmd *cmd)
-{
-	while (cmd)
+	if (!first)
 	{
-		if (cmd->in != 0)
-			close_error(cmd->in);
-		if (cmd->out != 1)
-			close_error(cmd->out);
-		cmd = cmd->next;
+		if (shell->cmd->in != 0)
+			close_error(fd[0]);
+		else
+			shell->cmd->in = fd[0];
 	}
+	if (pipe(fd) == -1)
+	{
+		perror("FD_Set pipe error\n");
+		return (0);
+	}
+	if (shell->cmd->next)
+		shell->cmd->out = fd[1];
+	else
+	{
+		close_error(fd[0]);
+		close_error(fd[1]);
+	}
+	return (1);
 }
+
