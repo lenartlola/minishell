@@ -1,4 +1,83 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/31 15:59:03 by hsabir            #+#    #+#             */
+/*   Updated: 2021/12/31 19:01:11 by hsabir           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../incs/minishell.h"
+
+int	is_builtin(char *arg)
+{
+	t_builtin_cmd	cmd;
+
+	cmd = N_B_IN;
+	if (arg == NULL)
+		return (0);
+	if (ft_strcmp("echo", arg) == 0)
+		cmd = ECHO_M;
+	else if (ft_strcmp("pwd", arg) == 0)
+		cmd = PWD_M;
+	else if (ft_strcmp("cd", arg) == 0)
+		cmd = CD_M;
+	else if (ft_strcmp("export", arg) == 0)
+		cmd = EXPORT_M;
+	else if (ft_strcmp("unset", arg) == 0)
+		cmd = UNSET_M;
+	return (cmd);
+}
+
+int	main_redirection(t_shell *shell)
+{
+	if (*shell->cmd->redirection)
+	{
+		shell->std_in = dup(0);
+		if (shell->std_in == -1)
+			free_all(shell, 1, "Std_in dup in main redirection\n");
+		shell->std_out = dup(1);
+		if (shell->std_out == -1)
+			free_all(shell, 1, "Std_out dup in main redirection\n");
+		redirection_handler(shell);
+	}
+}
+
+int	launch_builtin(int tmp, t_shell *shell, int in_fork)
+{
+	if (!in_fork)
+		main_redirection(shell);
+	if (tmp == ECHO_M)
+		shell->ret = ft_echo(shell->cmd->token + 1);
+	else if (tmp == ENV_M)
+		shell->ret = ft_env(shell);
+	else if (tmp == CD_M)
+		shell->ret = ft_cd(*shell->cmd->token + 1, shell);
+	else if (tmp == EXPORT_M)
+		shell->ret = ft_export(*shell->cmd->token, shell);
+	if (!in_fork)
+		swap_fds(shell->std_in, shell->std_out);
+	shell->std_in = 0;
+	shell->std_out = 1;
+	return (1);
+}
+
+int exec_built_in(t_shell *shell, int in_fork)
+{
+	int	tmp;
+
+	if (*shell->cmd->token)
+	{
+		tmp = is_builtin(*shell->cmd->token);
+		if (tmp != N_B_IN)
+			return launch_builtin(tmp, shell, in_fork);
+	}
+	return (0);
+}
+
 int	ft_cd(char **cmd, t_shell *shell)
 {
 

@@ -6,11 +6,19 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 17:02:39 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/31 13:05:41 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/31 14:28:52 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
+
+void	swap_fds(int in, int out)
+{
+	if (in != 0)
+		dup_and_close(in, 0);
+	if (out != 1)
+		dup_and_close(out, 1);
+}
 
 void	close_unused_fd(t_shell *shell, int fd)
 {

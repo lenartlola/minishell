@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/30 17:12:48 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/31 19:00:08 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ int	main(int argc, char **argv, char **env)
 	shell.ev = env;
 	while (1)
 	{
+		shell.ret = 0;
+		shell.std_in = 0;
+		shell.std_out = 1;
 		g_env = NULL;
 		signal(SIGINT, (void (*)(int))blocksig);
 		init_line(&shell);

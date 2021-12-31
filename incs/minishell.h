@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/31 13:37:16 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/31 18:55:40 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,24 @@
 # include "../libs/libft/incs/libft.h"
 # include <signal.h>
 # include <termios.h>
-#include <fcntl.h>
+# include <fcntl.h>
+# include <sys/stat.h>
 
 extern char **g_env;
 
 typedef struct s_quotes	t_quotes;
 typedef struct s_cmd	t_cmd;
+
+typedef enum	s_builtin_cmd
+{
+	N_B_IN,
+	ECHO_M,
+	CD_M,
+	PWD_M,
+	EXPORT_M,
+	UNSET_M,
+	ENV_M,
+}	t_builtin_cmd;
 
 typedef enum	s_red_type
 {
@@ -72,6 +84,7 @@ typedef struct	s_cmd
 {
 	char	**token;
 	char	**redirection;
+	char	*path;
 	int		in;
 	int		out;
 	t_cmd	*next;
@@ -82,6 +95,9 @@ typedef struct	s_shell
 	t_cmd	*cmd;
 	char	*cmdline;
 	char	**tokens;
+	int		ret;
+	int		std_in;
+	int		std_out;
 	int		n_pipes;
 	int		pipe_flag;
 	int		pipe_cmd_exist;
@@ -92,6 +108,12 @@ typedef struct	s_shell
 	char	**exp;
 }	t_shell;
 
+int exec_built_in(t_shell *shell, int in_fork);
+char	*check_cmd(char *cmd, t_shell *shell);
+void	free_all(t_shell *shell, int exit_p, char *str);
+void	swap_fds(int in, int out);
+void	dup_and_close(int fd_in, int fd_out);
+int	is_builtin(char *arg);
 void	redirection_handler(t_shell *shell);
 void	close_unused_fd(t_shell *shell, int fd);
 int	ft_strcmp(char *s1, char *s2);

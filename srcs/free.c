@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 12:33:06 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/18 23:47:44 by lgyger           ###   ########.fr       */
+/*   Updated: 2021/12/31 16:06:49 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,22 @@ int	double_free(char **array)
 	}
 	free(array);
 	return (0);
+}
+
+void	free_all(t_shell *shell, int exit_p, char *str)
+{
+	if (shell->std_in > 0)
+		close_error(shell->std_in);
+	if (shell->std_out > 1)
+		close_error(shell->std_out);
+	free_cmd(shell->cmd);
+	rl_clear_history();
+	if (exit_p)
+	{
+		perror(str);
+		exit(EXIT_FAILURE);
+	}
+
 }
 
 void	free_struct(t_shell *shell)
