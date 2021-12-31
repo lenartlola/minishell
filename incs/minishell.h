@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/30 17:34:18 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/31 13:37:16 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include "../libs/libft/incs/libft.h"
 # include <signal.h>
 # include <termios.h>
+#include <fcntl.h>
 
 extern char **g_env;
 
@@ -91,6 +92,8 @@ typedef struct	s_shell
 	char	**exp;
 }	t_shell;
 
+void	redirection_handler(t_shell *shell);
+void	close_unused_fd(t_shell *shell, int fd);
 int	ft_strcmp(char *s1, char *s2);
 void	close_error(int fd);
 void	close_fds(t_cmd *cmd);

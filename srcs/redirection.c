@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:57:56 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/30 17:31:20 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/31 13:39:45 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,56 @@ int	redirection_type(char *redirection)
 	redirection_in(redirection, &mode);
 	redirection_out(redirection, &mode);
 	return (mode);
+}
+
+/* ############################################################## */
+
+void	dup_and_close(int fd_in, int fd_out)
+{
+	if (dup2(fd_in, fd_out) == -1)
+		perror("Dup2Close\n");
+	close_error(fd_in);
+}
+
+int	apply_redirection(t_shell *shell, char *filename, int mode)
+{
+	int	f_fd;
+
+	f_fd = -1;
+	if (mode == REDIRECT_IN)
+		f_fd = open(filename, O_RDONLY);
+	else if (mode == REDIRECT_OUT)
+		f_fd = open(filename, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	else if (mode == REDIRECT_D_OUT)
+		f_fd = open(filename, O_CREAT | O_RDWR, O_APPEND, 0644);
+	if (f_fd == -1)
+	{
+		perror(filename);
+		return (EXIT_FAILURE);
+	}
+	if (mode == REDIRECT_OUT || mode == REDIRECT_D_OUT)
+		dup_and_close(f_fd, shell->cmd->out);
+	else
+		dup_and_close(f_fd, shell->cmd->in);
+	return (0);
+}
+
+void	redirection_handler(t_shell *shell)
+{
+	int	red;
+	int	i;
+
+	i = -1;
+	while (shell->cmd->redirection[++i])
+	{
+		if (redirection_type(shell->cmd->redirection[i]) == -1
+			|| redirection_type(shell->cmd->redirection[i]) == HEREDOC)
+			continue ;
+		red = redirection_type(shell->cmd->redirection[i]);
+		i++;
+		if (apply_redirection(shell, shell->cmd->redirection[i], red) == 1)
+				break ;
+	}
+	double_free(shell->cmd->redirection);
+	shell->cmd->redirection = NULL;
 }

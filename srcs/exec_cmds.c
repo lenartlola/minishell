@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 21:41:20 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/30 17:38:06 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/31 13:36:32 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,15 @@ int fork_pipes (int n, char ***av, char **env, t_shell *shell)
 
 int	exec_pipe_cmd(t_shell *shell, char **env, int fd_in)
 {
-	int		fd[2];
+	int	pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		close_unused_fd(shell, fd_in);
+		redirection_handler(shell);
+	}
+	/*int		fd[2];
 	pid_t	pid;
 	int i; 
 
@@ -87,7 +95,7 @@ int	exec_pipe_cmd(t_shell *shell, char **env, int fd_in)
 		waitpid(pid, 0, 0);
 	if (i < 0)
 		return (0);
-	return (1);
+	return (1);*/
 }
 
 void	exec_path_cmd(char *path, t_shell *shell)
