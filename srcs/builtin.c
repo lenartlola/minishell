@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 15:59:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/31 19:01:11 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/31 19:20:23 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,8 @@ int	ft_echo(char **cmd)
 			printf(" ");
 		i++;
 	}
-	if ((ft_strncmp(cmd[1],"-n",2)))
-		printf("\n");
+	//if ((ft_strncmp(cmd[1],"-n",2)))
+	//	printf("\n");
 	return (1);
 }
 

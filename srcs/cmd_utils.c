@@ -6,11 +6,20 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 10:26:23 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/31 16:32:49 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/31 19:55:51 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
+
+t_cmd	*last_cmd(t_cmd *cmd)
+{
+	if (!cmd)
+		return (NULL);
+	while (cmd->next)
+		cmd = cmd->next;
+	return (cmd);
+}
 
 char	**init_cmd_token(void)
 {

@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/31 18:55:40 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/31 20:03:51 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct	s_cmd
 	char	**token;
 	char	**redirection;
 	char	*path;
+	int		pid;
 	int		in;
 	int		out;
 	t_cmd	*next;
@@ -106,8 +107,12 @@ typedef struct	s_shell
 	char	*prompt;
 	char	**ev;
 	char	**exp;
+	struct termios term;
 }	t_shell;
 
+t_cmd	*last_cmd(t_cmd *cmd);
+void	wait_all_process(t_cmd *cmd, t_shell *shell);
+void	child_handler(t_shell *shell);
 int exec_built_in(t_shell *shell, int in_fork);
 char	*check_cmd(char *cmd, t_shell *shell);
 void	free_all(t_shell *shell, int exit_p, char *str);

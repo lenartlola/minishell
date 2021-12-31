@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 09:57:44 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/31 19:10:53 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2021/12/31 20:10:24 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,9 @@ int	launch(t_shell *shell, int *status, char **env)
 	first = 1;
 	while (shell->cmd)
 	{
-		if (!shell->cmd->next)
+		if (!shell->cmd->next && is_builtin(*shell->cmd->token))
 		{
+			exec_built_in(shell, 0);
 			//get_cmd(shell);
 			*status = -1;
 		}
@@ -140,6 +141,10 @@ int	launch(t_shell *shell, int *status, char **env)
 				return (0);
 			exec_pipe_cmd(shell, env, fd[0]);
 		}
+		if (shell->cmd->next)
+			close_error(fd[1]);
+		if (shell->cmd->in != 0)
+			close_error(shell->cmd->in);
 		shell->cmd = shell->cmd->next;
 		first = 0;
 	}
@@ -155,42 +160,15 @@ void	parsing(t_shell *shell, char **env)
 	ptr = shell->cmd;
 	if (heredoc(shell))
 	{
+		//printf("FSign\n");
 		if (!launch(shell, &status, env))
 			close_fds(ptr);
+		if (status != -1)
+		{
+			printf("Sign\n");
+			wait_all_process(ptr, shell);
+		}
 	}
 	free_cmd(ptr);
 	shell->cmd = NULL;
-	/*while (shell->cmd)
-	{
-		if (!shell->cmd->next)
-		{
-			get_cmd(shell);
-			status = -1;
-		}
-		else
-		{
-			//printf("next -> %s\n", shell->cmd->token[0]);
-			get_pipes(shell);
-			shell->n_pipes = 1;
-			shell->pipe_flag = 1;
-			break ;
-		}
-		shell->cmd = shell->cmd->next;
-	}*/
-	//if (shell->n_pipes == 1)
-	//	printf("Hello pipes\n");
-	//if (!builtin(shell))
-	//	printf("Error\n");
-	/*if (shell->n_pipes)
-	{
-		if (shell->pipe_flag == 1)
-		{
-		//	parse_pipes(shell);
-		}
-	}
-	else
-	{
-		get_cmd(shell);
-	}
-	return (1);*/
 }
