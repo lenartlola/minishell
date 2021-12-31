@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 09:57:44 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/31 19:01:42 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/31 19:10:53 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,10 @@ int	heredoc(t_shell *shell)
 	int		i;
 
 	cmd = shell->cmd;
-	i = -1;
+	//i = -1;
 	while (shell->cmd)
 	{
+		i = -1;
 		if (shell->cmd->redirection)
 		{
 			while (shell->cmd->redirection[++i])
