@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/31 20:03:51 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/31 21:01:39 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ extern char **g_env;
 
 typedef struct s_quotes	t_quotes;
 typedef struct s_cmd	t_cmd;
-
+typedef struct s_env	t_env;
 typedef enum	s_builtin_cmd
 {
 	N_B_IN,
@@ -64,6 +64,13 @@ typedef enum	s_type
 	DOUBLE,
 	NONE,
 }	t_type;
+
+typedef struct	s_env
+{
+	char	*name;
+	char	*value;
+	t_env	*next;
+}	t_env;
 
 typedef struct	s_quotes
 {
@@ -110,6 +117,7 @@ typedef struct	s_shell
 	struct termios term;
 }	t_shell;
 
+void	parrent_handler(void);
 t_cmd	*last_cmd(t_cmd *cmd);
 void	wait_all_process(t_cmd *cmd, t_shell *shell);
 void	child_handler(t_shell *shell);
@@ -151,7 +159,7 @@ int	ft_echo(char **cmd);
 int     ft_cd(char **cmd, t_shell *shell);
 int	ft_export(char **cmd, t_shell *shell);
 //Init ascii
-void	init_shell(void);
+void	init_ascii(void);
 //Free
 void	free_struct(t_shell *shell);
 int		double_free(char **array);

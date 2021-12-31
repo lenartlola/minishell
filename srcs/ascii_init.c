@@ -6,13 +6,13 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 23:12:23 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/20 09:53:37 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/31 21:00:42 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-void	init_shell(void)
+void	uwu(void)
 {
 	printf("%s⡆⣐⢕⢕⢕⢕⢕⢕⢕⢕⠅⢗⢕⢕⢕⢕⢕⢕⢕⠕⠕⢕⢕⢕⢕⢕⢕⢕⢕⢕\n", KCYN);
 	printf("⢐⢕⢕⢕⢕⢕⣕⢕⢕⠕⠁⢕⢕⢕⢕⢕⢕⢕⢕⠅%s⡄%s⢕⢕⢕⢕⢕⢕⢕⢕⢕\n", KNRM, KCYN);
@@ -30,6 +30,10 @@ void	init_shell(void)
 	printf("⣿⣦⡀⣿⣿⣷⣶⣬⣍%s⣛⣛⣛⡛⠿⠿⠿⠛⠛⢛⣛⣉⣭%s⣤⣂⢜⠕⢑⣡⣴⣿%s\n", KNRM, KCYN, KNRM);
 	printf("\n");
 	printf("-----------------------------------------------------------------------\n");
+}
+
+void	minish(void)
+{
 	printf("\n");
 	printf("%s", KRED);
 	printf("              $$\\           $$\\           $$\\                 $$\\ $$\\ \n");
@@ -43,4 +47,10 @@ void	init_shell(void)
 	printf("%s\\__| \\__| \\__|\\__|\\__|  \\__|\\__|\\_______/ \\__|  \\__| \\_______|\\__|\\__|\n", KWHT);
 	printf("\n");
 	printf("%s", KNRM);
+}
+
+void	init_ascii(void)
+{
+	uwu();
+	minish();
 }
