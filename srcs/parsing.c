@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 09:57:44 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/30 17:37:16 by hsabir           ###   ########.fr       */
+/*   Updated: 2021/12/31 14:12:48 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,9 +125,9 @@ int	launch(t_shell *shell, int *status, char **env)
 	first = 1;
 	while (shell->cmd)
 	{
-		if (!shell->cmd->next)
+		if (!shell->cmd->next && builtin(shell))
 		{
-			get_cmd(shell);
+			//get_cmd(shell);
 			*status = -1;
 		}
 		else
