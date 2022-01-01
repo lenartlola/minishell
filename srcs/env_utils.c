@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 20:43:20 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/01 16:08:56 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/01 18:36:31 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,4 +135,48 @@ t_env	*get_envs(char	**m_env)
 						ft_strdup(m_env[i] + len + 1)));
 	}
 	return (env);
+}
+
+int	qd_strcmp(const char *s1, const char *s2)
+{
+	size_t			i;
+	unsigned char	*s1b;
+	unsigned char	*s2b;
+
+	i = 0;
+	s1b = (unsigned char *)s1;
+	s2b = (unsigned char *)s2;
+	if (!s1 || !s2)
+		return (-1);
+	while (s1b[i] || s2b[i])
+	{
+		if (s1b[i] != s2b[i])
+			return (s1b[i] - s2b[i]);
+		i++;
+	}
+	return (0);
+}
+
+int	check_path_env(t_env **env, char *name)
+{
+	t_env	*ptr;
+
+	if (env)
+	{
+		printf("TEST\n");
+		ptr = *env;
+		//printf("env : %s\n", name);
+		while (*env)
+		{
+		//	printf("(env) -> name : %s\n", (*env)->name);
+			if (qd_strcmp((*env)->name, name) == 0)
+			{
+				printf("TESTO\n");
+				return (1);
+			}
+			*env = (*env)->next;
+		}
+		*env = ptr;
+	}
+	return (0);
 }

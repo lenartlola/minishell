@@ -6,68 +6,11 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 21:41:20 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2022/01/01 16:26:27 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/01 18:00:29 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
-
-int spawn_proc (int in, int out,char ***av, char  **env)
-{
-	pid_t pid;
-	
-	pid = fork();
-	if (pid == 0)
-	{
-		if (in != 0)
-		{
-			dup2 (in, 0);
-			close (in);
-		}
-		if (out != 1)
-		{
-			dup2 (out, 1);
-			close (out);
-		}
-		//printf("av[i] : %s", av[1][0]);
-		//return execve (*av[0],*av, env);
-		//printf("env : %s\n", *g_env);
-		return execve(*av[0], *av, env);
-	}
-	return (1);
-}
-
-int fork_pipes (int n, char ***av, char **env, t_shell *shell)
-{
-	int i;
-	pid_t pid;
-	int in;
-	int fd [2];
-
-	in = 0;
-	i = 0;
-	while (i < n)
-	{
-		pipe (fd);
-		//if (spawn_proc (in, fd [1], av + i, env) < 0)
-		//	return (-1);
-		// the child will write here.
-
-		close (fd [1]);
-
-    // the next child will read from there.
-		in = fd [0];
-		i++;
-	}
-	if (in != 0)
-		dup2 (in, 0);
-
-	//if (!(acess(av[i][0], X_OK)))
-	//printf("fork : %s\n", shell->cmd->str[0]);
-	//return (execve (av[i][0], av[i],NULL));
-
-	return (1);
-}
 
 int	exec_pipe_cmd(t_shell *shell, char **env, int fd_in)
 {
@@ -82,7 +25,8 @@ int	exec_pipe_cmd(t_shell *shell, char **env, int fd_in)
 		swap_fds(shell->cmd->in, shell->cmd->out);
 		if (exec_built_in(shell, 1))
 			exit(shell->ret);
-		shell->cmd->path = check_cmd(*shell->cmd->token, shell);
+		//shell->cmd->path = check_cmd(*shell->cmd->token, shell);
+		shell->ret = get_path_exec(shell);
 		//printf("path : %s\n", shell->cmd->path);
 		if (!shell->cmd->path)
 		{
