@@ -6,11 +6,27 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 09:59:11 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/23 12:18:12 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/01 14:43:14 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
+
+t_type	get_type(t_quotes *quotes, int i)
+{
+	t_quotes	*tmp;
+
+	tmp = quotes;
+	while (tmp)
+	{
+		if (i >= tmp->start && i <= tmp->end)
+			return (tmp->type);
+		tmp = tmp->next;
+	}
+	return (NONE);
+}
+
+/* ####################################################################### */
 
 int	ft_strhas(char *str, char *set)
 {
@@ -96,7 +112,7 @@ void	parse_quotes(t_vars *vars, int len)
 	}
 }
 
-
+/* ##################################################################### */
 
 int	quotes_error()
 {

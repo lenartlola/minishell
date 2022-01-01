@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/31 21:01:39 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/01 16:02:11 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 
-extern char **g_env;
+extern int *g_ptr;
 
 typedef struct s_quotes	t_quotes;
 typedef struct s_cmd	t_cmd;
@@ -63,6 +63,7 @@ typedef enum	s_type
 	SIMPLE,
 	DOUBLE,
 	NONE,
+	ENVS
 }	t_type;
 
 typedef struct	s_env
@@ -84,7 +85,10 @@ typedef struct	s_vars
 {
 	t_cmd		*cmd;
 	t_quotes	*quotes;
+	t_quotes	*env;
+	t_env		*env_vars;
 	char		*str;
+	int			*last_ret;
 }	t_vars;
 
 typedef struct	s_cmd
@@ -106,6 +110,8 @@ typedef struct	s_shell
 	int		ret;
 	int		std_in;
 	int		std_out;
+	int		error;
+	t_env	*env;
 	int		n_pipes;
 	int		pipe_flag;
 	int		pipe_cmd_exist;
@@ -117,6 +123,10 @@ typedef struct	s_shell
 	struct termios term;
 }	t_shell;
 
+t_env	*get_envs(char **m_env);
+char	**get_env_array(t_env *env);
+t_type	get_type(t_quotes *quotes, int i);
+void	free_envs(t_env *env);
 void	parrent_handler(void);
 t_cmd	*last_cmd(t_cmd *cmd);
 void	wait_all_process(t_cmd *cmd, t_shell *shell);

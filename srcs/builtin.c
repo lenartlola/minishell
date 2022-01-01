@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 15:59:03 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/31 19:20:23 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/01 16:06:03 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	is_builtin(char *arg)
 	return (cmd);
 }
 
-int	main_redirection(t_shell *shell)
+void	main_redirection(t_shell *shell)
 {
 	if (*shell->cmd->redirection)
 	{
@@ -51,13 +51,13 @@ int	launch_builtin(int tmp, t_shell *shell, int in_fork)
 	if (!in_fork)
 		main_redirection(shell);
 	if (tmp == ECHO_M)
-		shell->ret = ft_echo(shell->cmd->token + 1);
+		shell->ret = ft_echo(shell->cmd->token);
 	else if (tmp == ENV_M)
 		shell->ret = ft_env(shell);
 	else if (tmp == CD_M)
-		shell->ret = ft_cd(*shell->cmd->token + 1, shell);
+		shell->ret = ft_cd(shell->cmd->token + 1, shell);
 	else if (tmp == EXPORT_M)
-		shell->ret = ft_export(*shell->cmd->token, shell);
+		shell->ret = ft_export(shell->cmd->token, shell);
 	if (!in_fork)
 		swap_fds(shell->std_in, shell->std_out);
 	shell->std_in = 0;
@@ -140,19 +140,19 @@ int	ft_env(t_shell *shell)
 	int	a;
 
 	i = 0;
-	while(g_env[i])
+//	while(g_env[i])
 	{
-		if (!ft_strncmp(g_env[i],"PWD",3))
+//		if (!ft_strncmp(g_env[i],"PWD",3))
 		{
 			a = i;
-			g_env[i] = "PWD=";
-			g_env[i] = ft_strjoin(g_env[i],getcwd(NULL,sizeof(char *)));
+		//	g_env[i] = "PWD=";
+		//	g_env[i] = ft_strjoin(g_env[i],getcwd(NULL,sizeof(char *)));
 		}
-		printf("%s\n",g_env[i]);
+	//	printf("%s\n",g_env[i]);
 		i++;
 	}
 	if (oldpwd != NULL)
 		printf("OLDPWD=%s\n",oldpwd);
-	oldpwd = (g_env[a] + 4);
+	//oldpwd = (g_env[a] + 4);
 	return (1);
 }

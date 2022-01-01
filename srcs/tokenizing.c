@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 22:55:45 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/29 13:31:40 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/01 16:15:44 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,14 @@ int	parse_quotes_args(t_vars *vars, int *i, t_cmd *tmp)
 	int	ret;
 
 	ret = 0;
-	if (ft_strncmp(&vars->str[*i], "\'", 1) == 0)
+	if (ft_strncmp(&vars->str[*i], "\'", 1) == 0
+			&& get_type(vars->env, *i) != ENVS)
 		ret = parse_simple_quote(vars, tmp, *i) + 1;
-	else if (ft_strncmp(&vars->str[*i], "\"", 1) == 0)
+	else if (ft_strncmp(&vars->str[*i], "\"", 1) == 0
+			&& get_type(vars->env, *i) != ENVS)
 		ret = parse_double_quote(vars, tmp, *i) + 1;
-	else if (vars->str[*i] == '<' || vars->str[*i] == '>')
+	else if ((vars->str[*i] == '<' || vars->str[*i] == '>')
+			&& get_type(vars->env, *i) != ENVS)
 		ret = redirection(vars, tmp, *i);
 	*i += ret;
 	if (ret == -1)
@@ -96,7 +99,8 @@ int	parse_pipes(t_vars *vars, int *i, t_cmd **tmp, int len)
 	int	ret;
 
 	ret = 0;
-	if (ft_strncmp(&vars->str[*i], "|", 1) == 0)
+	if (ft_strncmp(&vars->str[*i], "|", 1) == 0
+			&& get_type(vars->env, *i) != ENVS)
 	{
 		//printf("str[%c]\n", vars->str[i]);
 		if (pipe_handler(vars, *i, len, tmp) == -1)
@@ -153,6 +157,24 @@ int	parse_loop(t_vars *vars, int len)
  * so find out its indexes of start and end and its type.
  */
 
+/*int	check_empty(t_vars *vars)
+{
+	if (!vars->cmd->token[0] && !vars->cmd->redirection[0]
+			&& vars->quotes->start != -1)
+	{
+		printf("minish: %s: command not found\n", *vars->cmd->token);
+		g_ptr = 127;
+		return (-1);
+	}
+	else if (!vars->cmd->token[0] && !vars->cmd->redirection[0]
+			&& vars->env->start != -1)
+	{
+		g_ptr = 0;
+		return (-1);
+	}
+	return (0);
+}*/
+
 int	tokenizing(t_shell *shell)
 {
 	t_vars	vars;
@@ -160,7 +182,10 @@ int	tokenizing(t_shell *shell)
 
 	shell->cmd = init_cmd();
 	if (!shell->cmd)
+	{
+		free_envs(shell->env);
 		perror("Close");
+	}
 	init_vars(&vars, shell);
 	len = ft_strlen(vars.str);
 	parse_quotes(&vars, len);

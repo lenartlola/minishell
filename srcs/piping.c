@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 22:07:59 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/30 14:35:18 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/01 14:49:24 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,10 @@ int	get_pipes(t_shell *shell)
 
 int	check_after_pipe(t_vars *vars, int i, int len, t_cmd *tmp)
 {
-	if (!tmp->token[0])
+	if (!tmp->token[0] && !tmp->redirection[0])
 	{
 		printf("minnishell: syntax error near unexpected token `|'\n");
+		*vars->last_ret = 258;
 		return (-1);
 	}
 	i += trim_spaces(&vars->str[i]);
@@ -95,6 +96,7 @@ int	check_after_pipe(t_vars *vars, int i, int len, t_cmd *tmp)
 		if (vars->str[i] == '|')
 		{
 			printf("minishell: syntax error near unexpected token `|'\n");
+			*vars->last_ret = 258;
 			return (-1);
 		}
 		else
@@ -102,6 +104,7 @@ int	check_after_pipe(t_vars *vars, int i, int len, t_cmd *tmp)
 		i++;
 	}
 	printf("minishell: unxpected error\n");
+	*vars->last_ret = 258;
 	return (-1);
 }
 

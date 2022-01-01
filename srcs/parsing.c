@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 09:57:44 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/31 20:10:24 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/01 15:47:12 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ int	heredoc(t_shell *shell)
 	int		i;
 
 	cmd = shell->cmd;
-	//i = -1;
 	while (shell->cmd)
 	{
 		i = -1;
@@ -129,10 +128,9 @@ int	launch(t_shell *shell, int *status, char **env)
 	first = 1;
 	while (shell->cmd)
 	{
-		if (!shell->cmd->next && is_builtin(*shell->cmd->token))
+		if (first && !shell->cmd->next && is_builtin(*shell->cmd->token))
 		{
 			exec_built_in(shell, 0);
-			//get_cmd(shell);
 			*status = -1;
 		}
 		else
@@ -157,17 +155,14 @@ void	parsing(t_shell *shell, char **env)
 	t_cmd	*ptr;
 
 	status = 0;
+	shell->error = 0;
 	ptr = shell->cmd;
 	if (heredoc(shell))
 	{
-		//printf("FSign\n");
 		if (!launch(shell, &status, env))
 			close_fds(ptr);
-		if (status != -1)
-		{
-			printf("Sign\n");
+		if (status != -1 && !shell->error)
 			wait_all_process(ptr, shell);
-		}
 	}
 	free_cmd(ptr);
 	shell->cmd = NULL;

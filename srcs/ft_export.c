@@ -45,11 +45,11 @@ int	ft_export(char **cmd, t_shell *shell)
 		i++;
 	if (cmd[1] == NULL)
 	{
-		g_env = sort(shell->ev,i);
+//		g_env = sort(shell->ev,i);
 		i = 0;
-		while(g_env[i])
+//		while(g_env[i])
 		{
-			printf("declare -x %s\n",g_env[i]);
+//			printf("declare -x %s\n",g_env[i]);
 			i++;
 		}
 	}

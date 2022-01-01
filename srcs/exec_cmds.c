@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 21:41:20 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2021/12/31 20:12:13 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/01 16:26:27 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int spawn_proc (int in, int out,char ***av, char  **env)
 		}
 		//printf("av[i] : %s", av[1][0]);
 		//return execve (*av[0],*av, env);
+		//printf("env : %s\n", *g_env);
 		return execve(*av[0], *av, env);
 	}
 	return (1);
@@ -70,6 +71,8 @@ int fork_pipes (int n, char ***av, char **env, t_shell *shell)
 
 int	exec_pipe_cmd(t_shell *shell, char **env, int fd_in)
 {
+	char	**ptr;
+
 	child_handler(shell);
 	shell->cmd->pid = fork();
 	if (shell->cmd->pid == 0)
@@ -80,36 +83,22 @@ int	exec_pipe_cmd(t_shell *shell, char **env, int fd_in)
 		if (exec_built_in(shell, 1))
 			exit(shell->ret);
 		shell->cmd->path = check_cmd(*shell->cmd->token, shell);
+		//printf("path : %s\n", shell->cmd->path);
 		if (!shell->cmd->path)
 		{
 			free_cmd(shell->cmd);
 			exit (EXIT_FAILURE);
 		}
-		printf("Path : %s", shell->cmd->path);
-		execve(shell->cmd->path, shell->cmd->token, env);
+		//printf("Path : %s", shell->cmd->path);
+		ptr = get_env_array(shell->env);
+		printf("ENV : %s\n", *ptr);
+		execve(shell->cmd->path, shell->cmd->token, ptr);
 		perror(*shell->cmd->token);
 		exit(EXIT_FAILURE);
 	}
 	else if (shell->cmd->pid == -1)
 		perror("pipe execution fork\n");
-	/*int		fd[2];
-	pid_t	pid;
-	int i; 
-
-	i = 0;
-	if (shell->pipe_cmd_exist == 1)
-		pid = fork();
-	if (pid == 0)
-	{
-		//i = fork_pipes(shell->n_pipes,shell->cmds_pipe, env);
-		//i = fork_pipes(shell->n_pipes, &shell->cmd->token, env, shell);
-		//printf("fork %s\n", &shell->cmd->token);
-	}
-	else if (pid > 0)
-		waitpid(pid, 0, 0);
-	if (i < 0)
-		return (0);
-	return (1);*/
+	return (0);
 }
 
 void	exec_path_cmd(char *path, t_shell *shell)

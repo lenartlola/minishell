@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:57:56 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/31 13:39:45 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/01 13:40:13 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int	redirection_type(char *redirection)
 	int	mode;
 
 	mode = -1;
+	//printf("Mode test\n");
 	redirection_in(redirection, &mode);
 	redirection_out(redirection, &mode);
 	return (mode);
@@ -126,11 +127,12 @@ int	apply_redirection(t_shell *shell, char *filename, int mode)
 	if (mode == REDIRECT_IN)
 		f_fd = open(filename, O_RDONLY);
 	else if (mode == REDIRECT_OUT)
-		f_fd = open(filename, O_CREAT | O_RDWR | O_TRUNC, 0644);
+		f_fd = open(filename, O_CREAT | O_RDWR | O_TRUNC, 00644);
 	else if (mode == REDIRECT_D_OUT)
-		f_fd = open(filename, O_CREAT | O_RDWR, O_APPEND, 0644);
+		f_fd = open(filename, O_CREAT | O_RDWR, O_APPEND, 00644);
 	if (f_fd == -1)
 	{
+		shell->ret = 1;
 		perror(filename);
 		return (EXIT_FAILURE);
 	}
@@ -146,6 +148,7 @@ void	redirection_handler(t_shell *shell)
 	int	red;
 	int	i;
 
+	//printf("redirection test\n");
 	i = -1;
 	while (shell->cmd->redirection[++i])
 	{
@@ -154,6 +157,8 @@ void	redirection_handler(t_shell *shell)
 			continue ;
 		red = redirection_type(shell->cmd->redirection[i]);
 		i++;
+		//printf("red : %i\n", red);
+		//printf("filename : %s\n", shell->cmd->redirection[i]);
 		if (apply_redirection(shell, shell->cmd->redirection[i], red) == 1)
 				break ;
 	}

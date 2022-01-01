@@ -6,13 +6,13 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/31 21:02:26 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/01 16:03:31 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-char **g_env = NULL;
+int	*g_ptr;
 
 /*
  * Init a nice prompt, Init a new line, 
@@ -52,31 +52,27 @@ void	init_line(t_shell *shell)
 void	init_shell(t_shell *shell, char **env)
 {
 	shell->cmdline = NULL;
-	shell->ev = ft_calloc(sizeof(env), 100);
-	shell->ev = env;
+	shell->env = get_envs(env);
 	shell->cmd = NULL;
 	shell->ret = 0;
 	shell->std_in = 0;
 	shell->std_out = 0;
 	tcgetattr(0, &shell->term);
-	//g_env = &shell->ret;
+	g_ptr = &shell->ret;
 }
 
 int	main(int argc, char **argv, char **env)
 {
 	t_shell	shell;
 
-//	check_tty();
 	init_ascii();
-	//shell.ev = env;
 	init_shell(&shell, env);
 	while (1)
 	{
-		//g_env = NULL;
-		//signal(SIGINT, (void (*)(int))blocksig);
 		parrent_handler();
 		init_line(&shell);
-		if (shell.cmdline && !(ft_strncmp(shell.cmdline, "exit", 4)) && ft_strlen(shell.cmdline) == 4)
+		if (shell.cmdline && !(ft_strncmp(shell.cmdline, "exit", 4))
+				&& ft_strlen(shell.cmdline) == 4)
 		{
 			//free_struct(&shell);
 			rl_clear_history();
@@ -84,7 +80,7 @@ int	main(int argc, char **argv, char **env)
 		}
 		if (shell.cmdline)
 		{
-			g_env = env;
+			//g_env = env;
 			add_history(shell.cmdline);
 			if (tokenizing(&shell) == -1)
 				continue ;
