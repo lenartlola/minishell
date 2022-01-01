@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 16:24:35 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/01 18:38:48 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/01 21:02:58 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ int	add_slash(char **path)
 	char	*tmp;
 	int		i;
 
-	i = -1;
-	while (path[++i])
+	i = 0;
+	while (path[i])
 	{
 		tmp = ft_strjoin(path[i], "/");
 		if (!tmp)
@@ -63,6 +63,7 @@ int	add_slash(char **path)
 		}
 		free(path[i]);
 		path[i] = tmp;
+		i++;
 	}
 	return (1);
 }
@@ -96,6 +97,7 @@ int	check_path_and_permission(char *path, t_cmd *cmd, t_shell *shell, char **per
 	}
 	if (cmd->path != NULL)
 		free(cmd->path);
+	cmd->path = ft_strdup(path);
 	if (access(path, X_OK) != 0)
 	{
 		if (*per == NULL)
@@ -119,6 +121,8 @@ void	search_path(char **tmp_path, t_shell *shell)
 	while (tmp_path[++i])
 	{
 		path = ft_strjoin(tmp_path[i], *shell->cmd->token);
+		if (path == NULL)
+			return ;
 		if (check_path_and_permission(path, shell->cmd, shell, &per))
 		{
 			free(path);
@@ -147,10 +151,11 @@ int	get_path_exec(t_shell *shell)
 	t_env	*env;
 	char	**tmp_path;
 
+	env = shell->env;
 	if (absolute_path(shell))
 		return (shell->ret);
 	tmp_path = split_tab(shell->env);
-	if (tmp_path == NULL || !*env->value)
+	if (tmp_path == NULL || (check_path_env(&env, "PATH") && !env->value) || !*env->value)
 	{
 		//(check_path_env(&env, "PATH") && !env->value)
 		shell->cmd->path = ft_strdup(*shell->cmd->token);

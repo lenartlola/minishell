@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 21:41:20 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2022/01/01 18:00:29 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/01 20:53:54 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	exec_pipe_cmd(t_shell *shell, char **env, int fd_in)
 		close_unused_fd(shell, fd_in);
 		redirection_handler(shell);
 		swap_fds(shell->cmd->in, shell->cmd->out);
+		if (shell->error)
+			exit(EXIT_FAILURE);
 		if (exec_built_in(shell, 1))
 			exit(shell->ret);
 		//shell->cmd->path = check_cmd(*shell->cmd->token, shell);
