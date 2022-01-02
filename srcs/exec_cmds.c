@@ -48,6 +48,19 @@ int	exec_pipe_cmd(t_shell *shell, char **env, int fd_in)
 	return (0);
 }
 
+int exec_built_in(t_shell *shell, int in_fork)
+{
+	int	tmp;
+
+	if (*shell->cmd->token)
+	{
+		tmp = is_builtin(*shell->cmd->token);
+		if (tmp != N_B_IN)
+			return launch_builtin(tmp, shell, in_fork);
+	}
+	return (0);
+}
+
 void	exec_path_cmd(char *path, t_shell *shell)
 {
 	int		status;
