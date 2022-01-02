@@ -123,6 +123,7 @@ typedef struct	s_shell
 	struct termios term;
 }	t_shell;
 
+int	launch_builtin(int tmp, t_shell *shell, int in_fork);
 int	check_path_env(t_env **env, char *name);
 int	get_path_exec(t_shell *shell);
 t_env	*get_envs(char **m_env);
