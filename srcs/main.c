@@ -6,14 +6,14 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/02 15:04:48 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2022/01/02 16:08:13 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-int	*g_ptr;
-//char	**g_env = NULL;
+//int	*g_ptr;
+char	**g_env = NULL;
 /*
  * Init a nice prompt, Init a new line, 
  * wait to user promt. verify if there is some strings
@@ -58,7 +58,7 @@ void	init_shell(t_shell *shell, char **env)
 	shell->std_in = 0;
 	shell->std_out = 0;
 	tcgetattr(0, &shell->term);
-	g_ptr = &shell->ret;
+	//g_ptr = &shell->ret;
 }
 
 int	main(int argc, char **argv, char **env)

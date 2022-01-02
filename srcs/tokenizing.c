@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 22:55:45 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2022/01/02 11:27:56 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2022/01/02 16:10:58 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,23 +157,23 @@ int	parse_loop(t_vars *vars, int len)
  * so find out its indexes of start and end and its type.
  */
 
-/*int	check_empty(t_vars *vars)
+int	check_empty(t_vars *vars)
 {
 	if (!vars->cmd->token[0] && !vars->cmd->redirection[0]
 			&& vars->quotes->start != -1)
 	{
 		printf("minish: %s: command not found\n", *vars->cmd->token);
-		g_ptr = 127;
+		//g_ptr = 127;
 		return (-1);
 	}
 	else if (!vars->cmd->token[0] && !vars->cmd->redirection[0]
 			&& vars->env->start != -1)
 	{
-		g_ptr = 0;
+		//g_ptr = 0;
 		return (-1);
 	}
 	return (0);
-}*/
+}
 
 int	tokenizing(t_shell *shell)
 {
@@ -190,7 +190,7 @@ int	tokenizing(t_shell *shell)
 	len = ft_strlen(vars.str);
 	parse_quotes(&vars, len);
 	len = ft_strlen(vars.str);
-	if (parse_loop(&vars, len) == -1)
+	if (parse_loop(&vars, len) == -1 || check_empty(&vars) == -1)
 	{
 		//check_empty(&vars) == -1
 		c_free_vars(&vars);

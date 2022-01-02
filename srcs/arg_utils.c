@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 12:26:35 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/02 11:55:05 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2022/01/02 16:12:33 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	args_loop(t_vars *vars, int *i)
 	return (0);
 }
 
-int	check_empty(t_vars *vars)
+/*int	check_empty(t_vars *vars)
 {
 	if (!vars->cmd->token[0] && vars->quotes->start != -1)
 	{
@@ -111,7 +111,7 @@ int	check_empty(t_vars *vars)
 		return (-1);
 	}
 	return (0);
-}
+}*/
 
 int	args_to_word(t_vars *vars, t_cmd *current, int i)
 {
