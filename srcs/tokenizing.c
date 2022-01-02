@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 22:55:45 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2022/01/01 16:15:44 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/02 11:27:56 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	parse_quotes_args(t_vars *vars, int *i, t_cmd *tmp)
 			&& get_type(vars->env, *i) != ENVS)
 		ret = redirection(vars, tmp, *i);
 	*i += ret;
-	if (ret == -1)
+	if (ret == -1 || ret == -254 || ret == -255)
 		return (-1);
 	return (ret);
 }
@@ -199,10 +199,6 @@ int	tokenizing(t_shell *shell)
 	}
 	free(vars.str);
 	free_quotes(vars.quotes);
+	free_quotes(vars.env);
 	return (0);
-	/*shell->n_pipes = pipe_counter(shell->cmdline, '|');
-	if (shell->n_pipes)
-		tokenizing_pipe(shell);
-	else
-		shell->tokens = ft_split(shell->cmdline, ' ');*/
 }

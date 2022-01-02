@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 11:49:31 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/22 20:13:24 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/02 11:19:27 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,13 +109,13 @@ int	is_quote(t_vars *vars, int i)
 
 char	*substr_quote(t_vars *vars, int start, int end)
 {
-	//int		cut;
+	int		cut;
 	char	*tmp;
 	int		i;
 
-	//cut = quote_counter(vars, start, end);
-	//tmp = malloc(sizeof(char) * (end - start - cut + 2));
-	tmp = malloc(sizeof(char) * (end - start + 2));
+	cut = quote_counter(vars, start, end);
+	tmp = malloc(sizeof(char) * (end - start - cut + 2));
+//	tmp = malloc(sizeof(char) * (end - start + 2));
 	if (!tmp)
 		return (NULL);
 	i = 0;

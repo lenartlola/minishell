@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:57:56 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/01 13:40:13 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/02 14:43:11 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 
 int	args_r_handler(t_vars *vars, int *i)
 {
-	if (is_sep(vars->str[*i]))
+	if (is_sep(vars->str[*i]) && get_type(vars->env, *i) != ENVS)
 	{
 		ft_printf("minish: syntax error near unexpected token `%c'\n", vars->str[*i]);
+		*vars->last_ret = 258;
 		return (-1);
 	}
-	else if (vars->str[*i] == '\0')
+	else if (vars->str[*i] == '\0' && get_type(vars->env, (*i - 1) != ENVS))
 	{
 		printf("minish: syntax error near unexpected token `newline'\n");
+		*vars->last_ret = 258;
 		return (-1);
 	}
 	return (1);
@@ -58,7 +60,11 @@ int	redirection(t_vars *vars, t_cmd *current, int i)
 		j++;
 	tmp = ft_substr(vars->str, i, j - i);
 	if (!tmp)
+	{
 		free_vars(vars);
+		perror("Redirection error\n");
+		exit(-1);
+	}
 	current->redirection = append_args(current->redirection, tmp);
 	if (!current->redirection)
 		free_vars(vars);
@@ -72,7 +78,7 @@ int	redirection(t_vars *vars, t_cmd *current, int i)
 	current->redirection = append_args(current->redirection, tmp);
 	if (!current->redirection)
 		free_vars(vars);
-	return (k - j);
+	return (k - i);
 }
 
 /* ########################################################### */
@@ -124,18 +130,20 @@ int	apply_redirection(t_shell *shell, char *filename, int mode)
 	int	f_fd;
 
 	f_fd = -1;
-	if (mode == REDIRECT_IN)
-		f_fd = open(filename, O_RDONLY);
-	else if (mode == REDIRECT_OUT)
+	if (mode == REDIRECT_OUT)
 		f_fd = open(filename, O_CREAT | O_RDWR | O_TRUNC, 00644);
 	else if (mode == REDIRECT_D_OUT)
-		f_fd = open(filename, O_CREAT | O_RDWR, O_APPEND, 00644);
+		f_fd = open(filename, O_CREAT | O_RDWR | O_APPEND, 00644);
+	else if (mode == REDIRECT_IN)
+		f_fd = open(filename, O_RDONLY);
 	if (f_fd == -1)
 	{
 		shell->ret = 1;
+		shell->error = 1;
 		perror(filename);
 		return (EXIT_FAILURE);
 	}
+	shell->ret = 0;
 	if (mode == REDIRECT_OUT || mode == REDIRECT_D_OUT)
 		dup_and_close(f_fd, shell->cmd->out);
 	else

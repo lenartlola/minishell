@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 19:21:59 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/31 20:04:05 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/02 11:28:56 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	child_handler(t_shell *shell)
 
 /* ########################################## */
 
-void	sig_parrent(sig)
+void	sig_parrent(int sig)
 {
 	if (sig == SIGINT)
 	{

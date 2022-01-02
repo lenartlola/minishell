@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 12:26:35 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/30 17:35:14 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/02 11:55:05 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,13 @@ int	args_loop(t_vars *vars, int *i)
 	int	len;
 	int	ret;
 
+	ret = 0;
 	len = ft_strlen(vars->str);
 	while (*i < len)
 	{
 		if (vars->str[*i] == ' ')
 			break ;
-		if (is_sep(vars->str[*i]))
+		if (is_sep(vars->str[*i]) && get_type(vars->env, *i) != ENVS)
 			break ;
 		else if (ft_strncmp(&vars->str[*i], "\'", 1) == 0)
 		{

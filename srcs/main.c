@@ -6,14 +6,14 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/01 16:03:31 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/02 15:04:48 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
 int	*g_ptr;
-
+//char	**g_env = NULL;
 /*
  * Init a nice prompt, Init a new line, 
  * wait to user promt. verify if there is some strings
@@ -80,22 +80,13 @@ int	main(int argc, char **argv, char **env)
 		}
 		if (shell.cmdline)
 		{
-			//g_env = env;
 			add_history(shell.cmdline);
 			if (tokenizing(&shell) == -1)
 				continue ;
-			if (*shell.cmd->token)
+			if (*shell.cmd->token || *shell.cmd->redirection)
 			{
 				parsing(&shell, env);
 			}
-			//if (shell.n_pipes)
-			//{
-				//if (shell.pipe_flag == 1)
-					//printf("tkn : %s, %s\n", shell.cmd->token[0], shell.cmd->token[1]);
-							//exec_pipe_cmd(&shell, env);
-				//else if (shell.pipe_flag == 0)
-				//	printf("minishell: syntax error near unexpected token `%s'\n", shell.cmdline);
-			//}
 		}
 		//free(shell.cmdline);
 	}

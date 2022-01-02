@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 14:06:39 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/01 16:23:59 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/02 15:19:24 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_putstring(char *s, int fd)
 {
 	write(fd, s, ft_strlen(s));
-	write(fd, "\n", 1);
+	//write(fd, "\n", 1);
 }
 
 void	close_heredoc_fds(t_cmd *ptr)
@@ -57,11 +57,16 @@ void	child_heredoc(int *fd, char *delim)
 
 	signal(SIGINT, SIG_DFL);
 	close_error(fd[0]);
+	ft_putstring("> ", 1);
 	line = get_next_line(0);
 	while (line)
 	{
+		//printf("diff : %i\n", ft_strncmp(delim, line, ft_strlen(delim)));
 		if (ft_strncmp(delim, line, ft_strlen(delim)) == 0)
 			break ;
+		//printf(">");
+		//ft_putchar_fd('>', 1);
+		ft_putstring("> ", 1);
 		ft_putstring(line, fd[1]);
 		free(line);
 		line = get_next_line(0);
@@ -76,6 +81,7 @@ int	parse_heredoc(char *delim, t_shell *shell, t_cmd *ptr)
 	int	fd[2];
 	int	pid;
 
+	//printf("parse_heredoc works\n");
 	if (pipe(fd) == -1)
 	{
 		perror("Heredoc pipe\n");
