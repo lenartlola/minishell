@@ -65,19 +65,6 @@ int	launch_builtin(int tmp, t_shell *shell, int in_fork)
 	return (1);
 }
 
-int exec_built_in(t_shell *shell, int in_fork)
-{
-	int	tmp;
-
-	if (*shell->cmd->token)
-	{
-		tmp = is_builtin(*shell->cmd->token);
-		if (tmp != N_B_IN)
-			return launch_builtin(tmp, shell, in_fork);
-	}
-	return (0);
-}
-
 int	ft_cd(char **cmd, t_shell *shell)
 {
 
