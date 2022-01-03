@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 20:43:20 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/03 10:22:22 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/03 18:49:37 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,17 +143,11 @@ int	check_path_env(t_env **env, char *name)
 
 	if (env)
 	{
-		//printf("TEST\n");
 		ptr = *env;
-		//printf("env : %s\n", name);
 		while (*env)
 		{
-		//	printf("(env) -> name : %s\n", (*env)->name);
 			if (ft_strcmp((*env)->name, name) == 0)
-			{
-		//		printf("TESTO\n");
 				return (1);
-			}
 			*env = (*env)->next;
 		}
 		*env = ptr;
