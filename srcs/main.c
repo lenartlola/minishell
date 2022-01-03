@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/02 16:08:13 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2022/01/03 09:31:18 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	init_line(t_shell *shell)
 
 /*
  * The core of the program.
- * Init a shell structure with some utilities, refer to minishell.h
+ * Init a shell structure with some utilities, refer to "minishell.h".
  * if cmdline is exit and no more strings exist, free the allocated
  * memory and leave the program.
  * if some strings are given then add a history and pass to tokenizing part.

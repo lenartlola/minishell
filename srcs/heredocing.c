@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 14:06:39 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/02 15:19:24 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2022/01/03 09:54:44 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	child_heredoc(int *fd, char *delim)
 
 	signal(SIGINT, SIG_DFL);
 	close_error(fd[0]);
-	ft_putstring("> ", 1);
+	ft_putstr_fd("> ", 1);
 	line = get_next_line(0);
 	while (line)
 	{
@@ -66,8 +66,8 @@ void	child_heredoc(int *fd, char *delim)
 			break ;
 		//printf(">");
 		//ft_putchar_fd('>', 1);
-		ft_putstring("> ", 1);
-		ft_putstring(line, fd[1]);
+		ft_putstr_fd("> ", 1);
+		ft_putstr_fd(line, fd[1]);
 		free(line);
 		line = get_next_line(0);
 	}

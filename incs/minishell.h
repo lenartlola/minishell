@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/02 15:04:58 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2022/01/03 09:40:33 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ extern int *g_ptr;
 typedef struct s_quotes	t_quotes;
 typedef struct s_cmd	t_cmd;
 typedef struct s_env	t_env;
+
 typedef enum	s_builtin_cmd
 {
 	N_B_IN,

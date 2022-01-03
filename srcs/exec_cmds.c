@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 21:41:20 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2022/01/02 15:11:17 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2022/01/03 09:30:09 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	exec_pipe_cmd(t_shell *shell, char **env, int fd_in)
 		//if (shell->ret > 0)
 		if (!shell->cmd->path)
 		{
+			printf("minish: %s: command not found\n", *shell->cmd->token);
 			free_cmd(shell->cmd);
 			exit (EXIT_FAILURE);
 		}
