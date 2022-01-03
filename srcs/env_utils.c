@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 20:43:20 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/02 12:20:57 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2022/01/03 10:22:22 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,26 +137,6 @@ t_env	*get_envs(char	**m_env)
 	return (env);
 }
 
-int	qd_strcmp(const char *s1, const char *s2)
-{
-	size_t			i;
-	unsigned char	*s1b;
-	unsigned char	*s2b;
-
-	i = 0;
-	s1b = (unsigned char *)s1;
-	s2b = (unsigned char *)s2;
-	if (!s1 || !s2)
-		return (-1);
-	while (s1b[i] || s2b[i])
-	{
-		if (s1b[i] != s2b[i])
-			return (s1b[i] - s2b[i]);
-		i++;
-	}
-	return (0);
-}
-
 int	check_path_env(t_env **env, char *name)
 {
 	t_env	*ptr;
@@ -169,7 +149,7 @@ int	check_path_env(t_env **env, char *name)
 		while (*env)
 		{
 		//	printf("(env) -> name : %s\n", (*env)->name);
-			if (qd_strcmp((*env)->name, name) == 0)
+			if (ft_strcmp((*env)->name, name) == 0)
 			{
 		//		printf("TESTO\n");
 				return (1);
