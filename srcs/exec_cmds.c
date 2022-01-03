@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 21:41:20 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2022/01/03 16:06:28 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/03 18:38:38 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,13 @@ int	exec_pipe_cmd(t_shell *shell, char **env, int fd_in)
 		if (exec_built_in(shell, 1))
 			exit(shell->ret);
 		shell->cmd->path = check_cmd(*shell->cmd->token, shell);
-		//shell->ret = get_path_exec(shell);
-		//printf("path : %s\n", shell->cmd->path);
-		//if (shell->ret > 0)
 		if (!shell->cmd->path)
 		{
 			printf("minish: %s: command not found\n", *shell->cmd->token);
 			free_cmd(shell->cmd);
 			exit (EXIT_FAILURE);
 		}
-		//printf("Path : %s", shell->cmd->path);
 		ptr = get_env_array(shell->env);
-		printf("ENV : %s\n", shell->cmd->path);
 		execve(shell->cmd->path, shell->cmd->token, ptr);
 		perror(*shell->cmd->token);
 	//	exit(EXIT_FAILURE);

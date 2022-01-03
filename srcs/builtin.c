@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 15:59:03 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/03 15:44:30 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/03 18:34:22 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,43 @@ int	launch_builtin(int tmp, t_shell *shell, int in_fork)
 	shell->std_out = 1;
 	return (1);
 }
+void	updatepwd(t_shell *shell, char *pwd)
+{
+	t_env *tmp;
 
+	tmp = shell->env;
+	while (tmp)
+	{
+		if (!ft_strcmp(tmp->name,"PWD"))
+			getcwd(tmp->value,100);
+		else if (!ft_strcmp(tmp->name, "OLDPWD"))
+		{
+			tmp->value = pwd;
+			pwd = NULL;
+		}
+		tmp = tmp->next;
+	}
+	if (pwd)
+	{
+		tmp = new_env("OLDPWD", pwd);
+		env_add_back(&shell->env,tmp);
+	}
+}		
 int	ft_cd(char **cmd, t_shell *shell)
 {
+	t_env *tmp;
+	char *pwd;
 
+	pwd = malloc(sizeof(char) * 100);
+	getcwd(pwd,100);
 	if (cmd[0] == NULL)
 		cmd[0] = getenv("HOME");
-	getcwd(shell->ev[31],100);
-//	shell->ev[31] = ft_strjoin("OLDPWD=",shell->ev[31]);
 	if (chdir(cmd[0]) != 0)
 	{
 		printf("cd: no such file or directory: %s\n",cmd[0]);
 		return (0);
 	}
+	updatepwd(shell, pwd);
 	init_prompt(shell);
 	return (1);
 }
@@ -110,6 +134,11 @@ int	ft_echo(char **cmd)
 	int	i;
 	
 	i = 1;
+	if (!cmd[i])
+	{
+		printf("\n");
+		return (1);
+	}
 	while(cmd[i])
 	{
 		if(i == 1 && (!ft_strncmp(cmd[1], "-n",ft_strlen(cmd[1]))))

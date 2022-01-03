@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 09:57:44 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2022/01/03 14:56:01 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/03 18:35:28 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,38 @@ int	launch(t_shell *shell, int *status, char **env)
 	}
 	return (1);
 }
+char	*parse_dol(char *tr, t_shell *shell,char *shellvar)
+{
+	t_env *tmp;
+	tmp = shell->env;
+	if (shellvar[0] == '?')
+		tr = ft_itoa(shell->lreturn);
+	else 
+	{
+		while (tmp)
+		{
+			if (!ft_strcmp(tmp->name, shellvar))
+			{
+				tr = ft_strdup(tmp->value);
+				return (tr);
+			}
+			tmp = tmp->next;
+		}
+	}
+	return (NULL);
+}
+void	parse_var(t_shell *shell)
+{
+	int	i;
 
+	i = 0;
+	while (shell->cmd->token[i])
+	{
+		if (ft_strchr(shell->cmd->token[i], '$'))
+			shell->cmd->token[i] = parse_dol(shell->cmd->token[i], shell, shell->cmd->token[i] + 1);
+		i++;
+	}
+}
 void	parsing(t_shell *shell, char **env)
 {
 	int		status;
@@ -159,6 +190,7 @@ void	parsing(t_shell *shell, char **env)
 	status = 0;
 	shell->error = 0;
 	ptr = shell->cmd;
+	parse_var(shell);
 	if (heredoc(shell))
 	{
 		if (!launch(shell, &status, env))
