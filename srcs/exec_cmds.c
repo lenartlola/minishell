@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 21:41:20 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2022/01/03 09:30:09 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/03 16:06:28 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 int	exec_pipe_cmd(t_shell *shell, char **env, int fd_in)
 {
 	char	**ptr;
-
+	int status;
+	
 	child_handler(shell);
 	shell->cmd->pid = fork();
 	if (shell->cmd->pid == 0)
@@ -39,13 +40,16 @@ int	exec_pipe_cmd(t_shell *shell, char **env, int fd_in)
 		}
 		//printf("Path : %s", shell->cmd->path);
 		ptr = get_env_array(shell->env);
-		//printf("ENV : %s\n", *ptr);
+		printf("ENV : %s\n", shell->cmd->path);
 		execve(shell->cmd->path, shell->cmd->token, ptr);
 		perror(*shell->cmd->token);
-		exit(EXIT_FAILURE);
+	//	exit(EXIT_FAILURE);
 	}
 	else if (shell->cmd->pid == -1)
 		perror("pipe execution fork\n");
+	else if (shell->cmd->pid > 0)
+		waitpid(shell->cmd->pid, &status,WCONTINUED);
+	shell->lreturn = WEXITSTATUS(status);
 	return (0);
 }
 

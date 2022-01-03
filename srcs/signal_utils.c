@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 19:21:59 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/02 11:28:56 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2022/01/03 12:27:08 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	sig_parrent(int sig)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();
-		rl_replace_line("", 0);
+	//	rl_replace_line("", 0);
 		rl_redisplay();
 //		*g_env = 1;
 	}

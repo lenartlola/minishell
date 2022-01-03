@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/03 09:31:18 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/03 16:27:22 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,16 @@ char	**g_env = NULL;
 
 void	init_line(t_shell *shell)
 {
+	char *line;
+	line = NULL;
 	if (!shell->cmdline)
 		init_prompt(shell);
 	signal(SIGQUIT, SIG_IGN);
 	rl_replace_line("",0);
-	shell->cmdline = readline(shell->prompt);
+//	printf("\ncmd -> line %s\n \n", shell->cmdline);
+	line = readline(shell->prompt);
+	shell->cmdline = line;
+//	printf("\n cmd line %s\n",shell->cmdline);
 	if (!shell->cmdline)
 	{
 		if (shell->cmdline != NULL)
@@ -55,6 +60,7 @@ void	init_shell(t_shell *shell, char **env)
 	shell->env = get_envs(env);
 	shell->cmd = NULL;
 	shell->ret = 0;
+	shell->lreturn = 0;
 	shell->std_in = 0;
 	shell->std_out = 0;
 	tcgetattr(0, &shell->term);
@@ -69,6 +75,7 @@ int	main(int argc, char **argv, char **env)
 	init_shell(&shell, env);
 	while (1)
 	{
+//		init_shell(&shell, env);
 		parrent_handler();
 		init_line(&shell);
 		if (shell.cmdline && !(ft_strncmp(shell.cmdline, "exit", 4))

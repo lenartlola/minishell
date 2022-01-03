@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 22:55:45 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2022/01/03 10:23:48 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/03 17:11:07 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,8 +173,7 @@ int	check_empty(t_vars *vars)
 		return (-1);
 	}
 	return (0);
-}
-
+} 
 
 /*
  * 
@@ -191,6 +190,7 @@ int	tokenizing(t_shell *shell)
 		free_envs(shell->env);
 		perror("Close");
 	}
+	vars.lreturn = shell->lreturn;
 	init_vars(&vars, shell);
 	len = ft_strlen(vars.str);
 	parse_quotes(&vars, len);

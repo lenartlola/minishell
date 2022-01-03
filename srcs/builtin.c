@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 15:59:03 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/01 16:06:03 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/03 15:44:30 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,14 @@ int	is_builtin(char *arg)
 		cmd = EXPORT_M;
 	else if (ft_strcmp("unset", arg) == 0)
 		cmd = UNSET_M;
+	else if (ft_strcmp("env", arg) == 0)
+		cmd = ENV_M;
 	return (cmd);
 }
 
-void	main_redirection(t_shell *shell)
+/*void	main_redirection(t_shell *shell)
 {
-	if (*shell->cmd->redirection)
+	if (!*shell->cmd->redirection)
 	{
 		shell->std_in = dup(0);
 		if (shell->std_in == -1)
@@ -45,11 +47,11 @@ void	main_redirection(t_shell *shell)
 		redirection_handler(shell);
 	}
 }
-
+*/
 int	launch_builtin(int tmp, t_shell *shell, int in_fork)
 {
-	if (!in_fork)
-		main_redirection(shell);
+//	if (in_fork)
+//		main_redirection(shell);
 	if (tmp == ECHO_M)
 		shell->ret = ft_echo(shell->cmd->token);
 	else if (tmp == ENV_M)
@@ -58,6 +60,8 @@ int	launch_builtin(int tmp, t_shell *shell, int in_fork)
 		shell->ret = ft_cd(shell->cmd->token + 1, shell);
 	else if (tmp == EXPORT_M)
 		shell->ret = ft_export(shell->cmd->token, shell);
+	else if (tmp == UNSET_M)
+		shell->ret = ft_unset(shell->cmd->token,shell);
 	if (!in_fork)
 		swap_fds(shell->std_in, shell->std_out);
 	shell->std_in = 0;
@@ -108,38 +112,29 @@ int	ft_echo(char **cmd)
 	i = 1;
 	while(cmd[i])
 	{
-		if(i == 1 && (!ft_strncmp(cmd[1], "-n",2)))
+		if(i == 1 && (!ft_strncmp(cmd[1], "-n",ft_strlen(cmd[1]))))
 			i++;
+//		printf("%s\n",cmd[i]);
 		ft_printecho(cmd[i]);
 		if (cmd[i + 1])
 			printf(" ");
 		i++;
 	}
-	//if ((ft_strncmp(cmd[1],"-n",2)))
-	//	printf("\n");
+	if ((ft_strncmp(cmd[1],"-n",ft_strlen(cmd[1]))))
+		printf("\n");
 	return (1);
 }
 
 int	ft_env(t_shell *shell)
 {
-	int	i;
-	static char *oldpwd;
-	int	a;
+	t_env *tmp;
 
-	i = 0;
-//	while(g_env[i])
+	tmp = shell->env;
+	while (tmp)
 	{
-//		if (!ft_strncmp(g_env[i],"PWD",3))
-		{
-			a = i;
-		//	g_env[i] = "PWD=";
-		//	g_env[i] = ft_strjoin(g_env[i],getcwd(NULL,sizeof(char *)));
-		}
-	//	printf("%s\n",g_env[i]);
-		i++;
+		printf("%s=%s\n",tmp->name,tmp->value);
+		tmp = tmp->next;
 	}
-	if (oldpwd != NULL)
-		printf("OLDPWD=%s\n",oldpwd);
 	//oldpwd = (g_env[a] + 4);
 	return (1);
 }

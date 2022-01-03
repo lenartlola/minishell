@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/03 09:40:33 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/03 16:10:33 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct	s_vars
 	t_env		*env_vars;
 	char		*str;
 	int			*last_ret;
+	int     lreturn;
 }	t_vars;
 
 typedef struct	s_cmd
@@ -116,6 +117,7 @@ typedef struct	s_shell
 	int		n_pipes;
 	int		pipe_flag;
 	int		pipe_cmd_exist;
+	int	lreturn;
 	char	*cmds;
 	char	**cmds_pipe[1024];
 	char	*prompt;
@@ -133,8 +135,11 @@ t_type	get_type(t_quotes *quotes, int i);
 void	free_envs(t_env *env);
 void	parrent_handler(void);
 t_cmd	*last_cmd(t_cmd *cmd);
+t_env   *new_env(char   *name, char *value);
 void	wait_all_process(t_cmd *cmd, t_shell *shell);
+int	ft_unset(char **cmd, t_shell *shell);
 void	child_handler(t_shell *shell);
+t_env   *last_env(t_env *env);
 int exec_built_in(t_shell *shell, int in_fork);
 char	*check_cmd(char *cmd, t_shell *shell);
 void	free_all(t_shell *shell, int exit_p, char *str);
@@ -145,6 +150,7 @@ void	redirection_handler(t_shell *shell);
 void	close_unused_fd(t_shell *shell, int fd);
 int	ft_strcmp(char *s1, char *s2);
 void	close_error(int fd);
+void    env_add_back(t_env **lst, t_env *new);
 void	close_fds(t_cmd *cmd);
 int	fd_set_in_out(t_shell *shell, int *fd, int first);
 int	parse_heredoc(char *delim, t_shell *shell, t_cmd *ptr);
