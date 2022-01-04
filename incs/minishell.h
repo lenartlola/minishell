@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/03 16:10:33 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/04 14:57:21 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,8 @@ typedef struct	s_shell
 	struct termios term;
 }	t_shell;
 
+char	*build_new_tkn(t_vars *vars, t_quotes q_tmp, char *tmp);
+void	parse_dollar(t_vars *vars, int len);
 int	launch_builtin(int tmp, t_shell *shell, int in_fork);
 int	check_path_env(t_env **env, char *name);
 int	get_path_exec(t_shell *shell);

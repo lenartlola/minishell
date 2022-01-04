@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 11:49:31 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/02 11:19:27 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2022/01/04 14:56:47 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,4 +132,31 @@ char	*substr_quote(t_vars *vars, int start, int end)
 	}
 	tmp[i] = '\0';
 	return (tmp);
+}
+
+char	*build_new_tkn(t_vars *vars, t_quotes q_tmp, char *tmp)
+{
+	char		*a;
+	char		*b;
+	char		*swap;
+	char		*s_end;
+	t_quotes	env;
+
+	a = ft_substr(vars->str, 0, q_tmp.start);
+	if (!a)
+		return (NULL);
+	env.start = ft_strlen(a);
+	env.end = ft_strlen(a) + ft_strlen(tmp) - 1;
+	env.type = ENVS;
+	set_quotes_data(vars, vars->env, env);
+	b = ft_substr(vars->str, q_tmp.end, ft_strlen(vars->str));
+	if (tmp == NULL)
+		swap = ft_strdup(a);
+	else
+		swap = ft_strjoin(a, tmp);
+	s_end = ft_strjoin(swap, b);
+	free(a);
+	free(b);
+	free(swap);
+	return (s_end);
 }
