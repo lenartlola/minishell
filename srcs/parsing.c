@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 09:57:44 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2022/01/03 18:35:28 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/04 10:51:21 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,10 @@ char	*parse_dol(char *tr, t_shell *shell,char *shellvar)
 	t_env *tmp;
 	tmp = shell->env;
 	if (shellvar[0] == '?')
+	{
 		tr = ft_itoa(shell->lreturn);
+		return (tr);
+	}
 	else 
 	{
 		while (tmp)
