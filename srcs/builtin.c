@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 15:59:03 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/03 18:34:22 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/04 11:16:44 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ int	ft_echo(char **cmd)
 	int	i;
 	
 	i = 1;
+	if (!ft_strcmp(cmd[i],"-n") && !cmd[i + 1])
+		return (1);
 	if (!cmd[i])
 	{
 		printf("\n");
@@ -143,7 +145,6 @@ int	ft_echo(char **cmd)
 	{
 		if(i == 1 && (!ft_strncmp(cmd[1], "-n",ft_strlen(cmd[1]))))
 			i++;
-//		printf("%s\n",cmd[i]);
 		ft_printecho(cmd[i]);
 		if (cmd[i + 1])
 			printf(" ");
