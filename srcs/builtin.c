@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 15:59:03 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/04 11:16:44 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/04 17:28:59 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ int	is_builtin(char *arg)
 	}
 }
 */
+int	ft_pwd(void)
+{
+	printf("%s\n",getcwd(NULL,100));
+	return (1);
+}
 int	launch_builtin(int tmp, t_shell *shell, int in_fork)
 {
 //	if (in_fork)
@@ -62,6 +67,8 @@ int	launch_builtin(int tmp, t_shell *shell, int in_fork)
 		shell->ret = ft_export(shell->cmd->token, shell);
 	else if (tmp == UNSET_M)
 		shell->ret = ft_unset(shell->cmd->token,shell);
+	else if (tmp == PWD_M)
+		shell->ret = ft_pwd();
 	if (!in_fork)
 		swap_fds(shell->std_in, shell->std_out);
 	shell->std_in = 0;
@@ -134,13 +141,13 @@ int	ft_echo(char **cmd)
 	int	i;
 	
 	i = 1;
-	if (!ft_strcmp(cmd[i],"-n") && !cmd[i + 1])
-		return (1);
 	if (!cmd[i])
 	{
 		printf("\n");
 		return (1);
 	}
+	if (!ft_strcmp(cmd[i],"-n") && !cmd[i + 1])
+		 return (1);
 	while(cmd[i])
 	{
 		if(i == 1 && (!ft_strncmp(cmd[1], "-n",ft_strlen(cmd[1]))))

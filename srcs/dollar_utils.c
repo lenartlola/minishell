@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 14:27:51 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/04 17:04:28 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/04 17:30:21 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,6 @@ void	parse_dollar(t_vars *vars, int len)
 			i++;
 			if (vars->str[i] == '?' || (!ft_isalpha(vars->str[i])))
 			{
-				printf("DOLLAR\n");
 				if (vars->str[i] == '?')
 					last_dollar_ret(vars, &i);
 				else if (!ft_isalpha(vars->str[i]))

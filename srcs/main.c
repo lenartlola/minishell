@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/03 16:27:22 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/04 17:31:17 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	main(int argc, char **argv, char **env)
 		if (shell.cmdline && !(ft_strncmp(shell.cmdline, "exit", 4))
 				&& ft_strlen(shell.cmdline) == 4)
 		{
-			//free_struct(&shell);
+			printf("exit\n");
 			rl_clear_history();
 			exit (EXIT_SUCCESS);
 		}
