@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 14:27:51 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/04 16:41:31 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/04 17:04:28 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,10 +182,10 @@ void	dollar_to_env(t_vars *vars, int *i)
 		exit(-1);
 	}
 	swap = get_env_value(vars, tmp);
-	if (!swap)
-	{
-		swap = ft_strjoin("$", tmp);
-	}
+	//if (!swap)
+	//{
+	//	swap = ft_calloc(10, 10);
+	//}
 	//if (!swap)
 	//{
 	//	free(swap);

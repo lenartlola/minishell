@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 22:55:45 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2022/01/04 14:29:50 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/04 17:06:34 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ int	tokenizing(t_shell *shell)
 	len = ft_strlen(vars.str);
 	parse_quotes(&vars, len);
 	parse_dollar(&vars, len);
-//	len = ft_strlen(vars.str);
+	len = ft_strlen(vars.str);
 	if (parse_loop(&vars, len) == -1)
 	{
 		//check_empty(&vars) == -1
