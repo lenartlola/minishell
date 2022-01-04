@@ -6,11 +6,11 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 09:59:11 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/01 14:43:14 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/04 19:38:12 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incs/minishell.h"
+#include "../incs/minishell.h"
 
 t_type	get_type(t_quotes *quotes, int i)
 {
