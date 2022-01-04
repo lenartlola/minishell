@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/04 17:31:17 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/04 18:17:24 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	init_line(t_shell *shell)
 		init_prompt(shell);
 	signal(SIGQUIT, SIG_IGN);
 	rl_replace_line("",0);
-//	printf("\ncmd -> line %s\n \n", shell->cmdline);
 	line = readline(shell->prompt);
 	shell->cmdline = line;
 //	printf("\n cmd line %s\n",shell->cmdline);
@@ -75,11 +74,10 @@ int	main(int argc, char **argv, char **env)
 	init_shell(&shell, env);
 	while (1)
 	{
-//		init_shell(&shell, env);
+		init_shell(&shell, env);
 		parrent_handler();
 		init_line(&shell);
-		if (shell.cmdline && !(ft_strncmp(shell.cmdline, "exit", 4))
-				&& ft_strlen(shell.cmdline) == 4)
+		if (shell.cmdline && !(ft_strncmp(shell.cmdline, "exit", ft_strlen(shell.cmdline))))
 		{
 			printf("exit\n");
 			rl_clear_history();
@@ -95,7 +93,6 @@ int	main(int argc, char **argv, char **env)
 				parsing(&shell, env);
 			}
 		}
-		//free(shell.cmdline);
 	}
 	free_struct(&shell);
 	return (0);

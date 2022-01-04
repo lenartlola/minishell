@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 19:21:59 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/03 12:27:08 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/04 18:22:40 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,4 @@ void	wait_all_process(t_cmd *cmd, t_shell *shell)
 			nl = 1;
 		cmd = cmd->next;
 	}
-	if (nl == 1)
-		write(1, "\n", 1);
 }
