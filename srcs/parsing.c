@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 09:57:44 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2022/01/04 10:51:21 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/04 14:25:09 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int	launch(t_shell *shell, int *status, char **env)
 	first = 1;
 	while (shell->cmd)
 	{
-		if (first && !shell->cmd->next && is_builtin(*shell->cmd->token))
+		if (first && !shell->cmd->redirection[0] && is_builtin(*shell->cmd->token))
 		{
 //			printf("Nothing...\n");
 			exec_built_in(shell, 1);
@@ -193,7 +193,7 @@ void	parsing(t_shell *shell, char **env)
 	status = 0;
 	shell->error = 0;
 	ptr = shell->cmd;
-	parse_var(shell);
+//	parse_var(shell);
 	if (heredoc(shell))
 	{
 		if (!launch(shell, &status, env))
