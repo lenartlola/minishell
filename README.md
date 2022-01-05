@@ -5,6 +5,8 @@ Implemented with [Leo](https://github.com/lgyger)
 --------
 #### As beautiful as a shell
 
+![linux penguin gif](imgs/uwu.png)\
+
 
 > Summary: The objective of this project is for you to create a simple shell. Yes, your little bash or zsh. You will learn a lot about processes and file descriptors
 
