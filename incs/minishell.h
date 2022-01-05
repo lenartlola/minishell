@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/05 14:30:53 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/05 15:17:00 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ typedef struct	s_vars
 	int			*last_ret;
 	int     lreturn;
 }	t_vars;
-t_env    *g_env;
+extern t_env    *g_env;
 typedef struct	s_cmd
 {
 	char	**token;

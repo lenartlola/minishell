@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 09:57:44 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2022/01/05 11:59:43 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2022/01/05 15:47:06 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,5 @@ void	parsing(t_shell *shell, char **env)
 			wait_all_process(ptr, shell);
 	}
 	free_cmd(ptr);
-	//free_envs(shell->env);
-//	free_cmd(ptr);
 	shell->cmd = NULL;
 }

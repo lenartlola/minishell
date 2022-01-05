@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 09:46:58 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/05 15:12:29 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/05 16:05:59 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ int	ft_export(char **cmd, t_shell *shell, t_env **tenv)
 			ret = ft_split(cmd[i], '=');
 			tmp = new_env(ret[0],ret[1]);
 			env_add_back(&shell->env,tmp);
+			free(ret);
 			i++;
 		}
 	}

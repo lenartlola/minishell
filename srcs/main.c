@@ -6,11 +6,13 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/05 14:26:35 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/05 16:04:14 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
+
+t_env	*g_env;
 
 //int	*g_ptr;
 /*
@@ -77,8 +79,6 @@ int	main(int argc, char **argv, char **env)
 		{
 			free_struct(&shell);
 			free_envs(shell.env);
-//			if (shell.prompt)
-//				free(shell.prompt);
 			printf("exit\n");
 			rl_clear_history();
 			exit (EXIT_SUCCESS);
@@ -100,7 +100,6 @@ int	main(int argc, char **argv, char **env)
 		}
 		free(shell.prompt);
 		shell.prompt = NULL;
-//		free_envs(shell.env);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 15:59:03 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/05 14:17:11 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/05 16:02:42 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,10 @@ void	updatepwd(t_shell *shell, char *pwd)
 }
 int	ft_cd(char **cmd, t_shell *shell)
 {
-	t_env *tmp;
-	char *pwd;
+	static char *pwd;
 
-	pwd = malloc(sizeof(char) * 100);
+	if (!pwd)
+		pwd = malloc(sizeof(char) * 100);
 	getcwd(pwd,100);
 	if (cmd[0] == NULL)
 		cmd[0] = getenv("HOME");
@@ -113,7 +113,6 @@ int	ft_cd(char **cmd, t_shell *shell)
 		return (0);
 	}
 	updatepwd(shell, pwd);
-	init_prompt(shell);
 	return (1);
 }
 void	ft_printecho(char *str)
