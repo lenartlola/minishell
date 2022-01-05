@@ -6,14 +6,13 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/05 12:29:00 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/05 14:26:35 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
 //int	*g_ptr;
-char	**g_env = NULL;
 /*
  * Init a nice prompt, Init a new line, 
  * wait to user promt. verify if there is some strings
@@ -51,7 +50,9 @@ void	init_line(t_shell *shell)
 void	init_shell(t_shell *shell, char **env)
 {
 	shell->cmdline = NULL;
-	shell->env = get_envs(env);
+	if (!g_env)
+		shell->env = get_envs(env);
+	g_env = shell->env;
 	shell->cmd = NULL;
 	shell->ret = 0;
 	shell->lreturn = 0;
@@ -99,7 +100,7 @@ int	main(int argc, char **argv, char **env)
 		}
 		free(shell.prompt);
 		shell.prompt = NULL;
-		free_envs(shell.env);
+//		free_envs(shell.env);
 	}
 	return (0);
 }

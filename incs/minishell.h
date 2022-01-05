@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/04 14:57:21 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/05 14:30:53 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 
-extern int *g_ptr;
-//extern char	**g_env;
+//extern t_env	**g_env;
 typedef struct s_quotes	t_quotes;
 typedef struct s_cmd	t_cmd;
 typedef struct s_env	t_env;
@@ -92,7 +91,7 @@ typedef struct	s_vars
 	int			*last_ret;
 	int     lreturn;
 }	t_vars;
-
+t_env    *g_env;
 typedef struct	s_cmd
 {
 	char	**token;
@@ -179,7 +178,7 @@ int	pipe_handler(t_vars *vars, int i, int len, t_cmd **tmp);
 int	ft_env(t_shell *shell);
 int	ft_echo(char **cmd);
 int     ft_cd(char **cmd, t_shell *shell);
-int	ft_export(char **cmd, t_shell *shell);
+int	ft_export(char **cmd, t_shell *shell, t_env **tenv);
 //Init ascii
 void	init_ascii(void);
 //Free

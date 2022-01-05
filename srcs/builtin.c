@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 15:59:03 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/05 12:15:32 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2022/01/05 14:17:11 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	launch_builtin(int tmp, t_shell *shell, int in_fork)
 	else if (tmp == CD_M)
 		shell->ret = ft_cd(shell->cmd->token + 1, shell);
 	else if (tmp == EXPORT_M)
-		shell->ret = ft_export(shell->cmd->token, shell);
+		shell->ret = ft_export(shell->cmd->token, shell, &shell->env);
 	else if (tmp == UNSET_M)
 		shell->ret = ft_unset(shell->cmd->token,shell);
 	else if (tmp == PWD_M)
@@ -113,7 +113,7 @@ int	ft_cd(char **cmd, t_shell *shell)
 		return (0);
 	}
 	updatepwd(shell, pwd);
-	//init_prompt(shell);
+	init_prompt(shell);
 	return (1);
 }
 void	ft_printecho(char *str)

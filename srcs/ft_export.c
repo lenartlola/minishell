@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 09:46:58 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/03 13:56:09 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/05 15:07:54 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,23 +82,15 @@ t_env	*sort(t_env *env, int lenenv)
 	}
 	return (env);
 }
-t_env	*add_env(char *cmd)
-{
-	t_env *new;
-	char **res;
 
-	res = ft_split(cmd,'=');
-	new = new_env(res[0],res[1]);
-	free(res);
-	return (new);
-}
-int	ft_export(char **cmd, t_shell *shell)
+int	ft_export(char **cmd, t_shell *shell, t_env **tenv)
 {
 	unsigned int i;
 	t_env *tmp;
+	char **ret;
 
 	i = 0;
-	tmp = shell->env;
+	tmp = g_env;
 	while(tmp)
 	{
 		i++;
@@ -106,7 +98,7 @@ int	ft_export(char **cmd, t_shell *shell)
 	}
 	if (cmd[1] == NULL)
 	{
-		tmp = shell->env;
+		tmp = g_env;
 		tmp = sort(tmp, i);
 		while(tmp)
 		{
@@ -116,10 +108,10 @@ int	ft_export(char **cmd, t_shell *shell)
 	}
 	else
 	{
-		tmp = add_env(cmd[1]);
+		ret = ft_split(cmd[1], '=');
+		tmp = new_env(ret[0],ret[1]);
 		env_add_back(&shell->env,tmp);
-		cmd[1] = NULL;
-		ft_export(cmd, shell);
 	}
+	g_env = shell->env;
 	return (1);
 }
