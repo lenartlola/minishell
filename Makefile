@@ -6,13 +6,18 @@
 #    By: hsabir <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/14 13:27:39 by hsabir            #+#    #+#              #
-#    Updated: 2022/01/05 17:21:41 by lgyger           ###   ########.fr        #
+#    Updated: 2022/01/05 19:53:19 by hsabir           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 CFLAGS = -I ~/.brew/Cellar/readline/8.1.1/include -lreadline -L ~/.brew/Cellar/readline/8.1.1/lib
-CFLAGS2 = -o
+CFLAGS += -o minishell
+
 LIBFT_DIR = libs/libft/
+LFT_NAME = libft.a
+
 NAME = Minishell
+
 FILES = ./srcs/main.c\
        ./srcs/arg_utils.c\
 	./srcs/builtin.c\
@@ -37,20 +42,25 @@ FILES = ./srcs/main.c\
 	./srcs/signal_utils.c\
 	./srcs/str_utils.c\
 	./srcs/tokenizing.c\
-	./libs/libft/libft.a\
-	./incs/minishell.h\
 	./srcs/vars_utils.c
 
 all : $(NAME)
 
-$(NAME):
-	cd libs/libft/ && $(MAKE)
-	gcc $(CFLAGS) $(FILES) $(CFLAGS2) $(NAME)
+$(NAME): $(LFT_NAME)
+	$(MAKE) all -sC $(LIBFT_DIR)/
+	gcc $(CFLAGS) $(FILES) $(LFT_NAME)
+
+$(LFT_NAME):
+	$(MAKE) all -sC $(LIBFT_DIR)/
+	cp $(LIBFT_DIR)/$(LFT_NAME) $(LFT_NAME)
 
 fclean:
 	rm -f $(NAME)
+
 clean:
 	$(MAKE) -C $(LIBFT_DIR) clean
+
 re: fclean clean all
 	$(MAKE) -C $(LIBFT_DIR) re
+
 .PHONY: clean fclean all re
