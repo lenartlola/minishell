@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/05 12:01:58 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2022/01/05 12:29:00 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ char	**g_env = NULL;
 
 void	init_line(t_shell *shell)
 {
-	if (!shell->prompt)
-		init_prompt(shell);
+	init_prompt(shell);
 	signal(SIGQUIT, SIG_IGN);
 	rl_replace_line("",0);
 	shell->cmdline = readline(shell->prompt);

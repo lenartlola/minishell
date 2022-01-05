@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 14:27:51 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/05 11:17:37 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2022/01/05 13:18:44 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,13 @@ void	dollar_to_env(t_vars *vars, int *i)
 	vars->str = tmp;
 }
 
+int	ft_space(char c)
+{
+	if (c == 32 || (c >= 9 && c <= 13))
+		return (1);
+	return (0);
+}
+
 void	parse_dollar(t_vars *vars, int len)
 {
 	int	i;
@@ -231,7 +238,7 @@ void	parse_dollar(t_vars *vars, int len)
 			{
 				if (vars->str[i] == '?')
 					last_dollar_ret(vars, &i);
-				else if (!ft_isalpha(vars->str[i]))
+				else if (!ft_isalpha(vars->str[i]) && (!ft_space(vars->str[i])))
 					ignore_dollar(vars, &i);
 				continue ;
 			}
