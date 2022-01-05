@@ -8,7 +8,6 @@ Implemented with [Leo](https://github.com/lgyger)
 ![linux penguin gif](imgs/uwu.png)
 
 
-> Summary: The objective of this project is for you to create a simple shell. Yes, your little bash or zsh. You will learn a lot about processes and file descriptors
 
 ##### Q - So what is a shell?
 As the subject cites : ` The existence of shells is linked to the very existence of IT. At the time, all coders agreed
