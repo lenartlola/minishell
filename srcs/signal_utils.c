@@ -6,16 +6,11 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 19:21:59 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/04 18:22:40 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/05 17:46:29 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
-
-void	sig_child(int sig)
-{
-	(void)sig;
-}
 
 void	child_handler(t_shell *shell)
 {
@@ -32,9 +27,7 @@ void	sig_parrent(int sig)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();
-	//	rl_replace_line("", 0);
 		rl_redisplay();
-//		*g_env = 1;
 	}
 }
 
@@ -50,12 +43,6 @@ void	parrent_handler(void)
 }
 
 /* ################################################# */
-
-int	last_pid(t_cmd *cmd)
-{
-	cmd = last_cmd(cmd);
-	return (cmd->pid);
-}
 
 void	return_sig(int status, t_shell *shell, int *nl)
 {

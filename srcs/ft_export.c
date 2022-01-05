@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 09:46:58 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/05 16:05:59 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2022/01/05 17:19:01 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,31 +23,7 @@ int	ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
-/*char	**sort(char **ev,int n_array)
-{
-	int i;
-	int j;
-	char *temp;
-	
-	i = 0;
-	while (i < n_array)
-	{
-		j = 0;
-    		while(j < n_array-1-i)
-		{
-      			if(ft_strcmp(ev[j], ev[j+1]) > 0)
-			{
-				temp = ft_strdup(ev[j]);
-        			ev[j] = ft_strdup(ev[j+1]);
-        			ev[j+1] = ft_strdup(temp);
-			}
-			j++;
-		}
-		i++;
-	}
-	return (ev);
-}
-*/void	ft_sort(t_env *env, int lenenv)
+void	ft_sort(t_env *env, int lenenv)
 {
 	int	j;
 	char *temp;

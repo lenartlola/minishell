@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/05 15:17:00 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2022/01/05 18:03:51 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,10 +130,17 @@ void	parse_dollar(t_vars *vars, int len);
 int	launch_builtin(int tmp, t_shell *shell, int in_fork);
 int	check_path_env(t_env **env, char *name);
 int	get_path_exec(t_shell *shell);
+int     ft_strhas(char *str, char *set);
 t_env	*get_envs(char **m_env);
+int     is_xok(char *path);
+char    **split_tab(t_env *env);
+int     absolute_path(t_shell *shell);
+int     add_slash(char **path);
 char	**get_env_array(t_env *env);
 t_type	get_type(t_quotes *quotes, int i);
 void	free_envs(t_env *env);
+int     quotes_error(void);
+void    quote_error_exit(t_vars *vars);
 void	parrent_handler(void);
 t_cmd	*last_cmd(t_cmd *cmd);
 t_env   *new_env(char   *name, char *value);
@@ -161,8 +168,12 @@ int	tokenizing(t_shell *shell);
 int	pipe_counter(char *str, char c);
 void	blocksig(int sig, void *ptr);
 //parsing
+int	parse_quotes_args(t_vars *vars, int *i, t_cmd *tmp);
+int	parse_pipes(t_vars *vars, int *i, t_cmd **tmp, int len);
 void	parsing(t_shell *shell, char **env);
 int fork_pipes (int n, char ***argv, char **env, t_shell *shell);
+int     get_c_index(char *str, char c);
+char    *build_new_tkn(t_vars *vars, t_quotes q_tmp, char *tmp);
 //int	fork_pipes(int n, char *argv, char **env);
 //prompt
 void	init_prompt(t_shell *shell);
@@ -174,11 +185,16 @@ int		exec_pipe_cmd(t_shell *shell, char **env, int fd_in);
 //piping
 int	get_pipes(t_shell *shell);
 int	pipe_handler(t_vars *vars, int i, int len, t_cmd **tmp);
+int     redirection_type(char *redirection);
+void    dup_and_close(int fd_in, int fd_out);
+void    redirection_in(char *redirection, int *mode);
+void    redirection_out(char *redirection, int *type);
 //builtin
 int	ft_env(t_shell *shell);
 int	ft_echo(char **cmd);
 int     ft_cd(char **cmd, t_shell *shell);
 int	ft_export(char **cmd, t_shell *shell, t_env **tenv);
+int	ft_pwd(void);
 //Init ascii
 void	init_ascii(void);
 //Free
@@ -187,7 +203,9 @@ int		double_free(char **array);
 //Error
 void	print_error(char *str);
 
-//char	**g_env;
+//Launch
+int     is_builtin(char *arg);
+int     launch_builtin(int tmp, t_shell *shell, int in_fork);
 
 //quotes/
 int	parse_simple_quote(t_vars *vars, t_cmd *current, int i);
@@ -224,4 +242,7 @@ int	args_loop(t_vars *vars, int *i);
 char	**append_args(char **args, char *new);
 int	check_empty(t_vars *vars);
 int	args_to_word(t_vars *vars, t_cmd *current, int i);
+//sig_utils
+int     last_pid(t_cmd *cmd);
+void    sig_child(int sig);
 #endif

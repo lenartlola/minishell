@@ -6,31 +6,12 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 11:49:31 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/04 16:56:54 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/05 17:37:10 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-/*
- * Find the index of a character
- */
-
-int	get_c_index(char *str, char c)
-{
-	int	i;
-	int len;
-
-	i = 0;
-	len = ft_strlen(str);
-	while (i < len)
-	{
-		if (str[i] == c)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
 
 /*
  * Skip a space
@@ -115,7 +96,6 @@ char	*substr_quote(t_vars *vars, int start, int end)
 
 	cut = quote_counter(vars, start, end);
 	tmp = malloc(sizeof(char) * (end - start - cut + 2));
-//	tmp = malloc(sizeof(char) * (end - start + 2));
 	if (!tmp)
 		return (NULL);
 	i = 0;
@@ -134,7 +114,7 @@ char	*substr_quote(t_vars *vars, int start, int end)
 	return (tmp);
 }
 
-char	*build_new_tkn(t_vars *vars, t_quotes q_tmp, char *tmp)
+/*char	*build_new_tkn(t_vars *vars, t_quotes q_tmp, char *tmp)
 {
 	char		*a;
 	char		*b;
@@ -159,4 +139,4 @@ char	*build_new_tkn(t_vars *vars, t_quotes q_tmp, char *tmp)
 	free(b);
 	free(swap);
 	return (s_end);
-}
+} */

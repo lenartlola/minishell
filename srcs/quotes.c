@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 09:59:11 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/04 19:38:12 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/05 17:58:30 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,6 @@ t_type	get_type(t_quotes *quotes, int i)
 }
 
 /* ####################################################################### */
-
-int	ft_strhas(char *str, char *set)
-{
-	int	i;
-
-	while (str && *str)
-	{
-		i = 0;
-		while (set && set[i])
-		{
-			if (*str == set[i])
-				return (1);
-			i++;
-		}
-		str++;
-	}
-	return (0);
-}
 
 /*
  * Since we have defined the index of start and end of the quote
@@ -114,18 +96,6 @@ void	parse_quotes(t_vars *vars, int len)
 
 /* ##################################################################### */
 
-int	quotes_error()
-{
-	printf("minishell: syntax error unclosed quote\n");
-	return (-1);
-}
-
-void	quote_error_exit(t_vars *vars)
-{
-	free_vars(vars);
-	perror("Error\n");
-	exit(EXIT_FAILURE);
-}
 
 /*
  * Assign the index of the last quote into j

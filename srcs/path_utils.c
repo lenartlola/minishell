@@ -6,46 +6,12 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 16:24:35 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/01 21:02:58 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2022/01/05 18:02:25 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-int	is_xok(char *path)
-{
-	struct stat	stat_path;
-	int	ret;
-
-	ret = 0;
-	if (stat(path, &stat_path) == -1)
-	{
-		perror(path);
-		return (127);
-	}
-	if (S_ISDIR(stat_path.st_mode))
-	{
-		printf("minish: %s: is a directory\n", path);
-		return (126);
-	}
-	if (access(path, X_OK) != 0)
-	{
-		perror(path);
-		ret = 126;
-	}
-	return (ret);
-}
-
-int	absolute_path(t_shell *shell)
-{
-	if (ft_strchr(*shell->cmd->token, '/') || **shell->cmd->token == '.')
-	{
-		shell->cmd->path = ft_strdup(*shell->cmd->token);
-		shell->ret = is_xok(shell->cmd->path);
-		return (1);
-	}
-	return (0);
-}
 
 int	add_slash(char **path)
 {
@@ -66,24 +32,6 @@ int	add_slash(char **path)
 		i++;
 	}
 	return (1);
-}
-
-char	**split_tab(t_env *env)
-{
-	char	**tab;
-
-	tab = NULL;
-	if (check_path_env(&env, "PATH"))
-	{
-		if (env->value)
-		{
-			tab = ft_split(env->value, ':');
-			if (tab == NULL)
-				exit(EXIT_FAILURE);
-			add_slash(tab);
-		}
-	}
-	return (tab);
 }
 
 int	check_path_and_permission(char *path, t_cmd *cmd, t_shell *shell, char **per)

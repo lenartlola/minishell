@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:57:56 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/02 14:43:11 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2022/01/05 17:52:23 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,47 +83,8 @@ int	redirection(t_vars *vars, t_cmd *current, int i)
 
 /* ########################################################### */
 
-void	redirection_out(char *redirection, int *type)
-{
-	if (*redirection == '>')
-	{
-		if (*(redirection + 1) == '>')
-			*type = REDIRECT_D_OUT;
-		else
-			*type = REDIRECT_OUT;
-	}
-}
-
-void	redirection_in(char *redirection, int *mode)
-{
-	if (*redirection == '<')
-	{
-		if (*(redirection + 1) == '<')
-			*mode = HEREDOC;
-		else
-			*mode = REDIRECT_IN;
-	}
-}
-
-int	redirection_type(char *redirection)
-{
-	int	mode;
-
-	mode = -1;
-	//printf("Mode test\n");
-	redirection_in(redirection, &mode);
-	redirection_out(redirection, &mode);
-	return (mode);
-}
 
 /* ############################################################## */
-
-void	dup_and_close(int fd_in, int fd_out)
-{
-	if (dup2(fd_in, fd_out) == -1)
-		perror("Dup2Close\n");
-	close_error(fd_in);
-}
 
 int	apply_redirection(t_shell *shell, char *filename, int mode)
 {
