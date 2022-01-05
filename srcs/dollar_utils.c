@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 14:27:51 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/04 17:30:21 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/05 11:17:37 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,11 @@ void	ignore_dollar(t_vars *vars, int *i)
 	q_tmp.start = *i - 1;
 	q_tmp.end = *i + 1;
 	swap = ft_strdup("");
+	if (!swap)
+	{
+		free_vars(vars);
+		exit(-1);
+	}
 	update_quotes_data(vars->quotes, -2, *i);
 	*i -= 2;
 	tmp = build_new_tkn(vars, q_tmp, swap);
@@ -216,13 +221,13 @@ void	parse_dollar(t_vars *vars, int len)
 	int	i;
 
 	i = 0;
-	while (i < len)
+	while (i < len && vars->str[i])
 	{
 		//printf("vars -> str : %c\n", vars->str[i]);
 		if (vars->str[i] == '$' && vars->str[i + 1] && get_type(vars->quotes, i) != SIMPLE)
 		{
 			i++;
-			if (vars->str[i] == '?' || (!ft_isalpha(vars->str[i])))
+			if (vars->str[i] == '?' || (!ft_isalpha(vars->str[i]) && vars->str[i] != '_'))
 			{
 				if (vars->str[i] == '?')
 					last_dollar_ret(vars, &i);

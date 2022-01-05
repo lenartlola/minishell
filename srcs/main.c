@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/04 18:17:24 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/05 12:01:58 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,11 @@ char	**g_env = NULL;
 
 void	init_line(t_shell *shell)
 {
-	char *line;
-	line = NULL;
-	if (!shell->cmdline)
+	if (!shell->prompt)
 		init_prompt(shell);
 	signal(SIGQUIT, SIG_IGN);
 	rl_replace_line("",0);
-	line = readline(shell->prompt);
-	shell->cmdline = line;
-//	printf("\n cmd line %s\n",shell->cmdline);
+	shell->cmdline = readline(shell->prompt);
 	if (!shell->cmdline)
 	{
 		if (shell->cmdline != NULL)
@@ -71,7 +67,7 @@ int	main(int argc, char **argv, char **env)
 	t_shell	shell;
 
 	init_ascii();
-	init_shell(&shell, env);
+	//init_shell(&shell, env);
 	while (1)
 	{
 		init_shell(&shell, env);
@@ -79,6 +75,10 @@ int	main(int argc, char **argv, char **env)
 		init_line(&shell);
 		if (shell.cmdline && !(ft_strncmp(shell.cmdline, "exit", ft_strlen(shell.cmdline))))
 		{
+			free_struct(&shell);
+			free_envs(shell.env);
+//			if (shell.prompt)
+//				free(shell.prompt);
 			printf("exit\n");
 			rl_clear_history();
 			exit (EXIT_SUCCESS);
@@ -92,9 +92,16 @@ int	main(int argc, char **argv, char **env)
 			{
 				parsing(&shell, env);
 			}
+			else if (shell.cmd)
+			{
+				free_cmd(shell.cmd);
+				shell.cmd = NULL;
+			}
 		}
+		free(shell.prompt);
+		shell.prompt = NULL;
+		free_envs(shell.env);
 	}
-	free_struct(&shell);
 	return (0);
 }
 /*

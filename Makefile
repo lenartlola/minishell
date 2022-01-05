@@ -6,10 +6,10 @@
 #    By: hsabir <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/14 13:27:39 by hsabir            #+#    #+#              #
-#    Updated: 2022/01/04 19:50:14 by lgyger           ###   ########.fr        #
+#    Updated: 2022/01/04 19:59:38 by 1mthe0wl         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-CFLAGS = -I ~/.brew/Cellar/readline/8.1.1/include -lreadline -L ~/.brew/Cellar/readline/8.1.1/lib
+CFLAGS = -I ~/.brew/Cellar/readline/8.1.1/include -lreadline -L ~/.brew/Cellar/readline/8.1.1/lib -o minishell
 LIBFT_DIR = libs/libft/
 NAME = Minishell
 FILES = ./srcs/main.c\
@@ -45,7 +45,6 @@ all : $(NAME)
 $(NAME):
 	cd libs/libft/ && $(MAKE)
 	gcc $(CFLAGS) $(FILES)
-	mv a.out minishell
 
 fclean:
 	rm -f $(NAME)

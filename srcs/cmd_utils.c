@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 10:26:23 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/31 19:55:51 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/05 10:41:14 by 1mthe0wl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	free_cmd(t_cmd *cmd)
 	{
 		if (cmd->token)
 			double_free(cmd->token);
+		if (cmd->redirection)
+			double_free(cmd->redirection);
 		tmp = cmd->next;
 		free(cmd);
 		cmd = NULL;
