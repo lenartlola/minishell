@@ -16,6 +16,7 @@ a computer using interactive lines of commands in a language somewhat close
 to english.
 With Minishell, you’ll be able to travel through time and come back to problems
 people faced when Windows didn’t exist.` 
+
 So, basically, a shell is simply a program which simplicify the task of communicating between a user and a machine (Oh yes, it does translate the communication between users and the kernel.), `Finder` on `MAC` and programs like `nautils` on `Linux` or better sazing `GNU/Linux` are other examples of shell.
 
 
