@@ -62,4 +62,4 @@ make re
 ```
 
 ### Usage
-Minish is realy simple and yet powerfull, it's made for studies purpose and yet it's enough functional and usefull, it does support executing program from absolute or relative path, programs like `ls`, `mkdir`, `kill`, `rm` and etc.
+Minish is realy simple and yet powerfull, it's made for studies purpose and yet it's enough functional and usefull, it does search and execute program based on the PATH: variable or by using absolute or relative path, it as well contains some [builtin]() commands, please refer to the [man]() section to more detail about comannds.
