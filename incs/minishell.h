@@ -6,8 +6,8 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/06 13:30:51 by lgyger           ###   ########.fr       */
-/*                                                                            */
+/*   Updated: 2022/01/06 19:59:45 by hsabir           ###   ########.fr       */
+/*                                                                           */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
@@ -250,4 +250,4 @@ int			args_to_word(t_vars *vars, t_cmd *current, int i);
 //sig_utils
 int			last_pid(t_cmd *cmd);
 void		sig_child(int sig);
-#endif
+#endif 
