@@ -60,3 +60,6 @@ Remake everything.
 ```sh
 make re
 ```
+
+### Usage
+Minish is realy simple and yet powerfull, it's made for studies purpose and yet it's enough functional and usefull, it does support executing program from absolute or relative path, programs like `ls`, `mkdir`, `kill`, `rm` and etc.
