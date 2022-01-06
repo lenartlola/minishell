@@ -10,7 +10,7 @@
 
 ### Implemented with [Leo](https://github.com/lgyger)
 
-##### Q - So what is a shell?
+#### Q - So what is a shell?
 As the subject cites : ` The existence of shells is linked to the very existence of IT. At the time, all coders agreed
 that communicating with a computer using aligned 1/0 switches was seriously
 irritating. It was only logical that they came up with the idea to communicate with
@@ -23,6 +23,6 @@ So, basically, a shell is simply a program which simplicify the task of communic
 
 
 
-##### requirements :
+#### requirements :
 - GNU Make version: 3 above
 - GCC version: 4 above
