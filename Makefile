@@ -12,6 +12,7 @@
 
 CFLAGS = -I ~/.brew/Cellar/readline/8.1.1/include -lreadline -L ~/.brew/Cellar/readline/8.1.1/lib
 CFLAGS += -o minishell
+#CFLAGS += -g3 -fsanitize=address
 
 LIBFT_DIR = libs/libft/
 LFT_NAME = libft.a
@@ -64,11 +65,14 @@ $(LFT_NAME):
 
 fclean:
 	rm -f $(NAME)
+	rm -f $(LFT_NAME)
+	$(MAKE) fclean -sC $(LIBFT_DIR)
 
 clean:
-	$(MAKE) -C $(LIBFT_DIR) clean
+	rm -f $(LFT_NAME)
+	$(MAKE) fclean -sC $(LIBFT_DIR)
 
 re: fclean clean all
-	$(MAKE) -C $(LIBFT_DIR) re
+	$(MAKE) re -sC $(LIBFT_DIR)
 
 .PHONY: clean fclean all re
