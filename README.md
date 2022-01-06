@@ -34,7 +34,7 @@ Clone this repository.
 https://github.com/0xb1n4r/minishell
 ```
 
-cd into the libft directory.
+cd into the minishell directory.
 
 ```sh
 cd minishell
@@ -46,12 +46,12 @@ Make
 make
 ```
 
-delete all the *.o files.
+Clean the dependencies
 ```sh
 make clean
 ```
 
-Delete all the *.0 files plus libft.a
+Clean the dependencies + the program
 ```sh
 make fclean
 ```
