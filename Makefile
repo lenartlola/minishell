@@ -6,7 +6,7 @@
 #    By: hsabir <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/14 13:27:39 by hsabir            #+#    #+#              #
-#    Updated: 2022/01/05 19:53:19 by hsabir           ###   ########.fr        #
+#    Updated: 2022/01/06 15:01:44 by lgyger           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,30 +19,38 @@ LFT_NAME = libft.a
 NAME = Minishell
 
 FILES = ./srcs/main.c\
-       ./srcs/arg_utils.c\
-	./srcs/builtin.c\
-	./srcs/cmd_utils.c\
-	./srcs/dollar_utils.c\
-	./srcs/env_utils.c\
-	./srcs/error.c\
-	./srcs/exec_cmds.c\
-	./srcs/fd_utils.c\
-	./srcs/free.c\
-	./srcs/ft_export.c\
+	./srcs/ft_env.c\
+	./srcs/dollar_utils2.c\
+	./srcs/linked_env.c\
+	./srcs/pathing.c\
+	./srcs/redirection_utils.c\
+	./srcs/parse_quotes_args.c\
+	./srcs/utils.c\
+	./srcs/launch.c\
 	./srcs/ft_unset.c\
-	./srcs/heredocing.c\
-	./srcs/parsing.c\
-	./srcs/ascii_init.c\
-	./srcs/path_utils.c\
-	./srcs/piping.c\
-	./srcs/prompt.c\
-	./srcs/quotes_utils.c\
-	./srcs/redirection.c\
-	./srcs/quotes.c\
-	./srcs/signal_utils.c\
-	./srcs/str_utils.c\
+	./srcs/ft_export.c\
+	./srcs/builtin.c\
 	./srcs/tokenizing.c\
-	./srcs/vars_utils.c
+	./srcs/parsing.c\
+	./srcs/prompt.c\
+	./srcs/exec_cmds.c\
+	./srcs/piping.c\
+	./srcs/ascii_init.c\
+	./srcs/free.c\
+	./srcs/error.c\
+	./srcs/str_utils.c\
+	./srcs/quotes.c\
+	./srcs/quotes_utils.c\
+	./srcs/arg_utils.c\
+	./srcs/vars_utils.c\
+	./srcs/cmd_utils.c\
+	./srcs/fd_utils.c\
+	./srcs/heredocing.c\
+	./srcs/redirection.c\
+	./srcs/signal_utils.c\
+	./srcs/env_utils.c\
+	./srcs/path_utils.c\
+	./srcs/dollar_utils.c
 
 all : $(NAME)
 

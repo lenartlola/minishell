@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 12:33:06 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/05 11:25:35 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2022/01/06 12:22:17 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	free_all(t_shell *shell, int exit_p, char *str)
 		perror(str);
 		exit(EXIT_FAILURE);
 	}
-
 }
 
 void	free_struct(t_shell *shell)
@@ -49,6 +48,4 @@ void	free_struct(t_shell *shell)
 	free(shell->cmdline);
 	free(shell->prompt);
 	shell->prompt = NULL;
-//	if (g_env)
-//		double_free(shell->tokens);
 }

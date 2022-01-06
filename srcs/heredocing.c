@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 14:06:39 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/04 18:19:04 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/06 12:09:50 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	ft_putstring(char *s, int fd)
 {
 	write(fd, s, ft_strlen(s));
-	//write(fd, "\n", 1);
 }
 
 void	close_heredoc_fds(t_cmd *ptr)
@@ -61,11 +60,8 @@ void	child_heredoc(int *fd, char *delim)
 	line = get_next_line(0);
 	while (line)
 	{
-		//printf("diff : %i\n", ft_strncmp(delim, line, ft_strlen(delim)));
 		if (ft_strncmp(delim, line, ft_strlen(delim)) == 0)
 			break ;
-		//printf(">");
-		//ft_putchar_fd('>', 1);
 		ft_putstr_fd("> ", 1);
 		ft_putstr_fd(line, fd[1]);
 		free(line);
@@ -81,7 +77,6 @@ int	parse_heredoc(char *delim, t_shell *shell, t_cmd *ptr)
 	int	fd[2];
 	int	pid;
 
-	//printf("parse_heredoc works\n");
 	if (pipe(fd) == -1)
 	{
 		perror("Heredoc pipe\n");

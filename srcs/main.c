@@ -6,15 +6,13 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/05 16:04:14 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2022/01/06 12:58:27 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-t_env	*g_env;
-
-//int	*g_ptr;
+void	ft_exit(t_shell *shell);
 /*
  * Init a nice prompt, Init a new line, 
  * wait to user promt. verify if there is some strings
@@ -25,7 +23,7 @@ void	init_line(t_shell *shell)
 {
 	init_prompt(shell);
 	signal(SIGQUIT, SIG_IGN);
-	rl_replace_line("",0);
+	rl_replace_line("", 0);
 	shell->cmdline = readline(shell->prompt);
 	if (!shell->cmdline)
 	{
@@ -38,7 +36,7 @@ void	init_line(t_shell *shell)
 	{
 		free(shell->cmdline);
 		init_line(shell);
-	} 
+	}
 }
 
 /*
@@ -61,7 +59,7 @@ void	init_shell(t_shell *shell, char **env)
 	shell->std_in = 0;
 	shell->std_out = 0;
 	tcgetattr(0, &shell->term);
-	//g_ptr = &shell->ret;
+	init_line(shell);
 }
 
 int	main(int argc, char **argv, char **env)
@@ -69,29 +67,20 @@ int	main(int argc, char **argv, char **env)
 	t_shell	shell;
 
 	init_ascii();
-	//init_shell(&shell, env);
 	while (1)
 	{
 		init_shell(&shell, env);
 		parrent_handler();
-		init_line(&shell);
-		if (shell.cmdline && !(ft_strncmp(shell.cmdline, "exit", ft_strlen(shell.cmdline))))
-		{
-			free_struct(&shell);
-			free_envs(shell.env);
-			printf("exit\n");
-			rl_clear_history();
-			exit (EXIT_SUCCESS);
-		}
+		if (shell.cmdline && !(ft_strncmp(shell.cmdline,
+					"exit", ft_strlen(shell.cmdline))))
+			ft_exit(&shell);
 		if (shell.cmdline)
 		{
 			add_history(shell.cmdline);
 			if (tokenizing(&shell) == -1)
 				continue ;
 			if (*shell.cmd->token || *shell.cmd->redirection)
-			{
 				parsing(&shell, env);
-			}
 			else if (shell.cmd)
 			{
 				free_cmd(shell.cmd);
@@ -103,23 +92,12 @@ int	main(int argc, char **argv, char **env)
 	}
 	return (0);
 }
-/*
-void	blocksig(const int sig, void *ptr)
+
+void	ft_exit(t_shell *shell)
 {
-	struct termios termios_new;
-	static int a;
-	int rc;
-	
-	a = 0;
-	rc = tcgetattr(1, &termios_new);
-	termios_new.c_lflag &= ~ECHOCTL;
-	rc = tcsetattr(1, 0, &termios_new );
-	if (!g_env) 
-	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("",0);
-		rl_redisplay();
-//		shell->cmdline = NULL;
-	}
-}*/
+	free_struct(shell);
+	free_envs(shell->env);
+	printf("exit\n");
+	rl_clear_history();
+	exit(EXIT_SUCCESS);
+}

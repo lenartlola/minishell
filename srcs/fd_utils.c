@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 17:02:39 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/31 14:28:52 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/06 12:22:44 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	close_unused_fd(t_shell *shell, int fd)
 		ptr = ptr->next;
 	}
 }
+
 int	fd_set_in_out(t_shell *shell, int *fd, int first)
 {
 	if (!first)
@@ -59,4 +60,3 @@ int	fd_set_in_out(t_shell *shell, int *fd, int first)
 	}
 	return (1);
 }
-

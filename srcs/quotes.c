@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 09:59:11 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/05 17:58:30 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/06 11:53:30 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_type	get_type(t_quotes *quotes, int i)
  * we finally set them to the quotes struct.
  */
 
-void	set_quotes_data(t_vars * vars, t_quotes *quotes, t_quotes tmp)
+void	set_quotes_data(t_vars *vars, t_quotes *quotes, t_quotes tmp)
 {
 	t_quotes	*swap;
 
@@ -72,7 +72,7 @@ void	parse_quotes(t_vars *vars, int len)
 	t_quotes	tmp;
 
 	i = 0;
-	while(i < len)
+	while (i < len)
 	{
 		if (ft_strncmp(&vars->str[i], "\'", 1) == 0)
 		{
@@ -95,8 +95,6 @@ void	parse_quotes(t_vars *vars, int len)
 }
 
 /* ##################################################################### */
-
-
 /*
  * Assign the index of the last quote into j
  * check if after the quote there is something else that left

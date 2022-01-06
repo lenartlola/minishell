@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 19:21:59 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/05 17:46:29 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/06 11:39:39 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	sig_parrent(int sig)
 
 void	parrent_handler(void)
 {
-	struct termios terminos;
+	struct termios	terminos;
 
 	tcgetattr(0, &terminos);
 	terminos.c_lflag &= ~ECHOCTL;

@@ -6,7 +6,7 @@
 /*   By: lgyger <marvin@42lausanne.ch>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 17:59:41 by lgyger            #+#    #+#             */
-/*   Updated: 2022/01/05 18:00:57 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/06 11:57:51 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	is_xok(char *path)
 {
 	struct stat	stat_path;
-	int	ret;
+	int			ret;
 
 	ret = 0;
 	if (stat(path, &stat_path) == -1)

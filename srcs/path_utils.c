@@ -6,12 +6,11 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 16:24:35 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/05 18:02:25 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/06 12:00:35 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
-
 
 int	add_slash(char **path)
 {
@@ -34,7 +33,8 @@ int	add_slash(char **path)
 	return (1);
 }
 
-int	check_path_and_permission(char *path, t_cmd *cmd, t_shell *shell, char **per)
+int	check_path_and_permission(char *path, t_cmd *cmd,
+	t_shell *shell, char **per)
 {
 	struct stat	stat_path;
 
@@ -103,9 +103,9 @@ int	get_path_exec(t_shell *shell)
 	if (absolute_path(shell))
 		return (shell->ret);
 	tmp_path = split_tab(shell->env);
-	if (tmp_path == NULL || (check_path_env(&env, "PATH") && !env->value) || !*env->value)
+	if (tmp_path == NULL || (check_path_env(&env, "PATH")
+			&& !env->value) || !*env->value)
 	{
-		//(check_path_env(&env, "PATH") && !env->value)
 		shell->cmd->path = ft_strdup(*shell->cmd->token);
 		return (is_xok(*shell->cmd->token));
 	}

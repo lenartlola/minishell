@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:57:56 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/05 17:52:23 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/06 11:52:25 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	args_r_handler(t_vars *vars, int *i)
 {
 	if (is_sep(vars->str[*i]) && get_type(vars->env, *i) != ENVS)
 	{
-		ft_printf("minish: syntax error near unexpected token `%c'\n", vars->str[*i]);
+		printf("minish: syntax error near ");
+		printf("unexpected token `%c'\n", vars->str[*i]);
 		*vars->last_ret = 258;
 		return (-1);
 	}
@@ -53,37 +54,34 @@ int	redirection(t_vars *vars, t_cmd *current, int i)
 {
 	int		j;
 	int		k;
-	char	*tmp;
 
 	j = i + 1;
 	if (vars->str[j] == vars->str[j - 1])
 		j++;
-	tmp = ft_substr(vars->str, i, j - i);
-	if (!tmp)
+	if (!ft_substr(vars->str, i, j - i))
 	{
 		free_vars(vars);
 		perror("Redirection error\n");
 		exit(-1);
 	}
-	current->redirection = append_args(current->redirection, tmp);
+	current->redirection = append_args(current->redirection,
+			ft_substr(vars->str, i, j - i));
 	if (!current->redirection)
 		free_vars(vars);
 	j += trim_spaces(&vars->str[j]);
 	k = j;
 	if (redirection_loop(vars, &k) == -1)
 		return (-1);
-	tmp = substr_quote(vars, j, k - 1);
-	if (!tmp)
+	if (!substr_quote(vars, j, k - 1))
 		free_vars(vars);
-	current->redirection = append_args(current->redirection, tmp);
+	current->redirection = append_args(current->redirection,
+			substr_quote(vars, j, k - 1));
 	if (!current->redirection)
 		free_vars(vars);
 	return (k - i);
 }
 
 /* ########################################################### */
-
-
 /* ############################################################## */
 
 int	apply_redirection(t_shell *shell, char *filename, int mode)
@@ -117,7 +115,6 @@ void	redirection_handler(t_shell *shell)
 	int	red;
 	int	i;
 
-	//printf("redirection test\n");
 	i = -1;
 	while (shell->cmd->redirection[++i])
 	{
@@ -126,10 +123,8 @@ void	redirection_handler(t_shell *shell)
 			continue ;
 		red = redirection_type(shell->cmd->redirection[i]);
 		i++;
-		//printf("red : %i\n", red);
-		//printf("filename : %s\n", shell->cmd->redirection[i]);
 		if (apply_redirection(shell, shell->cmd->redirection[i], red) == 1)
-				break ;
+			break ;
 	}
 	double_free(shell->cmd->redirection);
 	shell->cmd->redirection = NULL;

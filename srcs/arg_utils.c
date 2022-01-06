@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 12:26:35 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/02 16:12:33 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2022/01/06 12:46:02 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,6 @@ int	args_to_word(t_vars *vars, t_cmd *current, int i)
 	if (!tmp)
 		free_vars(vars);
 	current->token = append_args(current->token, tmp);
-	//current->p_cmds = append_args(current->p_cmds, tmp);
-	//free(tmp);
 	if (!current->token)
 		free_vars(vars);
 	return (j - i);

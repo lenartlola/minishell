@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 22:55:45 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2022/01/05 17:32:10 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/06 11:39:08 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 char	*ft_trim(char *str)
 {
-	char *ret;
+	char	*ret;
 
 	ret = ft_strtrim(str, " ");
 	free(str);
 	return (ret);
 }
-
 
 /*
  * check for the pipes 
@@ -92,16 +91,16 @@ int	parse_loop(t_vars *vars, int len)
 int	check_empty(t_vars *vars)
 {
 	if (!vars->cmd->token[0] && !vars->cmd->redirection[0]
-			&& vars->quotes->start != -1)
+		&& vars->quotes->start != -1)
 	{
 		printf("minish: %s: command not found\n", *vars->cmd->token);
 		return (-1);
 	}
 	else if (!vars->cmd->token[0] && !vars->cmd->redirection[0]
-			&& vars->env->start != -1)
+		&& vars->env->start != -1)
 		return (-1);
 	return (0);
-} 
+}
 
 /*
  * 

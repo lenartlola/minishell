@@ -6,7 +6,7 @@
 /*   By: lgyger <marvin@42lausanne.ch>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 17:39:21 by lgyger            #+#    #+#             */
-/*   Updated: 2022/01/05 17:40:21 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/06 12:07:33 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	launch_builtin(int tmp, t_shell *shell, int in_fork)
 	else if (tmp == EXPORT_M)
 		shell->ret = ft_export(shell->cmd->token, shell, &shell->env);
 	else if (tmp == UNSET_M)
-		shell->ret = ft_unset(shell->cmd->token,shell);
+		shell->ret = ft_unset(shell->cmd->token, shell);
 	else if (tmp == PWD_M)
 		shell->ret = ft_pwd();
 	if (!in_fork)

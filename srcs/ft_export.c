@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 09:46:58 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/05 17:19:01 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/06 12:21:30 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	ft_strcmp(char *s1, char *s2)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
@@ -25,14 +25,14 @@ int	ft_strcmp(char *s1, char *s2)
 
 void	ft_sort(t_env *env, int lenenv)
 {
-	int	j;
-	char *temp;
-	char *ntemp;
+	int		j;
+	char	*temp;
+	char	*ntemp;
 
 	j = 0;
 	while (j < lenenv)
 	{
-		if (ft_strcmp(env->name,env->next->name) > 0)
+		if (ft_strcmp(env->name, env->next->name) > 0)
 		{
 			ntemp = ft_strdup(env->value);
 			temp = ft_strdup(env->name);
@@ -44,8 +44,6 @@ void	ft_sort(t_env *env, int lenenv)
 		env = env->next;
 		j++;
 	}
-	free(temp);
-	free(ntemp);
 }
 
 t_env	*sort(t_env *env, int lenenv)
@@ -61,15 +59,32 @@ t_env	*sort(t_env *env, int lenenv)
 	return (env);
 }
 
+void	add_varenv(t_shell *shell, char **cmd)
+{
+	unsigned int	i;
+	char			**ret;
+	t_env			*tmp;
+
+	i = 1;
+	while (cmd[i])
+	{
+		ret = ft_split(cmd[i], '=');
+		tmp = new_env(ret[0], ret[1]);
+		env_add_back(&shell->env, tmp);
+		free(ret);
+		i++;
+	}
+}
+
 int	ft_export(char **cmd, t_shell *shell, t_env **tenv)
 {
-	unsigned int i;
-	t_env *tmp;
-	char **ret;
+	unsigned int	i;
+	t_env			*tmp;
+	char			**ret;
 
 	i = 0;
 	tmp = g_env;
-	while(tmp)
+	while (tmp)
 	{
 		i++;
 		tmp = tmp->next;
@@ -78,24 +93,14 @@ int	ft_export(char **cmd, t_shell *shell, t_env **tenv)
 	{
 		tmp = g_env;
 		tmp = sort(tmp, i);
-		while(tmp)
+		while (tmp)
 		{
-			printf("declare -x %s=\"%s\"\n",tmp->name,tmp->value);
+			printf("declare -x %s=\"%s\"\n", tmp->name, tmp->value);
 			tmp = tmp->next;
 		}
 	}
 	else
-	{
-		i = 1;
-		while (cmd[i])
-		{
-			ret = ft_split(cmd[i], '=');
-			tmp = new_env(ret[0],ret[1]);
-			env_add_back(&shell->env,tmp);
-			free(ret);
-			i++;
-		}
-	}
+		add_varenv(shell, cmd);
 	g_env = shell->env;
 	return (1);
 }

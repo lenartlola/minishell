@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 10:26:23 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/05 10:41:14 by 1mthe0wl         ###   ########.fr       */
+/*   Updated: 2022/01/06 12:38:24 by lgyger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_cmd	*init_cmd(void)
 	cmd->token = init_cmd_token();
 	cmd->redirection = init_cmd_token();
 	if (!cmd->token || !cmd->redirection)
-		return  (NULL);
+		return (NULL);
 	cmd->next = NULL;
 	cmd->path = NULL;
 	cmd->in = 0;
