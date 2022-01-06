@@ -4,7 +4,7 @@
 
 ### As beautiful as a shell
 
-![linux penguin gif](imgs/uwuN.png)
+![linux penguin gif](imgs/UwU.png)
 
 -----------------------------------
 
