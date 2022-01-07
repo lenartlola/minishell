@@ -34,7 +34,8 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 
-//extern t_env	**g_env;
+extern t_env	*g_env;
+
 typedef struct s_quotes	t_quotes;
 typedef struct s_cmd	t_cmd;
 typedef struct s_env	t_env;
@@ -75,8 +76,8 @@ typedef struct s_env
 
 typedef struct s_quotes
 {
-	int			start;
-	int			end;
+	int		start;
+	int		end;
 	t_type		type;
 	t_quotes	*next;
 }	t_quotes;
@@ -88,18 +89,18 @@ typedef struct s_vars
 	t_quotes	*env;
 	t_env		*env_vars;
 	char		*str;
-	int			*last_ret;
-	int			lreturn;
+	int		*last_ret;
+	int		lreturn;
 }	t_vars;
-t_env					*g_env;
+
 typedef struct s_cmd
 {
 	char	**token;
 	char	**redirection;
 	char	*path;
-	int		pid;
-	int		in;
-	int		out;
+	int	pid;
+	int	in;
+	int	out;
 	t_cmd	*next;
 }	t_cmd;
 
@@ -108,15 +109,15 @@ typedef struct s_shell
 	t_cmd			*cmd;
 	char			*cmdline;
 	char			**tokens;
-	int				ret;
-	int				std_in;
-	int				std_out;
-	int				error;
+	int			ret;
+	int			std_in;
+	int			std_out;
+	int			error;
 	t_env			*env;
-	int				n_pipes;
-	int				pipe_flag;
-	int				pipe_cmd_exist;
-	int				lreturn;
+	int			n_pipes;
+	int			pipe_flag;
+	int			pipe_cmd_exist;
+	int			lreturn;
 	char			*cmds;
 	char			**cmds_pipe[1024];
 	char			*prompt;
