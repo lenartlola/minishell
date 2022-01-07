@@ -6,11 +6,16 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 09:59:11 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/06 11:53:30 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/07 13:56:23 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
+
+/*
+ * Recive an index, and check if the index is
+ * wihin quotes, if so then return the type of quotes.
+ */
 
 t_type	get_type(t_quotes *quotes, int i)
 {

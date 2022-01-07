@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 15:59:03 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/06 12:44:49 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/07 11:19:37 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	ft_cd(char **cmd, t_shell *shell)
 		pwd = malloc(sizeof(char) * 100);
 	getcwd(pwd, 100);
 	if (cmd[0] == NULL)
-		cmd[0] = getenv("HOME");
+		cmd[0] = ft_strdup(getenv("HOME"));
 	if (chdir(cmd[0]) != 0)
 	{
 		printf("cd: no such file or directory: %s\n", cmd[0]);

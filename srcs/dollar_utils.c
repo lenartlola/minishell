@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 14:27:51 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/06 12:49:31 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/07 13:19:29 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,12 @@ int	ft_space(char c)
 	return (0);
 }
 
+/*
+ * Looking for a $ sign and check if it's not in a single quotes,
+ * if it is so just continue, otherwise check if after it is a ?,
+ * and if it is call a function to find the last return value.
+ */
+
 void	parse_dollar(t_vars *vars, int len)
 {
 	int	i;
@@ -107,7 +113,8 @@ void	parse_dollar(t_vars *vars, int len)
 			{
 				if (vars->str[i] == '?')
 					last_dollar_ret(vars, &i);
-				else if (!ft_isalpha(vars->str[i]) && (!ft_space(vars->str[i])))
+				else if (!ft_isalpha(vars->str[i]) && (!ft_space(vars->str[i]))
+						&& vars->str[i] != '\"')
 					ignore_dollar(vars, &i);
 				continue ;
 			}

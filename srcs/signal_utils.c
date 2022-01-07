@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 19:21:59 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/06 11:39:39 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/07 15:46:35 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,18 @@ void	sig_parrent(int sig)
 	if (sig == SIGINT)
 	{
 		write(1, "\n", 1);
+		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 	}
 }
+
+/*
+ * The termios.h contains the definitions used by the terminal I/O interfaces.
+ * The ECHOCTL controls characters as ^char and delete as ~?
+ * TCSANOW : Immediately sets the parameters associated with the terminal
+ * from the referenced termios structure.
+ */
 
 void	parrent_handler(void)
 {
@@ -65,8 +73,6 @@ void	wait_all_process(t_cmd *cmd, t_shell *shell)
 	waitpid(last_pid(cmd), &status, 0);
 	if (WIFSIGNALED(status))
 		return_sig(status, shell, &nl);
-	else
-		shell->ret = WEXITSTATUS(status);
 	while (waitpid(cmd->pid, &status, 0) != -1)
 	{
 		if (WIFSIGNALED(status) && WTERMSIG(status) != SIGPIPE)

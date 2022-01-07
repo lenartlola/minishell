@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/06 19:59:45 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/01/07 13:17:51 by hsabir           ###   ########.fr       */
 /*                                                                           */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 
-extern t_env	*g_env;
-
 typedef struct s_quotes	t_quotes;
 typedef struct s_cmd	t_cmd;
 typedef struct s_env	t_env;
+
+extern t_env	*g_env;
 
 typedef enum s_builtin_cmd
 {
@@ -114,12 +114,9 @@ typedef struct s_shell
 	int			std_out;
 	int			error;
 	t_env			*env;
-	int			n_pipes;
-	int			pipe_flag;
 	int			pipe_cmd_exist;
 	int			lreturn;
 	char			*cmds;
-	char			**cmds_pipe[1024];
 	char			*prompt;
 	char			**ev;
 	char			**exp;

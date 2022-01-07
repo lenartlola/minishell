@@ -6,7 +6,7 @@
 /*   By: lgyger <marvin@42lausanne.ch>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 12:46:49 by lgyger            #+#    #+#             */
-/*   Updated: 2022/01/06 12:50:07 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/01/07 15:07:23 by hsabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	last_dollar_ret(t_vars *vars, int *i)
 	char		*swap;
 	t_quotes	q_tmp;
 
-	swap = ft_itoa(*vars->last_ret);
+	swap = ft_itoa(vars->lreturn);
 	if (!swap)
 	{
 		free_vars(vars);
