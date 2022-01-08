@@ -24,8 +24,28 @@ So, basically, a shell is simply a program which simplicify the task of communic
 ### requirements :
 - GNU Make version: 3 above
 - GCC version: 4 above
+- readline library
 
 ### Build
+----------------
+
+#### Install readline.
+MacOS:
+```
+brew install readline
+```
+
+Linux
+- Arch:
+```
+sudo pacman -Syu readline
+```
+- Ubuntu and debian based distros:
+```
+sudo apt-get install libreadline6 libreadline6-dev
+```
+
+----------------
 
 Clone this repository.
 ```sh
