@@ -6,11 +6,11 @@
 #    By: hsabir <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/14 13:27:39 by hsabir            #+#    #+#              #
-#    Updated: 2022/01/06 15:01:44 by lgyger           ###   ########.fr        #
+#    Updated: 2022/02/20 20:35:47 by hsabir           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -I ~/.brew/Cellar/readline/8.1.1/include -lreadline -L ~/.brew/Cellar/readline/8.1.1/lib
+CFLAGS = -I ~/.brew/Cellar/readline/8.1.2/include -lreadline -L ~/.brew/Cellar/readline/8.1.2/lib
 CFLAGS += -o minishell
 #CFLAGS += -g3 -fsanitize=address
 
