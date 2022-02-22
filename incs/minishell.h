@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/07 13:17:51 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/02/22 12:07:46 by                  ###   ########.fr       */
 /*                                                                           */
 /* ************************************************************************** */
 
@@ -22,17 +22,48 @@
 # define KCYN  "\x1B[36m"
 # define KWHT  "\x1B[37m"
 
+// Intern includes
+# include "minishell/main.h"
+# include "../libs/libft/incs/libft.h"
+//# include <minishell/builtin.h>
+//# include <minishell/colors.h>
+//# include <minishell/utils.h>
+//# include <minishell/signals.h>
+//# include <minishell/prompt.h>
+//# include <minishell/lexer.h>
+//# include <minishell/parser.h>
+//# include <minishell/ast.h>
+//# include <minishell/exec.h>
+//# include <minishell/read_config.h>
+
+// STANDARD LIBS
+# include <stdlib.h>
+# include <string.h>
 # include <stdio.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <limits.h>
+# include <dirent.h>
+# include <unistd.h>
+# include <termios.h>
+# include <term.h>
+# include <fcntl.h>
+
+// READLINE
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <string.h>
-# include <stdlib.h>
-# include <sys/wait.h>
-# include "../libs/libft/incs/libft.h"
-# include <signal.h>
-# include <termios.h>
-# include <fcntl.h>
-# include <sys/stat.h>
+
+
+# ifndef TRUE
+#  define TRUE 1
+# endif
+# ifndef FALSE
+#  define FALSE 0
+# endif
+
+# ifndef PATH_MAX
+#  define PATH_MAX 256
+# endif
 
 typedef struct s_quotes	t_quotes;
 typedef struct s_cmd	t_cmd;
@@ -106,6 +137,8 @@ typedef struct s_cmd
 
 typedef struct s_shell
 {
+	int				last_status;
+	t_list			**env;
 	t_cmd			*cmd;
 	char			*cmdline;
 	char			**tokens;
@@ -113,7 +146,6 @@ typedef struct s_shell
 	int			std_in;
 	int			std_out;
 	int			error;
-	t_env			*env;
 	int			pipe_cmd_exist;
 	int			lreturn;
 	char			*cmds;

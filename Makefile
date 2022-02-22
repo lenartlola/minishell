@@ -1,78 +1,70 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: hsabir <marvin@42.fr>                      +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/12/14 13:27:39 by hsabir            #+#    #+#              #
-#    Updated: 2022/02/20 20:35:47 by hsabir           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+SHELL = /bin/sh
 
-CFLAGS = -I ~/.brew/Cellar/readline/8.1.2/include -lreadline -L ~/.brew/Cellar/readline/8.1.2/lib
-CFLAGS += -o minishell
-#CFLAGS += -g3 -fsanitize=address
+CFLAGS := ${CFLAGS}
 
-LIBFT_DIR = libs/libft/
-LFT_NAME = libft.a
+CC     ?= gcc
+LD     ?= gcc
 
-NAME = Minishell
+INC_FLAGS := -Ilibs/libft/incs
+LIBS := -Llibs/libft -lft -lreadline
 
-FILES = ./srcs/main.c\
-	./srcs/ft_env.c\
-	./srcs/dollar_utils2.c\
-	./srcs/linked_env.c\
-	./srcs/pathing.c\
-	./srcs/redirection_utils.c\
-	./srcs/parse_quotes_args.c\
-	./srcs/utils.c\
-	./srcs/launch.c\
-	./srcs/ft_unset.c\
-	./srcs/ft_export.c\
-	./srcs/builtin.c\
-	./srcs/tokenizing.c\
-	./srcs/parsing.c\
-	./srcs/prompt.c\
-	./srcs/exec_cmds.c\
-	./srcs/piping.c\
-	./srcs/ascii_init.c\
-	./srcs/free.c\
-	./srcs/error.c\
-	./srcs/str_utils.c\
-	./srcs/quotes.c\
-	./srcs/quotes_utils.c\
-	./srcs/arg_utils.c\
-	./srcs/vars_utils.c\
-	./srcs/cmd_utils.c\
-	./srcs/fd_utils.c\
-	./srcs/heredocing.c\
-	./srcs/redirection.c\
-	./srcs/signal_utils.c\
-	./srcs/env_utils.c\
-	./srcs/path_utils.c\
-	./srcs/dollar_utils.c
+UNAME = $(shell uname -s)
+ifeq ($(UNAME), Linux)
+	NPROC := $(shell nproc)
+else
+	NPROC := $(shell sysctl -n hw.ncpu)
+	INC_FLAGS += -I$(HOME)/.brew/opt/readline/include
+    LIBS += -L$(HOME)/.brew/opt/readline/lib
+endif
 
-all : $(NAME)
+MAKEFLAGS += --output-sync=target
+MAKEFLAGS += --no-print-directory
 
-$(NAME): $(LFT_NAME)
-	$(MAKE) all -sC $(LIBFT_DIR)/
-	gcc $(CFLAGS) $(FILES) $(LFT_NAME)
+NAME ?= minish
 
-$(LFT_NAME):
-	$(MAKE) all -sC $(LIBFT_DIR)/
-	cp $(LIBFT_DIR)/$(LFT_NAME) $(LFT_NAME)
+BUILD_DIR ?= ./build
+SRC_DIRS ?= ./srcs
 
-fclean:
-	rm -f $(NAME)
-	rm -f $(LFT_NAME)
-	$(MAKE) fclean -sC $(LIBFT_DIR)
+SRCS := $(shell find $(SRC_DIRS) -name '*.c')
+OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
+
+INC_DIRS := $(shell find $(SRC_DIRS) -type d)
+INC_FLAGS += $(addprefix -I,$(INC_DIRS))
+
+LIB    := libs/libft/libft.a
+
+CFLAGS += -Wall -Wextra -Werror
+#CFLAGS += -O2 -march=native
+#CFLAGS += -g3
+
+all:
+	@$(MAKE) -j$(NPROC) $(NAME)
+
+$(NAME): $(LIB) $(OBJS)
+	@echo Linking $@
+	@$(CC) $(CFLAGS) $(INC_FLAGS) $(OBJS) $(LIBS) -o $(NAME)
+
+$(BUILD_DIR)/%.c.o: %.c
+	@echo Compiling $@
+	@mkdir -p $(dir $@)
+	@$(CC) -c  $(CFLAGS) $(INC_FLAGS) $< -o $@
+
+$(LIB):
+	@$(MAKE) -C libs/libft
+	@echo Libft done
 
 clean:
-	rm -f $(LFT_NAME)
-	$(MAKE) fclean -sC $(LIBFT_DIR)
+	@rm -rf $(BUILD_DIR)
+	@$(MAKE) -C libs/libft clean
+	@echo Clean done
 
-re: fclean clean all
-	$(MAKE) re -sC $(LIBFT_DIR)
+fclean:
+	@rm -rf $(BUILD_DIR)
+	@rm -f $(NAME)
+	@$(MAKE) -C libs/libft fclean
+	@echo Fclean done
 
-.PHONY: clean fclean all re
+re: fclean
+	@$(MAKE) -j$(NPROC) $(NAME)
+
+.PHONY: all clean fclean re
