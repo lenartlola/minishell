@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2022/02/22 12:07:46 by                  ###   ########.fr       */
+/*   Updated: 2022/03/13 05:30:32 by hypn0x           ###   ########.fr       */
 /*                                                                           */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 // Intern includes
 # include "minishell/main.h"
 # include "../libs/libft/incs/libft.h"
-//# include <minishell/builtin.h>
+# include <minishell/types.h>
 //# include <minishell/colors.h>
 //# include <minishell/utils.h>
 //# include <minishell/signals.h>
@@ -280,4 +280,9 @@ int			args_to_word(t_vars *vars, t_cmd *current, int i);
 //sig_utils
 int			last_pid(t_cmd *cmd);
 void		sig_child(int sig);
+
+// New bonus
+int			handle_line(t_shell *shell);
+
+
 #endif 

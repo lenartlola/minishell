@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/07 15:11:12 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/03/13 05:31:25 by hypn0x           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,15 +100,17 @@ int	main(int argc, char **argv, char **env)
 		if (shell.cmdline)
 		{
 			add_history(shell.cmdline);
-			if (tokenizing(&shell) == -1)
+			if (handle_line(&shell) == -1)
 				continue ;
-			if (*shell.cmd->token || *shell.cmd->redirection)
-				parsing(&shell, env);
-			else if (shell.cmd)
-			{
-				free_cmd(shell.cmd);
-				shell.cmd = NULL;
-			}
+			//if (tokenizing(&shell) == -1)
+			//	continue ;
+			//if (*shell.cmd->token || *shell.cmd->redirection)
+			//	parsing(&shell, env);
+			//else if (shell.cmd)
+			//{
+			//	free_cmd(shell.cmd);
+			//	shell.cmd = NULL;
+			//}
 		}
 		free(shell.prompt);
 		shell.prompt = NULL;

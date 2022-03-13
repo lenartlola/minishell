@@ -6,7 +6,7 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 22:55:45 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2022/01/07 17:11:50 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/03/13 05:39:33 by hypn0x           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,27 +48,12 @@ int	parse_loop(t_vars *vars, int len)
 	return (0);
 }
 
-/*
- * The base of the program here we decide how to handle what
- * the users write. It could be monkey typing so we have to be careful
- * whar we are reciving and how tto manage them.
- * ----------------------------------------------------------------
- * The first approach was to handle the pipes at first
- * but we soon realised that we should have took care of quotes :)
- * ----------------------------------------------------------------
- * Check if any type 'single', or "double" exist, if yes,
- * so find out its indexes of start and end, and as well its type.
- * ----------------------------------------------------------------
- * Once found quotes and its details then look for dollar sign
- * and handle it carefully as bash does.
- * ----------------------------------------------------------------
- */
-
-int	tokenizing(t_shell *shell)
+int	tokenizing(t_shell *shell, t_lexer *lex)
 {
-	t_vars	vars;
-	int		len;
+	size_t	len;
 
+	len = ft_strlen(shell->cmdline);
+/*
 	shell->cmd = init_cmd();
 	if (!shell->cmd)
 	{
@@ -91,4 +76,42 @@ int	tokenizing(t_shell *shell)
 	free_quotes(vars.quotes);
 	free_quotes(vars.env);
 	return (0);
+	*/
 }
+
+static int	check_line(char *line)
+{
+	char	*aux;
+
+	if (line == NULL || *line == '\0' || *line == '\n' || is_comment(line))
+	{
+		free_line(line, is_alloc);
+		return (1);
+	}
+	aux = line;
+	while (*aux != '\0')
+	{
+		if (ft_isblank(*aux) == 0)
+			break ;
+		aux++;
+	}
+	if (*aux == '\0')
+	{
+		free_line(line, is_alloc);
+		return (1);
+	}
+	return (0);
+}
+
+int	handle_line(t_shell *shell)
+{
+	t_lexer	lex;
+	t_ast	*ast;
+	int		ret;
+
+	ast = NULL;
+	if (check_line(shell->cmdline) == 1)
+		return (-1);
+	ret = tokenizing(shell, &lex);
+}
+
