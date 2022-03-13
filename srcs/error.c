@@ -47,3 +47,10 @@ void	close_fds(t_cmd *cmd)
 		cmd = cmd->next;
 	}
 }
+
+void	wcard_err(t_tkn *const *tkn, t_tkn *head)
+{
+	ft_putstr_fd((*tkn)->data, STDERR_FILENO);
+	ft_putstr_fd(": ambiguous redirect\n", STDERR_FILENO);
+	tok_del(head);
+}

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
+#include "minishell.h"
 
 t_quotes	*init_quotes(int start, int end, t_type type)
 {
@@ -68,4 +68,34 @@ void	quote_error_exit(t_vars *vars)
 	free_vars(vars);
 	perror("Error\n");
 	exit(EXIT_FAILURE);
+}
+
+// Re:Bonus
+
+void	trim_quotes(char *dst, char *src)
+{
+	int		i;
+	int		j;
+	int		len;
+	char	l_quote;
+
+	len = ft_strlen(src);
+	if (len <= 1)
+	{
+		ft_strcpy(dst, src);
+		return ;
+	}
+	l_quote = 0;
+	i = -1;
+	j = 0;
+	while (++i < len)
+	{
+		if ((src[i] == '\'' || src[i] == '\"') && l_quote == 0)
+			l_quote = src[i];
+		else if (src[i] == l_quote)
+			l_quote = 0;
+		else
+			dst[j++] = src[i];
+	}
+	dst[j] = 0;
 }

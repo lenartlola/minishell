@@ -4,6 +4,27 @@
 
 #include "../../incs/minishell.h"
 
+static int	check_tkn(t_lexer *lex, t_tkn **cur, t_tkn *prev)
+{
+	if (*cur == NULL)
+		return (1);
+	if (ft_strlen((*cur)->data) <= 0)
+	{
+		if (prev == NULL)
+			lex->tkn_list = (*cur)->next;
+		else
+			prev->next = (*cur)->next;
+		free((*cur)->data);
+		free(*cur);
+		if (prev == NULL)
+			*cur = lex->tkn_list;
+		else
+			*cur = prev->next;
+		return (1);
+	}
+	return (0);
+}
+
 static int	handle_wildcard(t_lexer *lex, t_tknadd *ta)
 {
 	int		ret;
@@ -16,7 +37,7 @@ static int	handle_wildcard(t_lexer *lex, t_tknadd *ta)
 		g_shell.is_expd = FALSE;
 		if (ret == 1)
 			return (-1);
-		if (check_tok(lex, &ta->aux, ta->prev))
+		if (check_tkn(lex, &ta->aux, ta->prev))
 		{
 			g_shell.tokdel = TRUE;
 			return (1);
@@ -47,7 +68,7 @@ static int	handle_token(t_lexer *lex, t_tknadd *ta)
 	{
 		trimed = (char *)malloc(ft_strlen(ta->aux->data) + 1);
 		if (trimed == NULL)
-			return (perror_ret("malloc", -1));
+			return (print_error_ret("malloc", -1));
 		trim_quotes(trimed, ta->aux->data);
 		free(ta->aux->data);
 		ta->aux->data = trimed;
@@ -88,12 +109,12 @@ static int	parse_tokens(t_tkn *tkn, t_tkn *prev, t_lexer *lex, t_tknadd *ta)
 int	process_tokens(t_lexer *lex)
 {
 	t_tknadd 	ta;
-	t_tkn		*tok;
+	t_tkn		*tkn;
 	t_tkn		*prev;
 	int			cnt;
 
 	prev = NULL;
 	tkn = lex->tkn_list;
-	cnt = parse_tokens(tok, prev, lex, &ta);
+	cnt = parse_tokens(tkn, prev, lex, &ta);
 	return (cnt);
 }

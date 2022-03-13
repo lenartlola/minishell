@@ -94,7 +94,7 @@ int	handle_wildcards(t_tkn **tkn, t_tkn **prev, t_lexer *lex)
 	if (head->next != NULL && g_shell.prev
 		&& (g_shell.prev->type == CHAR_GT || g_shell.prev->type == CHAR_LS))
 	{
-		wc_put_error(tkn, head);
+		wcard_err(tkn, head);
 		return (-1);
 	}
 	rejoin_tknens(tkn, prev, lex, head);

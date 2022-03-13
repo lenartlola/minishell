@@ -70,13 +70,12 @@ static int	process_char(t_lexadd *la, const char *line, const size_t sz)
 	return (0);
 }
 
-int	tokenizing(t_lexer *lex)
+int	tokenizing(const char *line, size_t len, t_lexer *lex)
 {
-	size_t		len;
 	t_lexadd 	la;
 	int 		ret;
 
-	len = ft_strlen(g_shell.cmdline);
+	len = ft_strlen(line);
 
 	lex->n_tokens = 0;
 	if (g_shell.is_expd == FALSE)
@@ -89,7 +88,7 @@ int	tokenizing(t_lexer *lex)
 			break ;
 		la.c = g_shell.cmdline[la.i];
 		la.type = get_ctype(la.c);
-		if (process_char(&la, g_shell.cmdline, len))
+		if (process_char(&la, line, len))
 			return (0);
 		la.i++;
 		if (la.c == '\0')
@@ -100,28 +99,4 @@ int	tokenizing(t_lexer *lex)
 		return (-1);
 	lex->n_tokens += ret;
 	return (lex->n_tokens);
-/*
-	shell->cmd = init_cmd();
-	if (!shell->cmd)
-	{
-		free_envs(shell->env);
-		perror("Close");
-	}
-	vars.lreturn = shell->lreturn;
-	init_vars(&vars, shell);
-	len = ft_strlen(vars.str);
-	parse_quotes(&vars, len);
-	parse_dollar(&vars, len);
-	len = ft_strlen(vars.str);
-	if (parse_loop(&vars, len) == -1)
-	{
-		c_free_vars(&vars);
-		shell->cmd = NULL;
-		return (-1);
-	}
-	free(vars.str);
-	free_quotes(vars.quotes);
-	free_quotes(vars.env);
-	return (0);
-	*/
 }

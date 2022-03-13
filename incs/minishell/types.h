@@ -58,7 +58,7 @@ typedef struct s_tknadd {
 	t_tkn	*aux;
 }	t_tknadd;
 
-/* Asterik */
+/* AST */
 
 struct s_ast {
 	int		type;
@@ -66,6 +66,16 @@ struct s_ast {
 	t_ast	*left;
 	t_ast	*right;
 };
+
+/* Expand */
+
+typedef struct s_expand {
+	int		start;
+	int		end;
+	int		curly;
+	char	*name;
+	char	*value;
+}	t_expand;
 
 /* Built-in */
 

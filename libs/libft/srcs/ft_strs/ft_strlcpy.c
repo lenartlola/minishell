@@ -32,3 +32,14 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 		dst[i] = '\0';
 	return (srcsize);
 }
+
+char	*ft_strcpy(char *dst, const char *src)
+{
+	char	*save;
+
+	save = dst;
+	while (*src)
+		*dst++ = *src++;
+	*dst = '\0';
+	return (save);
+}

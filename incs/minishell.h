@@ -151,7 +151,7 @@ int			fd_set_in_out(t_shell *shell, int *fd, int first);
 int			parse_heredoc(char *delim, t_shell *shell, t_cmd *ptr);
 int			redirection_type(char *redirection);
 int			redirection(t_vars *vars, t_cmd *current, int i);
-int			tokenizing(t_lexer *lex);
+int			tokenizing(const char *line, size_t len, t_lexer *lex);
 int			pipe_counter(char *str, char c);
 void		blocksig(int sig, void *ptr);
 //parsing
@@ -240,10 +240,21 @@ void		sig_child(int sig);
 // re:bonus
 /* Lexer */
 int			handle_line();
+// quotes
+void		trim_quotes(char *dst, char *src);
+// Expand
+int			expand(t_tkn *tkn, int *start, int st);
+void		lexer_del(t_lexer *lex);
+void		insert_tknlst(t_tkn **tkn, t_tkn **prev, t_lexer *lex, t_tkn *head);
+int			handle_expand(t_tkn **tkn, t_tkn **prev, t_lexer *lex, t_tknadd *ts);
 // token utils
+int			process_tokens(t_lexer *lex);
 int			tok_init(t_tkn *tkn, size_t len);
 int			init_la(t_lexadd *la, t_lexer *lex, const size_t len);
 void		del_node(t_tkn **tkn, t_tkn *prev);
+void		tok_del(t_tkn *tkn);
+void		rejoin_tknens(t_tkn **tkn, t_tkn **prev, t_lexer *lex, t_tkn *head);
+
 
 // Inits
 void		init_shell(void);
@@ -266,6 +277,10 @@ void		handle_other_st(t_lexadd *la);
 
 // Wildcards
 int			wc_check(t_tkn *tkn);
+int			wc_match(const char *wildcard, const char *target);
 void		read_dir(t_tkn **head, DIR *ls, struct dirent *list);
+int			handle_wildcards(t_tkn **tkn, t_tkn **prev, t_lexer *lex);
+void		wcard_err(t_tkn *const *tkn, t_tkn *head);
+
 
 #endif 

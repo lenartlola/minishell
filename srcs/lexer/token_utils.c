@@ -48,3 +48,24 @@ void	del_node(t_tkn **tkn, t_tkn *prev)
 		free(tmp);
 	}
 }
+
+void	rejoin_tknens(t_tkn **tkn, t_tkn **prev, t_lexer *lex, t_tkn *head)
+{
+	int		cnt;
+	t_tkn	*aux;
+
+	aux = head;
+	cnt = 1;
+	while (aux->next && ++cnt)
+		aux = aux->next;
+	aux->next = (*tkn)->next;
+	if (lex->tkn_list == *tkn)
+		lex->tkn_list = head;
+	else
+		(*prev)->next = head;
+	free((*tkn)->data);
+	free(*tkn);
+	lex->n_tokens += cnt;
+	*tkn = aux->next;
+	*prev = aux;
+}

@@ -10,7 +10,7 @@ static int	check_line(char *line)
 
 	if (line == NULL || *line == '\0' || *line == '\n')
 	{
-		free_struct()
+		free_struct();
 		return (1);
 	}
 	aux = line;
@@ -38,5 +38,7 @@ int	handle_line()
 	ast = NULL;
 	if (check_line(g_shell.cmdline) == 1)
 		return (-1);
-	ret = tokenizing(&lex);
+	ret = tokenizing(g_shell.cmdline, ft_strlen(g_shell.cmdline), &lex);
+	//TODO: Error handling.
+	// Maybe tomorrow, I'm so fucking tired
 }
