@@ -6,11 +6,11 @@
 /*   By: 1mthe0wl </var/spool/mail/evil>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 22:55:45 by 1mthe0wl          #+#    #+#             */
-/*   Updated: 2022/03/13 05:39:33 by hypn0x           ###   ########.fr       */
+/*   Updated: 2022/03/13 17:12:47 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
+#include <minishell.h>
 
 char	*ft_trim(char *str)
 {
@@ -48,11 +48,58 @@ int	parse_loop(t_vars *vars, int len)
 	return (0);
 }
 
-int	tokenizing(t_shell *shell, t_lexer *lex)
-{
-	size_t	len;
+// Re:Bonus
 
-	len = ft_strlen(shell->cmdline);
+static int	process_char(t_lexadd *la, const char *line, const size_t sz)
+{
+	if (la->st == ST_GENERAL)
+	{
+		if (handle_general_state(la, line, sz))
+			return (1);
+	}
+	else
+		handle_other_st(la);
+	if (la->type == CHAR_NULL)
+	{
+		if (la->j > 0)
+		{
+			la->tkn->data[la->j] = '\0';
+			la->j = 0;
+		}
+	}
+	return (0);
+}
+
+int	tokenizing(t_lexer *lex)
+{
+	size_t		len;
+	t_lexadd 	la;
+	int 		ret;
+
+	len = ft_strlen(g_shell.cmdline);
+
+	lex->n_tokens = 0;
+	if (g_shell.is_expd == FALSE)
+		g_shell.tokdel = FALSE;
+	if (len == 0 || init_la(&la, lex, len) == 1)
+		return (0);
+	while (1)
+	{
+		if (la.i > (int)len)
+			break ;
+		la.c = g_shell.cmdline[la.i];
+		la.type = get_ctype(la.c);
+		if (process_char(&la, g_shell.cmdline, len))
+			return (0);
+		la.i++;
+		if (la.c == '\0')
+			break ;
+	}
+	ret = process_tokens(lex);
+	if (ret == -1)
+		return (-1);
+	lex->n_tokens += ret;
+	return (lex->n_tokens);
 /*
 	shell->cmd = init_cmd();
 	if (!shell->cmd)
@@ -78,40 +125,3 @@ int	tokenizing(t_shell *shell, t_lexer *lex)
 	return (0);
 	*/
 }
-
-static int	check_line(char *line)
-{
-	char	*aux;
-
-	if (line == NULL || *line == '\0' || *line == '\n' || is_comment(line))
-	{
-		free_line(line, is_alloc);
-		return (1);
-	}
-	aux = line;
-	while (*aux != '\0')
-	{
-		if (ft_isblank(*aux) == 0)
-			break ;
-		aux++;
-	}
-	if (*aux == '\0')
-	{
-		free_line(line, is_alloc);
-		return (1);
-	}
-	return (0);
-}
-
-int	handle_line(t_shell *shell)
-{
-	t_lexer	lex;
-	t_ast	*ast;
-	int		ret;
-
-	ast = NULL;
-	if (check_line(shell->cmdline) == 1)
-		return (-1);
-	ret = tokenizing(shell, &lex);
-}
-

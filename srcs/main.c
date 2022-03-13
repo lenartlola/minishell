@@ -6,55 +6,60 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2022/03/13 05:31:25 by hypn0x           ###   ########.fr       */
+/*   Updated: 2022/03/13 16:32:11 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-t_env	*g_env;
+//t_env	*g_env;
+t_shell	g_shell;
 
-/*
- * Init a nice prompt, Init a new line, 
- * wait to user promt. verify if there is some strings
- * otherwise free the allocated memory and reinit.
- */
+//get_line(char *line)
+//{
+//	init_prompt();
+//	signal(SIGQUIT, SIG_IGN);
+//	rl_replace_line("", 0);
+//	rl_redisplay();
+//
+//	g_shell.cmdline = readline(g_shell.prompt);
+//	if (!g_shell.cmdline)
+//	{
+//		if (g_shell.cmdline != NULL)
+//			free_struct();
+//		rl_clear_history();
+//		exit (EXIT_SUCCESS);
+//	}
+//	while (!(ft_strlen(g_shell.cmdline)))
+//	{
+//		free(g_shell.cmdline);
+//		g_shell.cmdline = NULL;
+//		get_line(line);
+//	}
+//	line = g_shell.cmdline;
+//}
 
-void	init_line(t_shell *shell)
+void	init_line()
 {
-	init_prompt(shell);
+	init_prompt(g_shell);
 	signal(SIGQUIT, SIG_IGN);
 	rl_replace_line("", 0);
 	rl_redisplay();
-	shell->cmdline = readline(shell->prompt);
-	if (!shell->cmdline)
+	g_shell.cmdline = readline(g_shell.prompt);
+	if (!g_shell.cmdline)
 	{
-		if (shell->cmdline != NULL)
-			free_struct(shell);
+		if (g_shell.cmdline != NULL)
+			free_struct();
 		rl_clear_history();
 		exit (EXIT_SUCCESS);
 	}
-	while (!(ft_strlen(shell->cmdline)))
+	while (!(ft_strlen(g_shell.cmdline)))
 	{
-		free(shell->cmdline);
-		init_line(shell);
+		free_struct();
+		init_line();
 	}
 }
 
-void	init_shell(t_shell *shell, char **env)
-{
-	parrent_handler();
-	shell->cmdline = NULL;
-	if (!g_env)
-		shell->env = get_envs(env);
-	g_env = shell->env;
-	shell->cmd = NULL;
-	shell->ret = 0;
-	shell->std_in = 0;
-	shell->std_out = 0;
-	tcgetattr(0, &shell->term);
-	init_line(shell);
-}
 
 void	ft_exit(t_shell *shell)
 {
@@ -75,32 +80,40 @@ static void	check_isatty(int ac, char **av)
 	}
 }
 
-/*
- * The core of the program.
- * Init a shell structure with some utilities, refer to "minishell.h".
- * if cmdline is exit and no more strings exist, free the allocated
- * memory and leave the program.
- * if some strings are given then add a history and pass to tokenizing part.
- * Once tokenizing finished, then parse and execute the commandline,
- * Free everything and restart if everything went fine.
- */
+//void	init_shell(t_shell *shell, char **env)
+//{
+//	parrent_handler();
+//	shell->cmdline = NULL;
+//	if (!g_env)
+//		shell->env = get_envs(env);
+//	g_env = shell->env;
+//	shell->cmd = NULL;
+//	shell->ret = 0;
+//	shell->std_in = 0;
+//	shell->std_out = 0;
+//	tcgetattr(0, &shell->term);
+//	init_line(shell);
+//}
 
 int	main(int argc, char **argv, char **env)
 {
 	t_shell	shell;
+	char 	*line;
 
 	check_isatty(argc, argv);
-	init_ascii();
+	init_shell();
 	while (1)
 	{
-		init_shell(&shell, env);
+		parrent_handler();
+		g_shell.is_expd = FALSE;
+		init_line();
 		if (shell.cmdline && !(ft_strncmp(shell.cmdline,
 					"exit", ft_strlen(shell.cmdline))))
 			ft_exit(&shell);
 		if (shell.cmdline)
 		{
 			add_history(shell.cmdline);
-			if (handle_line(&shell) == -1)
+			if (handle_line() == -1)
 				continue ;
 			//if (tokenizing(&shell) == -1)
 			//	continue ;
@@ -111,9 +124,8 @@ int	main(int argc, char **argv, char **env)
 			//	free_cmd(shell.cmd);
 			//	shell.cmd = NULL;
 			//}
-		}
-		free(shell.prompt);
-		shell.prompt = NULL;
+		}*/
+		free_struct();
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }

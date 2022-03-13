@@ -12,7 +12,7 @@
 
 #include "../incs/minishell.h"
 
-void	init_vars(t_vars *vars, t_shell *shell)
+void init_vars()
 {
 	vars->cmd = shell->cmd;
 	vars->str = shell->cmdline;

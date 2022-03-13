@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 09:46:58 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/06 12:21:30 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/03/13 15:00:32 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,31 +76,32 @@ void	add_varenv(t_shell *shell, char **cmd)
 	}
 }
 
-int	ft_export(char **cmd, t_shell *shell, t_env **tenv)
+int	ft_export(char **cmd)
 {
-	unsigned int	i;
-	t_env			*tmp;
-	char			**ret;
-
-	i = 0;
-	tmp = g_env;
-	while (tmp)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	if (cmd[1] == NULL)
-	{
-		tmp = g_env;
-		tmp = sort(tmp, i);
-		while (tmp)
-		{
-			printf("declare -x %s=\"%s\"\n", tmp->name, tmp->value);
-			tmp = tmp->next;
-		}
-	}
-	else
-		add_varenv(shell, cmd);
-	g_env = shell->env;
+	printf("EXPORT\n");
+//	unsigned int	i;
+//	t_env			*tmp;
+//	char			**ret;
+//
+//	i = 0;
+//	tmp = g_env;
+//	while (tmp)
+//	{
+//		i++;
+//		tmp = tmp->next;
+//	}
+//	if (cmd[1] == NULL)
+//	{
+//		tmp = g_env;
+//		tmp = sort(tmp, i);
+//		while (tmp)
+//		{
+//			printf("declare -x %s=\"%s\"\n", tmp->name, tmp->value);
+//			tmp = tmp->next;
+//		}
+//	}
+//	else
+//		add_varenv(shell, cmd);
+//	g_env = shell->env;
 	return (1);
 }

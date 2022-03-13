@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 12:33:06 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/06 12:22:17 by lgyger           ###   ########.fr       */
+/*   Updated: 2022/03/13 15:14:19 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	free_all(t_shell *shell, int exit_p, char *str)
 		close_error(shell->std_in);
 	if (shell->std_out > 1)
 		close_error(shell->std_out);
-	free_cmd(shell->cmd);
+	//free_cmd(shell->cmd);
 	rl_clear_history();
 	if (exit_p)
 	{
@@ -43,9 +43,10 @@ void	free_all(t_shell *shell, int exit_p, char *str)
 	}
 }
 
-void	free_struct(t_shell *shell)
+void	free_struct()
 {
-	free(shell->cmdline);
-	free(shell->prompt);
-	shell->prompt = NULL;
+	free(g_shell.cmdline);
+	free(g_shell.prompt);
+	g_shell.cmdline = NULL;
+	g_shell.prompt = NULL;
 }

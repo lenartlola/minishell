@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2022/03/13 05:30:32 by hypn0x           ###   ########.fr       */
+/*   Updated: 2022/03/13 17:45:23 by                  ###   ########.fr       */
 /*                                                                           */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@
 // Intern includes
 # include "minishell/main.h"
 # include "../libs/libft/incs/libft.h"
-# include <minishell/types.h>
+# include "minishell/types.h"
+# include "minishell/defs.h"
+# include "minishell/types_enum.h"
 //# include <minishell/colors.h>
 //# include <minishell/utils.h>
 //# include <minishell/signals.h>
@@ -53,14 +55,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-
-# ifndef TRUE
-#  define TRUE 1
-# endif
-# ifndef FALSE
-#  define FALSE 0
-# endif
-
 # ifndef PATH_MAX
 #  define PATH_MAX 256
 # endif
@@ -69,18 +63,7 @@ typedef struct s_quotes	t_quotes;
 typedef struct s_cmd	t_cmd;
 typedef struct s_env	t_env;
 
-extern t_env	*g_env;
-
-typedef enum s_builtin_cmd
-{
-	N_B_IN,
-	ECHO_M,
-	CD_M,
-	PWD_M,
-	EXPORT_M,
-	UNSET_M,
-	ENV_M,
-}	t_builtin_cmd;
+//extern t_env	*g_env;
 
 typedef enum s_red_type
 {
@@ -97,13 +80,6 @@ typedef enum s_type
 	NONE,
 	ENVS
 }	t_type;
-
-typedef struct s_env
-{
-	char	*name;
-	char	*value;
-	t_env	*next;
-}	t_env;
 
 typedef struct s_quotes
 {
@@ -135,26 +111,6 @@ typedef struct s_cmd
 	t_cmd	*next;
 }	t_cmd;
 
-typedef struct s_shell
-{
-	int				last_status;
-	t_list			**env;
-	t_cmd			*cmd;
-	char			*cmdline;
-	char			**tokens;
-	int			ret;
-	int			std_in;
-	int			std_out;
-	int			error;
-	int			pipe_cmd_exist;
-	int			lreturn;
-	char			*cmds;
-	char			*prompt;
-	char			**ev;
-	char			**exp;
-	struct termios	term;
-}	t_shell;
-
 char		*build_new_tkn(t_vars *vars, t_quotes q_tmp, char *tmp);
 void		parse_dollar(t_vars *vars, int len);
 int			launch_builtin(int tmp, t_shell *shell, int in_fork);
@@ -176,7 +132,7 @@ void		parrent_handler(void);
 t_cmd		*last_cmd(t_cmd *cmd);
 t_env		*new_env(char *name, char *value);
 void		wait_all_process(t_cmd *cmd, t_shell *shell);
-int			ft_unset(char **cmd, t_shell *shell);
+
 void		child_handler(t_shell *shell);
 t_env		*last_env(t_env *env);
 int			exec_built_in(t_shell *shell, int in_fork);
@@ -195,7 +151,7 @@ int			fd_set_in_out(t_shell *shell, int *fd, int first);
 int			parse_heredoc(char *delim, t_shell *shell, t_cmd *ptr);
 int			redirection_type(char *redirection);
 int			redirection(t_vars *vars, t_cmd *current, int i);
-int			tokenizing(t_shell *shell);
+int			tokenizing(t_lexer *lex);
 int			pipe_counter(char *str, char c);
 void		blocksig(int sig, void *ptr);
 //parsing
@@ -207,7 +163,7 @@ int			get_c_index(char *str, char c);
 char		*build_new_tkn(t_vars *vars, t_quotes q_tmp, char *tmp);
 //int	fork_pipes(int n, char *argv, char **env);
 //prompt
-void		init_prompt(t_shell *shell);
+void		init_prompt();
 
 //exec
 void		exec_path_cmd(char *path, t_shell *shell);
@@ -221,15 +177,16 @@ void		dup_and_close(int fd_in, int fd_out);
 void		redirection_in(char *redirection, int *mode);
 void		redirection_out(char *redirection, int *type);
 //builtin
-int			ft_env(t_shell *shell);
+int			ft_env(char **null);
 int			ft_echo(char **cmd);
-int			ft_cd(char **cmd, t_shell *shell);
-int			ft_export(char **cmd, t_shell *shell, t_env **tenv);
-int			ft_pwd(void);
+int			ft_cd(char **cmd);
+int			ft_export(char **cmd);
+int			ft_pwd(char **null);
+int			ft_unset(char **cmd);
 //Init ascii
 void		init_ascii(void);
 //Free
-void		free_struct(t_shell *shell);
+void		free_struct();
 int			double_free(char **array);
 //Error
 void		print_error(char *str);
@@ -268,7 +225,6 @@ t_quotes	*init_quotes(int start, int end, t_type type);
 void		free_quotes(t_quotes *quotes);
 
 //vars_utils
-void		init_vars(t_vars *vars, t_shell *shell);
 void		c_free_vars(t_vars *vars);
 void		free_vars(t_vars *vars);
 
@@ -281,8 +237,35 @@ int			args_to_word(t_vars *vars, t_cmd *current, int i);
 int			last_pid(t_cmd *cmd);
 void		sig_child(int sig);
 
-// New bonus
-int			handle_line(t_shell *shell);
+// re:bonus
+/* Lexer */
+int			handle_line();
+// token utils
+int			tok_init(t_tkn *tkn, size_t len);
+int			init_la(t_lexadd *la, t_lexer *lex, const size_t len);
+void		del_node(t_tkn **tkn, t_tkn *prev);
 
+// Inits
+void		init_shell(void);
+
+// Environments
+void		fill_env(char **env);
+char		*ft_getenv(const char *path);
+
+// Errors
+int			print_error_ret(const char *str, int ret);
+void		print_error(char *str);
+
+// Filters
+int			get_ctype(char c);
+
+// general states
+int			handle_general_state(t_lexadd *la, const char *line, const size_t len);
+// other states
+void		handle_other_st(t_lexadd *la);
+
+// Wildcards
+int			wc_check(t_tkn *tkn);
+void		read_dir(t_tkn **head, DIR *ls, struct dirent *list);
 
 #endif 

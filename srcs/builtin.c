@@ -6,23 +6,39 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 15:59:03 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/07 11:19:37 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/03/13 14:58:45 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-int	ft_pwd(void)
+int	ft_pwd(char **null)
 {
-	printf("%s\n", getcwd(NULL, 100));
-	return (1);
+	char	*pwd;
+
+	pwd = (char *)malloc(sizeof(char) * PATH_MAX);
+	if (!pwd)
+		return (1);
+	(void)n;
+	if (getcwd(pwd, PATH_MAX) == NULL)
+	{
+		free(pwd);
+		pwd = NULL;
+	}
+	if (pwd == NULL)
+		pwd = ft_getenv("PWD");
+	if (pwd == NULL)
+		return (1);
+	printf("%s\n", pwd);
+	free(pwd);
+	return (0);
 }
 
-void	updatepwd(t_shell *shell, char *pwd)
+void	updatepwd(char *pwd)
 {
 	t_env	*tmp;
 
-	tmp = shell->env;
+	tmp = g_shell.env;
 	while (tmp)
 	{
 		if (!ft_strcmp(tmp->name, "PWD"))
@@ -37,12 +53,12 @@ void	updatepwd(t_shell *shell, char *pwd)
 	if (pwd)
 	{
 		tmp = new_env("OLDPWD", pwd);
-		env_add_back(&shell->env, tmp);
+		env_add_back(&g_shell.env, tmp);
 	}
 	free(pwd);
 }
 
-int	ft_cd(char **cmd, t_shell *shell)
+int	ft_cd(char **cmd)
 {
 	static char	*pwd;
 
@@ -56,7 +72,7 @@ int	ft_cd(char **cmd, t_shell *shell)
 		printf("cd: no such file or directory: %s\n", cmd[0]);
 		return (0);
 	}
-	updatepwd(shell, pwd);
+	updatepwd(pwd);
 	return (1);
 }
 

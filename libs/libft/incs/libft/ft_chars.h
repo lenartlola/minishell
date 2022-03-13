@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42lausanne.ch>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 10:40:57 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/07 16:13:57 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/03/13 16:23:38 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@
 int	ft_putchar(char c);
 int	ft_isalnum(int c);
 int	ft_isalpha(int c);
+int	ft_isblank(int c);
 int	ft_isascii(int c);
 int	ft_isdigit(int c);
 int	ft_isprint(int c);
 int	ft_tolower(int c);
 int	ft_toupper(int c);
+int	ft_islower(int c);
 
 #endif

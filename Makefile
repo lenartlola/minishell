@@ -10,9 +10,9 @@ LIBS := -Llibs/libft -lft -lreadline
 
 UNAME = $(shell uname -s)
 ifeq ($(UNAME), Linux)
-	NPROC := $(shell nproc)
+#	NPROC := $(shell nproc)
 else
-	NPROC := $(shell sysctl -n hw.ncpu)
+#	NPROC := $(shell sysctl -n hw.ncpu)
 	INC_FLAGS += -I$(HOME)/.brew/opt/readline/include
     LIBS += -L$(HOME)/.brew/opt/readline/lib
 endif
@@ -24,11 +24,12 @@ NAME ?= minish
 
 BUILD_DIR ?= ./build
 SRC_DIRS ?= ./srcs
+INC_DIR ?= ./incs
 
 SRCS := $(shell find $(SRC_DIRS) -name '*.c')
 OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
 
-INC_DIRS := $(shell find $(SRC_DIRS) -type d)
+INC_DIRS := $(shell find $(INC_DIR) -type d)
 INC_FLAGS += $(addprefix -I,$(INC_DIRS))
 
 LIB    := libs/libft/libft.a

@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 14:03:26 by hsabir            #+#    #+#             */
-/*   Updated: 2021/12/30 17:26:27 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/03/13 16:39:44 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,20 @@
 
 void	print_error(char *str)
 {
-	printf("%s\n", str);
+	if (str == NULL)
+		perror("minishell: unexpected error\n");
+	else
+		perror(str);
+	exit(EXIT_FAILURE);
+}
+
+int	print_error_ret(const char *str, int ret)
+{
+	if (str == NULL)
+		perror("minishell: unexpected error\n");
+	else
+		perror(str);
+	return (ret);
 }
 
 void	close_error(int fd)
