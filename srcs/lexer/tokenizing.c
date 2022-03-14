@@ -85,7 +85,7 @@ int	tokenizing(const char *line, size_t len, t_lexer *lex)
 	{
 		if (la.i > (int)len)
 			break ;
-		la.c = g_shell.cmdline[la.i];
+		la.c = line[la.i];
 		la.type = get_ctype(la.c);
 		if (process_char(&la, line, len))
 			return (0);
