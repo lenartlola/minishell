@@ -58,6 +58,15 @@ typedef struct s_tknadd {
 	t_tkn	*aux;
 }	t_tknadd;
 
+// wildcard additional support
+typedef struct s_wcadd {
+	const char	*stgt;
+	const char	*swc;
+	const char	*tgt_end;
+	int			ret;
+	int			st;
+}	t_wcadd;
+
 /* AST */
 
 struct s_ast {

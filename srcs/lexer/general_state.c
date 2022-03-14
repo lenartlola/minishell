@@ -19,12 +19,12 @@ static void	gst_quotes(t_lexadd *la)
 		la->tkn->data[la->j++] = CHAR_DQOUTE;
 		la->tkn->type = TOK;
 	}
-	else if (la->type == CHAR_OCL)
-	{
-		la->st = ST_IN_CURLY;
-		la->tkn->data[la->j++] = CHAR_OCL;
-		la->tkn->type = TOK;
-	}
+//	else if (la->type == CHAR_OCL)
+//	{
+//		la->st = ST_IN_CURLY;
+//		la->tkn->data[la->j++] = CHAR_OCL;
+//		la->tkn->type = TOK;
+//	}
 }
 
 static int	gst_esc(t_lexadd *la, const char *line)
@@ -43,7 +43,7 @@ static int	gst_whitespace(t_lexadd *la, const size_t len)
 		if (la->tkn->next == NULL)
 			print_error_ret("malloc", 1);
 		la->tkn = la->tkn->next;
-		if (tok_init(la->tkn, len - la->i))
+		if (tkn_init(la->tkn, len - la->i))
 			return (1);
 		la->j = 0;
 	}
@@ -57,7 +57,7 @@ static int	gst_special_chars(t_lexadd *la, const size_t len)
 		la->tkn->data[la->j] = '\0';
 		la->tkn->next = (t_tkn *)malloc(sizeof(t_tkn));
 		if (!la->tkn->next)
-			perror_ret("malloc", 1);
+			print_error_ret("malloc", 1);
 		la->tkn = la->tkn->next;
 		if (tkn_init(la->tkn, len - la->i))
 			return (1);
@@ -75,8 +75,7 @@ static int	gst_special_chars(t_lexadd *la, const size_t len)
 
 int	handle_general_state(t_lexadd *la, const char *line, const size_t len)
 {
-	if (la->type == CHAR_QOUTE || la->type == CHAR_DQOUTE
-		|| la->type == CHAR_OCL)
+	if (la->type == CHAR_QOUTE || la->type == CHAR_DQOUTE)
 		gst_quotes(la);
 	else if (la->type == CHAR_ESCSEQ)
 		gst_esc(la, line);

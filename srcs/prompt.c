@@ -29,7 +29,7 @@ char	*get_path(char *path)
 void	init_prompt()
 {
 	char	*user;
-	char	*path;
+	char	*path = NULL;
 
 	user = getenv("USER");
 	if (!user)

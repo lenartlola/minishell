@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:35:03 by hsabir            #+#    #+#             */
-/*   Updated: 2022/03/13 17:45:23 by                  ###   ########.fr       */
+/*   Updated: 2022/03/14 11:53:50 by                  ###   ########.fr       */
 /*                                                                           */
 /* ************************************************************************** */
 
@@ -134,12 +134,12 @@ t_env		*new_env(char *name, char *value);
 void		wait_all_process(t_cmd *cmd, t_shell *shell);
 
 void		child_handler(t_shell *shell);
-t_env		*last_env(t_env *env);
+//t_env		*last_env(t_env *env);
 int			exec_built_in(t_shell *shell, int in_fork);
 char		*check_cmd(char *cmd, t_shell *shell);
 void		free_all(t_shell *shell, int exit_p, char *str);
 void		swap_fds(int in, int out);
-void		dup_and_close(int fd_in, int fd_out);
+//void		dup_and_close(int fd_in, int fd_out);
 int			is_builtin(char *arg);
 void		redirection_handler(t_shell *shell);
 void		close_unused_fd(t_shell *shell, int fd);
@@ -225,14 +225,14 @@ t_quotes	*init_quotes(int start, int end, t_type type);
 void		free_quotes(t_quotes *quotes);
 
 //vars_utils
-void		c_free_vars(t_vars *vars);
-void		free_vars(t_vars *vars);
+//void		c_free_vars(t_vars *vars);
+//void		free_vars(t_vars *vars);
 
 //args_utils
 int			args_loop(t_vars *vars, int *i);
 char		**append_args(char **args, char *new);
 int			check_empty(t_vars *vars);
-int			args_to_word(t_vars *vars, t_cmd *current, int i);
+//int			args_to_word(t_vars *vars, t_cmd *current, int i);
 //sig_utils
 int			last_pid(t_cmd *cmd);
 void		sig_child(int sig);
@@ -249,8 +249,8 @@ void		insert_tknlst(t_tkn **tkn, t_tkn **prev, t_lexer *lex, t_tkn *head);
 int			handle_expand(t_tkn **tkn, t_tkn **prev, t_lexer *lex, t_tknadd *ts);
 // token utils
 int			process_tokens(t_lexer *lex);
-int			tok_init(t_tkn *tkn, size_t len);
-int			init_la(t_lexadd *la, t_lexer *lex, const size_t len);
+//int			tkn_init(t_tkn *tkn, size_t len);
+int			init_la(t_lexadd *la, t_lexer *lex, size_t len);
 void		del_node(t_tkn **tkn, t_tkn *prev);
 void		tok_del(t_tkn *tkn);
 void		rejoin_tknens(t_tkn **tkn, t_tkn **prev, t_lexer *lex, t_tkn *head);
@@ -260,7 +260,7 @@ void		rejoin_tknens(t_tkn **tkn, t_tkn **prev, t_lexer *lex, t_tkn *head);
 void		init_shell(void);
 
 // Environments
-void		fill_env(char **env);
+void		fill_envs(char **env);
 char		*ft_getenv(const char *path);
 
 // Errors
@@ -272,6 +272,9 @@ int			get_ctype(char c);
 
 // general states
 int			handle_general_state(t_lexadd *la, const char *line, const size_t len);
+int			tkn_init(t_tkn *tkn, size_t sz);
+
+
 // other states
 void		handle_other_st(t_lexadd *la);
 
@@ -281,6 +284,8 @@ int			wc_match(const char *wildcard, const char *target);
 void		read_dir(t_tkn **head, DIR *ls, struct dirent *list);
 int			handle_wildcards(t_tkn **tkn, t_tkn **prev, t_lexer *lex);
 void		wcard_err(t_tkn *const *tkn, t_tkn *head);
+int			wc_match_fragment(const char **frag, const char **tgt,
+						 const char *tgt_end, int *st);
 
 
 #endif 

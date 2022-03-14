@@ -9,17 +9,17 @@
 /*   Updated: 2022/03/13 15:04:07 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../incs/minishell.h"
+//#include "../incs/minishell.h"
 
-int	ft_env(char **null)
-{
-	t_env	*tmp;
-
-	tmp = g_shell.env;
-	while (tmp)
-	{
-		printf("%s=%s\n", tmp->name, tmp->value);
-		tmp = tmp->next;
-	}
-	return (1);
-}
+//int	ft_env(char **null)
+//{
+//	t_env	*tmp;
+//
+//	tmp = g_shell.env;
+//	while (tmp)
+//	{
+//		printf("%s=%s\n", tmp->name, tmp->value);
+//		tmp = tmp->next;
+//	}
+//	return (1);
+//}

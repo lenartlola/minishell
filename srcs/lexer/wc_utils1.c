@@ -20,23 +20,23 @@ static int	wc_match_inner_init(int *st, const char **wc,
 	return (1);
 }
 
-static int	wc_match_inner_loop(t_wcsup *wcsup, const char **wc,
+static int	wc_match_inner_loop(t_wcadd *wcadd, const char **wc,
 								  const char **tgt)
 {
 	while (**tgt)
 	{
-		wcsup->swc = *wc;
-		wcsup->stgt = *tgt;
-		wcsup->ret = wc_match_fragment(wc, tgt, wcsup->tgt_end, &wcsup->st);
-		if (wcsup->ret < 0)
-			return (wcsup->ret);
-		if (wcsup->ret > 0 && !**wc && *tgt != wcsup->tgt_end)
+		wcadd->swc = *wc;
+		wcadd->stgt = *tgt;
+		wcadd->ret = wc_match_fragment(wc, tgt, wcadd->tgt_end, &wcadd->st);
+		if (wcadd->ret < 0)
+			return (wcadd->ret);
+		if (wcadd->ret > 0 && !**wc && *tgt != wcadd->tgt_end)
 		{
-			*tgt = wcsup->tgt_end - (*tgt - wcsup->stgt);
-			*wc = wcsup->swc;
-			return (wc_match_fragment(wc, tgt, wcsup->tgt_end, &wcsup->st));
+			*tgt = wcadd->tgt_end - (*tgt - wcadd->stgt);
+			*wc = wcadd->swc;
+			return (wc_match_fragment(wc, tgt, wcadd->tgt_end, &wcadd->st));
 		}
-		if (wcsup->ret > 0)
+		if (wcadd->ret > 0)
 			break ;
 		(*tgt)++;
 	}
@@ -45,10 +45,10 @@ static int	wc_match_inner_loop(t_wcsup *wcsup, const char **wc,
 
 static int	wc_match_inner(const char *wc, const char *tgt)
 {
-	t_wcsup		wcsup;
+	t_wcadd		wcadd;
 	int			ret;
 
-	if (wc_match_inner_init(&wcsup.st, &wc, &tgt, &wcsup.tgt_end) <= 0)
+	if (wc_match_inner_init(&wcadd.st, &wc, &tgt, &wcadd.tgt_end) <= 0)
 		return (0);
 	while (*wc)
 	{
@@ -56,15 +56,15 @@ static int	wc_match_inner(const char *wc, const char *tgt)
 			wc++;
 		if (!*wc)
 			return (1);
-		wcsup.ret = 0;
-		ret = wc_match_inner_loop(&wcsup, &wc, &tgt);
+		wcadd.ret = 0;
+		ret = wc_match_inner_loop(&wcadd, &wc, &tgt);
 		if (ret != -1)
 			return (ret);
-		if (wcsup.ret > 0)
+		if (wcadd.ret > 0)
 			continue ;
 		return (0);
 	}
-	return (tgt == wcsup.tgt_end);
+	return (tgt == wcadd.tgt_end);
 }
 
 int	wc_match(const char *wildcard, const char *target)

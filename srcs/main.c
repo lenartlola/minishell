@@ -6,7 +6,7 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:28:25 by hsabir            #+#    #+#             */
-/*   Updated: 2022/03/13 16:32:11 by                  ###   ########.fr       */
+/*   Updated: 2022/03/14 13:59:36 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ void	init_line()
 }
 
 
-void	ft_exit(t_shell *shell)
+void	ft_exit()
 {
-	free_struct(shell);
-	free_envs(shell->env);
+	free_struct();
+//	free_envs(shell->env);
 	printf("exit\n");
 	rl_clear_history();
 	exit(EXIT_SUCCESS);
@@ -95,10 +95,10 @@ static void	check_isatty(int ac, char **av)
 //	init_line(shell);
 //}
 
-int	main(int argc, char **argv, char **env)
+int	main(int argc, char **argv)
 {
-	t_shell	shell;
-	char 	*line;
+//	t_shell	shell;
+//	char 	*line;
 
 	check_isatty(argc, argv);
 	init_shell();
@@ -107,12 +107,12 @@ int	main(int argc, char **argv, char **env)
 		parrent_handler();
 		g_shell.is_expd = FALSE;
 		init_line();
-		if (shell.cmdline && !(ft_strncmp(shell.cmdline,
-					"exit", ft_strlen(shell.cmdline))))
-			ft_exit(&shell);
-		if (shell.cmdline)
+		if (g_shell.cmdline && !(ft_strncmp(g_shell.cmdline,
+					"exit", ft_strlen(g_shell.cmdline))))
+			ft_exit();
+		if (g_shell.cmdline)
 		{
-			add_history(shell.cmdline);
+			add_history(g_shell.cmdline);
 			if (handle_line() == -1)
 				continue ;
 			//if (tokenizing(&shell) == -1)
@@ -124,7 +124,7 @@ int	main(int argc, char **argv, char **env)
 			//	free_cmd(shell.cmd);
 			//	shell.cmd = NULL;
 			//}
-		}*/
+		}
 		free_struct();
 	}
 	return (EXIT_SUCCESS);

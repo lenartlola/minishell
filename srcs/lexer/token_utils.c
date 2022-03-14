@@ -4,7 +4,7 @@
 
 #include "../../incs/minishell.h"
 
-int	tok_init(t_tkn *tkn, size_t len)
+int	tkn_init(t_tkn *tkn, size_t len)
 {
 	tkn->data = (char *)malloc((len + 2) * sizeof(char));
 	if (tkn->data == NULL)
@@ -15,13 +15,13 @@ int	tok_init(t_tkn *tkn, size_t len)
 	return (0);
 }
 
-int	init_la(t_lexadd *la, t_lexer *lex, const size_t len)
+int	init_la(t_lexadd *la, t_lexer *lex, size_t len)
 {
 	lex->tkn_list = (t_tkn *)malloc(sizeof(t_tkn));
 	if (!lex->tkn_list)
 		return (print_error_ret("fatal error", 1));
 	la->tkn = lex->tkn_list;
-	tok_init(la->tkn, len);
+	tkn_init(la->tkn, len);
 	la->st = ST_GENERAL;
 	la->i = 0;
 	la->j = 0;

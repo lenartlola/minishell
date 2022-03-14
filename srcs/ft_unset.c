@@ -12,26 +12,26 @@
 
 #include "../incs/minishell.h"
 
-int	ft_unset(char **cmd)
-{
-	int		i;
-	t_env	*mem;
-	t_env	*des;
-
-	i = 1;
-	while (cmd[i])
-	{
-		mem = g_shell.env;
-		while (mem->next)
-		{
-			if (!ft_strcmp(mem->next->name, cmd[i]))
-			{
-				mem->next = mem->next->next;
-				break ;
-			}
-			mem = mem->next;
-		}
-		i++;
-	}
-	return (1);
-}
+//int	ft_unset(char **cmd)
+//{
+//	int		i;
+//	t_env	*mem;
+//	t_env	*des;
+//
+//	i = 1;
+//	while (cmd[i])
+//	{
+//		mem = g_shell.env;
+//		while (mem->next)
+//		{
+//			if (!ft_strcmp(mem->next->name, cmd[i]))
+//			{
+//				mem->next = mem->next->next;
+//				break ;
+//			}
+//			mem = mem->next;
+//		}
+//		i++;
+//	}
+//	return (1);
+//}

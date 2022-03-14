@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "incs/minishell.h"
+#include "../../incs/minishell.h"
 
 void	uwu(void)
 {

@@ -36,10 +36,10 @@ static int	lowercmp(const char *s1, const char *s2)
 	return (c1 - c2);
 }
 
-void	sort_list(t_tok **head)
+void	sort_list(t_tkn **head)
 {
-	t_tok	*aux1;
-	t_tok	*aux2;
+	t_tkn	*aux1;
+	t_tkn	*aux2;
 
 	aux1 = *head;
 	while (aux1)
@@ -106,10 +106,10 @@ int	wc_check(t_tkn *tkn)
 							|| (st == ST_IN_DQUOTE && *wc == CHAR_DQOUTE)))
 		{
 			incr = TRUE;
-			st = ST_GEN;
+			st = ST_GENERAL;
 			wc++;
 		}
-		if (st == ST_GEN && (*wc == '?' || *wc == '*'))
+		if (st == ST_GENERAL && (*wc == '?' || *wc == '*'))
 			return (1);
 		if (incr == FALSE)
 			wc++;

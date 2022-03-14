@@ -4,6 +4,24 @@
 
 #include "../../incs/minishell.h"
 
+/*-----Demo scanner-----*/
+
+/* print tokens */
+static void print_tokens(t_lexer *lex)
+{
+	t_tkn *tmp;
+
+	printf("------------------------------------\n");
+	printf("n_tkn: %d\n", lex->n_tokens);
+	tmp = lex->tkn_list;
+	while (tmp)
+	{
+		printf("type: %d, data: %s\n", tmp->type, tmp->data);
+		tmp = tmp->next;
+	}
+	printf("------------------------------------\n");
+}
+
 static int	check_line(char *line)
 {
 	char	*aux;
@@ -28,7 +46,6 @@ static int	check_line(char *line)
 	return (0);
 }
 
-
 int	handle_line()
 {
 	t_lexer	lex;
@@ -39,6 +56,17 @@ int	handle_line()
 	if (check_line(g_shell.cmdline) == 1)
 		return (-1);
 	ret = tokenizing(g_shell.cmdline, ft_strlen(g_shell.cmdline), &lex);
-	//TODO: Error handling.
-	// Maybe tomorrow, I'm so fucking tired
+	if (ret <= 0)
+	{
+		if (ret == 0 && g_shell.tokdel == FALSE)
+			write(STDERR_FILENO, "minish: syntax error\n", 20);
+		free(g_shell.cmdline);
+		g_shell.cmdline = NULL;
+		lexer_del(&lex);
+		return -1;
+	}
+	print_tokens(&lex);
+	free(g_shell.cmdline);
+	g_shell.cmdline = NULL;
+	return (0);
 }

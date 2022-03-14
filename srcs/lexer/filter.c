@@ -2,7 +2,8 @@
 // Created by Hajar Sabir on 3/13/22.
 //
 
-#include <minishell.h>
+//#include <minishell.h>
+#include "../../incs/minishell.h"
 
 int	get_ctype(char c)
 {
@@ -30,5 +31,5 @@ int	get_ctype(char c)
 		return (CHAR_LS);
 	else if (c == '\0')
 		return (CHAR_NULL);
-	return (get_ctype_2(c));
+	return (CHAR_GEN);
 }

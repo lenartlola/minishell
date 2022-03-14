@@ -6,15 +6,15 @@
 /*   By: hsabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 19:21:59 by hsabir            #+#    #+#             */
-/*   Updated: 2022/01/07 15:46:35 by hsabir           ###   ########.fr       */
+/*   Updated: 2022/03/14 09:46:48 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "incs/minishell.h"
+#include "../../incs/minishell.h"
 
-void	child_handler(t_shell *shell)
+void	child_handler()
 {
-	tcsetattr(0, TCSANOW, &shell->term);
+//	tcsetattr(0, TCSANOW, &shell->term);
 	signal(SIGINT, &sig_child);
 	signal(SIGQUIT, &sig_child);
 }
@@ -64,19 +64,19 @@ void	return_sig(int status, t_shell *shell, int *nl)
 	}
 }
 
-void	wait_all_process(t_cmd *cmd, t_shell *shell)
-{
-	int	status;
-	int	nl;
-
-	nl = 0;
-	waitpid(last_pid(cmd), &status, 0);
-	if (WIFSIGNALED(status))
-		return_sig(status, shell, &nl);
-	while (waitpid(cmd->pid, &status, 0) != -1)
-	{
-		if (WIFSIGNALED(status) && WTERMSIG(status) != SIGPIPE)
-			nl = 1;
-		cmd = cmd->next;
-	}
-}
+//void	wait_all_process(t_cmd *cmd, t_shell *shell)
+//{
+//	int	status;
+//	int	nl;
+//
+//	nl = 0;
+//	waitpid(last_pid(cmd), &status, 0);
+//	if (WIFSIGNALED(status))
+//		return_sig(status, shell, &nl);
+//	while (waitpid(cmd->pid, &status, 0) != -1)
+//	{
+//		if (WIFSIGNALED(status) && WTERMSIG(status) != SIGPIPE)
+//			nl = 1;
+//		cmd = cmd->next;
+//	}
+//}
